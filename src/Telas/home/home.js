@@ -1,28 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "../styles/styles.css"
-import usuario from "../../img/usuario.svg"
-import home from "../../img/home.svg"
-import statics from "../../img/statics.svg"
-import estoque from "../../img/estoque.svg"
-import calendario from "../../img/calendario.svg"
-import log from "../../img/Rectangle 3 (1).svg";
+import NavLateral from "../../components/NavLateral"    //import do componente lateral
+// import Tarefas from "./components/Tarefas/Tarefas";
+
 export default function Home(){
     return(
-    <div className="container">
-        <div className="nav">
-            <Link className="logo" to="/Inicio"><img src={log} alt="Bryst"/></Link>
-            <Link to='/User'><img className="btn_no_select" src={usuario} alt="user"/></Link>
-            <Link to='/Home'><img className="btn_select" src={home} alt="home"/></Link>
-            <Link to='/Estoque'><img className="btn_no_select" src={estoque} alt="estoque"/></Link>
-            <Link to='/Statics'><img className="btn_no_select" src={statics} alt="Statics"/></Link>
-            <Link to='/Calendario'><img className="btn_no_select" src={calendario} alt="calendario"/></Link>
-        </div>
-        <div className="tela_home"> 
+    <body className="container">
+        <NavLateral Home="true"/>
+        <section className="tela_home"> 
             <div className="name">
                 hey Sir. Abner e Crisp
             </div>
-
+            {/* <Tarefas/> */}
             <div className="tasks">
                 <div className="inner_tasks_btn">
                     <div className="tasks_btn">
@@ -45,10 +33,10 @@ export default function Home(){
             <div className="container_2">
                 <div className="calendario">
                     <div className="calendario_btn">
-                        Calendario
+                        Vendas
                     </div>
                     <div className="inner_calendario">
-                        <div className="calendario_show">dias</div>
+                        <div className="calendario_show">compra realizada</div>
                         <div className="calendario_show">dias</div>
                         <div className="calendario_show">dias</div>
                         <div className="calendario_show">dias</div>
@@ -88,8 +76,8 @@ export default function Home(){
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </body>
     )
 
 }

@@ -1,4 +1,4 @@
-@import "../abstract/variaveis";
+@import "../styles/abstract/variaveis";
 
 @mixin style_calendario_estoque{
     border-radius: 20px;
@@ -10,11 +10,11 @@
     flex-direction: column;
 }
 
-.tela_home{
+.tela_home{     //parte da tela que divide espaço com o nav
     @include tela_all;
 }
 .name{
-    font-weight: 800;
+    font-weight: $semi-bold;
     margin:0 0 0 1.5rem;
     color: #FFFFFF;
     align-self: flex-start;

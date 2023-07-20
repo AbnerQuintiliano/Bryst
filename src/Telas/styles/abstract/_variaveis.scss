@@ -3,14 +3,13 @@ $cor-de-fundo: #17181C;
 $cor-das-tabelas:  #111215;
 $cor-fundo-claro:   #1B1E27;
 $padding-das-telas:1.18%  1.18% 0.79% 1.18%;
-$semi-bold: 800;
+$semi-bold: 700;
 $light:300;
 
-@mixin tela_all(){
-    height:100vh;
-    width: 100vw;
-    padding: 1.25rem 0 1.25rem 0;
-
+@mixin tela_all(){      //fundo de toda a tela 
+    flex: 95%;
+    padding: .5rem 0 .5rem 0;
+    
     display: flex;
     flex-direction:column;
     align-items: center;
@@ -32,10 +31,10 @@ $light:300;
     height: 1.75rem;
     width: 7.5rem;
     border-radius: 20px;
+    font-size: 1rem;
 
     color: #FFFFFF;
     background-color: #1B1E27;
-    
     font-weight: $semi-bold;
 
     display: flex;
@@ -43,10 +42,14 @@ $light:300;
     justify-content: center;
 }
 
-@mixin btn($color){
+@mixin btn($color,$cor-hover){
     @include titulo;
     background-color: $color;
     width: 40%;
     padding: 0 0.75rem 0 0.75rem;
     font-weight: 600;
+    border: 1.5px solid $cor-hover;
+    &:hover{
+        background-color:$cor-hover;
+    }
 }

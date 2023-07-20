@@ -1,35 +1,30 @@
 @import "../abstract/variaveis";
-@mixin btn_navg{
-    height: 93%;
-    width: 97%;
-   align-items: center;
-}
 .nav{
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    min-width: 4.5%;
+    flex: 3.5%;
+    // height: 100%;
+    // width: 3.5%;
     padding: 3rem 0 7.75rem 0;
-    // margin: 20xp 0 20px 0;
     border-radius: 0 20px 20px 0 ;
     background-color: $cor-das-tabelas;
 
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
-
-   .logo{
-        // height: 50px;
-        width: 50px;
-        // margin: 0 5px 20px 5px;   
-        justify-content: center;  
-    }
-    
-    .btn_no_select{
-        @include btn_navg();
+    .btn_nav{
+        width: 50%;
         opacity: 0.5;
+        img{
+            width: 100%;
+        }
     }
-    .btn_select{
-        @include btn_navg();
-        
+    [ativo="true"]{
+        opacity: 1;
+    }
+    [logo]{
+        width: 80%;
+        opacity: 1;
+        padding: 10px 0;
     }
 }
+   

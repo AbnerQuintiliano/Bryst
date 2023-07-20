@@ -1,11 +1,13 @@
-@import "../styles/abstract/_home.scss";
-@import "../styles/abstract/_navbar.scss";
-@import "../styles/abstract/variaveis";
-@import "../styles/abstract/user";
-@import "../styles/abstract/statics";
+@import "../home/home";
+    // @import"../home/components/Tarefas/Tarefas";
+@import "./abstract/_navbar.scss";
+@import "./abstract/variaveis";
+@import "./abstract/user";
+@import "./abstract/_estoque.scss";
+@import "./abstract/statics";
 
-.container{
-    height: 100vh;
+.container{     //fundo de toda a tela 
+    height: 100dvh;
     display: flex;
     background-color: $cor-de-fundo;
 }
@@ -15,7 +17,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     a{
         text-decoration: none;
     }
