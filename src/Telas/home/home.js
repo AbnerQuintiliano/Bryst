@@ -1,18 +1,27 @@
 import React from "react";
 import NavLateral from "../../components/NavLateral"    //import do componente lateral
-// import Tarefas from "./components/Tarefas/Tarefas";
+import Tarefas from "./components/Tarefas/_Tarefas";
+import { _Main , _ContainerTela , _Wrapper} from "../../components/_variaveis";
+import { _WrapperTela } from "./components/Tarefas/_Tarefas";
 
 export default function Home(){
     return(
-    <body className="container">
+    // <body className="container">
+    <_Main>
         <NavLateral Home="true"/>
-        <section className="tela_home"> 
-            <div className="name">
+        <_ContainerTela> 
+            <h1>
                 hey Sir. Abner e Crisp
-            </div>
-            {/* <Tarefas/> */}
-            <div className="tasks">
-                <div className="inner_tasks_btn">
+            </h1>
+            
+            <_Wrapper>
+                {/* <Tarefas/> */}
+                <_WrapperTela>
+                    <button>Tarefas</button>
+                    <button>Avisos</button>
+                </_WrapperTela>
+                ???
+                {/* <div className="inner_tasks_btn">
                     <div className="tasks_btn">
                         Tarefas
                     </div>
@@ -27,11 +36,11 @@ export default function Home(){
                     <div className="tasks_show">nao sei como vai funcionar aqui dentro</div>
                     <div className="tasks_show">nao sei como vai funcionar aqui dentro</div>
                     <div className="tasks_show">nao sei como vai funcionar aqui dentro</div>
-                </div>
-            </div>
+                </div> */}
+            </_Wrapper>
 
             <div className="container_2">
-                <div className="calendario">
+                <_Wrapper>
                     <div className="calendario_btn">
                         Vendas
                     </div>
@@ -42,9 +51,9 @@ export default function Home(){
                         <div className="calendario_show">dias</div>
                         <div className="calendario_show">dias</div>
                     </div>
-                </div>
+                </_Wrapper>
 
-                <div className="estoque">
+                <_Wrapper>
                     <div className="estoque_btn">
                         Estoque
                     </div>
@@ -74,10 +83,11 @@ export default function Home(){
                         <div className="estoque_show"></div>
                         <div className="estoque_show"></div>
                     </div>
-                </div>
+                </_Wrapper>
             </div>
-        </section>
-    </body>
+        </_ContainerTela>
+    </_Main>
+    //</body> 
     )
 
 }

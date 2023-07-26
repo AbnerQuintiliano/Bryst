@@ -2,7 +2,7 @@
 
 @mixin style_calendario_estoque{
     border-radius: 20px;
-    width: 46.2%; /*46.31*/
+    flex: 50%;
     padding: $padding-das-telas;
     background-color: $cor-das-tabelas;
 
@@ -10,10 +10,10 @@
     flex-direction: column;
 }
 
-.tela_home{     //parte da tela que divide espaço com o nav
+.tela_home{     //parte da tela que divide espaço com o nav / esta _variaveis como _ContainerTela
     @include tela_all;
 }
-.name{
+.name{ //esta embutido ao _ContainerTela
     font-weight: $semi-bold;
     margin:0 0 0 1.5rem;
     color: #FFFFFF;
@@ -21,10 +21,10 @@
 }
 
 .tasks{
-    height: 36.13%;
-    width: 95.66%;
+    flex: 50%;
+    width: 100%;
     border-radius: 20px;
-    padding: $padding-das-telas;
+    padding: 0.5rem;
     background-color: $cor-das-tabelas;
     
     display: flex;
@@ -62,13 +62,12 @@
 }
 
 .container_2{
-    height: 48.36%;
+    flex: 50%;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    
-    // margin: 0 1.5rem 1.5rem 1.5rem;
+    gap: 1rem;
 }
 .calendario{
    @include style_calendario_estoque;

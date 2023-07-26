@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link} from "react-router-dom";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import "./Telas/styles/styles.css"
 import Home from "./Telas/home/home.js";
 import Login from "./Telas/login/Login";
@@ -7,9 +7,13 @@ import Inicio from "./Telas/inicio.js";
 import Statics from "./Telas/statics/statics.js";
 import Estoque from "./Telas/estoque/estoque.js";
 
+import {GlobalStyle} from "./components/_GlobalStyle";
+
 
 export default function rotas(){
     return(
+      <>
+      <GlobalStyle/>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login/>}/>
@@ -21,5 +25,6 @@ export default function rotas(){
           <Route path="*" element={<div> Não encontrado </div>}/>
         </Routes>
       </BrowserRouter>
+      </>
     )
 }

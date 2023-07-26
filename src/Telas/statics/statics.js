@@ -2,9 +2,10 @@ import React from "react";
 import "../styles/styles.css"
 import blusa from "../../img/sim.jpeg";
 import NavLateral from "../../components/NavLateral";
+import { _Main } from "../../components/_variaveis";
 export default function Home(){
     return(
-        <div className="container">
+        <_Main>
             <NavLateral Statics="true"/>
             <div className="tela_statics">
                 <section className="container_produtos">
@@ -59,6 +60,6 @@ export default function Home(){
                     <div className="null">sim3</div>
                 </div>
             </div>
-        </div>
+        </_Main>
     )
 }

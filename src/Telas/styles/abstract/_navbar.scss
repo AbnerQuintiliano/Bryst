@@ -1,8 +1,6 @@
 @import "../abstract/variaveis";
 .nav{
     flex: 3.5%;
-    // height: 100%;
-    // width: 3.5%;
     padding: 3rem 0 7.75rem 0;
     border-radius: 0 20px 20px 0 ;
     background-color: $cor-das-tabelas;
@@ -22,9 +20,9 @@
         opacity: 1;
     }
     [logo]{
-        width: 80%;
+        // width: 80%;
         opacity: 1;
-        padding: 10px 0;
+        padding: 10px 0 15px 0;
     }
 }
    

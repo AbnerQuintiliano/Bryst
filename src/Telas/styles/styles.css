@@ -15,10 +15,10 @@
 }
 
 .tasks {
-  height: 36.13%;
-  width: 95.66%;
+  flex: 50%;
+  width: 100%;
   border-radius: 20px;
-  padding: 1.18% 1.18% 0.79% 1.18%;
+  padding: 0.5rem;
   background-color: #111215;
   display: flex;
   flex-direction: column;
@@ -67,16 +67,17 @@
 }
 
 .container_2 {
-  height: 48.36%;
+  flex: 50%;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  gap: 1rem;
 }
 
 .calendario {
   border-radius: 20px;
-  width: 46.2%; /*46.31*/
+  flex: 50%;
   padding: 1.18% 1.18% 0.79% 1.18%;
   background-color: #111215;
   display: flex;
@@ -129,7 +130,7 @@
 
 .estoque {
   border-radius: 20px;
-  width: 46.2%; /*46.31*/
+  flex: 50%;
   padding: 1.18% 1.18% 0.79% 1.18%;
   background-color: #111215;
   display: flex;
@@ -172,32 +173,6 @@
   width: 23.2%;
   height: 12.2%;
   font-weight: 600;
-}
-
-.nav {
-  flex: 3.5%;
-  padding: 3rem 0 7.75rem 0;
-  border-radius: 0 20px 20px 0;
-  background-color: #111215;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-.nav .btn_nav {
-  width: 50%;
-  opacity: 0.5;
-}
-.nav .btn_nav img {
-  width: 100%;
-}
-.nav [ativo=true] {
-  opacity: 1;
-}
-.nav [logo] {
-  width: 80%;
-  opacity: 1;
-  padding: 10px 0;
 }
 
 .tela_user {
@@ -732,18 +707,7 @@
 }
 
 .container {
-  height: 100dvh;
+  height: 100vh;
   display: flex;
   background-color: #17181C;
-}
-
-* {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-* a {
-  text-decoration: none;
 }/*# sourceMappingURL=styles.css.map */
