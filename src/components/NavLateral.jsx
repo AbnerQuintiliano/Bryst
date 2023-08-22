@@ -5,16 +5,13 @@ import statics from "../img/statics.svg"
 import estoque from "../img/estoque.svg"
 import calendario from "../img/calendario.svg"
 import log from "../img/Rectangle 3 (1).svg";
-
-import styled from "styled-components"
-import {corDasTabelas} from "./_variaveis"
-import * as Cor from "./_variaveis"
+import styled from "styled-components";
 
 const _NavLateral = styled.nav`
-    flex: 2.5%;
+    flex: 3.5%;
     padding: 3rem 0 7.75rem 0;
     border-radius: 0 20px 20px 0 ;
-    background-color: ${corDasTabelas};
+    background-color: ${props => props.theme.black.dasTabelas};
 
     display: flex;
     flex-direction: column;
@@ -27,7 +24,7 @@ const _NavLateral = styled.nav`
             width: 100%;
         }
     }
-    [ativo="true"]{     //para ficar roxo onde está a pagina
+    [ativo]{     //para ficar roxo onde está a pagina
         opacity: 1;
     }
     [logo]{     //para a logo se destacar
@@ -35,13 +32,19 @@ const _NavLateral = styled.nav`
         opacity: 1;
         padding: 10px 0;
     }
+    
+    @media (max-width: 650px) {
+        flex: 30px;
+    }
+    @media (max-width: 450px) {
+        flex: 40px;
+    }
 `
 
 export default function NavLateral(props){
     return(
-            <_NavLateral> 
-                {console.log(Cor.CorDeFundo)}
-            <Link to="/Inicio" className="btn_nav" logo=""><img src={log} alt=""/></Link>
+            <_NavLateral>
+            <Link to="/Inicio" className="btn_nav" logo=""><img src={log}/></Link>
             <Link to='/User' className="btn_nav" ativo={props.User}><img src={usuario} /></Link>
             <Link to='/Home' className="btn_nav" ativo={props.Home}>< img  src={home} /></Link>
             <Link to='/Estoque' className="btn_nav" ativo={props.Estoque}><img src={estoque} /></Link>

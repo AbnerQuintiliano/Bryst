@@ -1,13 +1,11 @@
 import React from "react";
 import "../styles/styles.css"
 import blusa from "../../img/sim.jpeg";
-import NavLateral from "../../components/NavLateral";
 import { _Main } from "../../components/_variaveis";
+import MainTela from "../../components/MainTela";
 export default function Home(){
     return(
-        <_Main>
-            <NavLateral Statics="true"/>
-            <div className="tela_statics">
+        <MainTela Statics="true">
                 <section className="container_produtos">
                     <div className="grid_titulo">
                         <title className="titulo_produtos">Produtos</title>
@@ -59,7 +57,6 @@ export default function Home(){
                     <div className="null">sim2</div>
                     <div className="null">sim3</div>
                 </div>
-            </div>
-        </_Main>
+        </MainTela>
     )
 }

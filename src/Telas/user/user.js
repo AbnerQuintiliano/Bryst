@@ -5,6 +5,7 @@ import setaL from "../../img/setaL.svg"
 import setaR from "../../img/setaR.svg"
 import send from "../../img/send.svg"
 import NavLateral from "../../components/NavLateral";
+import MainTela from "../../components/MainTela";
 
 
 export default function User(){
@@ -23,8 +24,7 @@ export default function User(){
       }
 
     return(
-    <div className="container">
-        <NavLateral User="true"/>
+        <MainTela User="true">
         <div className="tela_user"> 
             <div className="conteiner_show_principal">
                 <div className="chat_avisos">
@@ -86,7 +86,7 @@ export default function User(){
                 <div className="rotina">
                     <div className="atividade">
                         <button className="pend">
-                            atividades pendentes
+                           Acesso(para ser quando entra e sai)
                         </button>
                     </div>
                     <div className="atividade_show">
@@ -134,9 +134,8 @@ export default function User(){
                 </div>
             </div>
 
-            
         </div>
-    </div>
+        </MainTela>
     )
 
 }

@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 function Login() {
   const[user, setUser] = useState("")
-  const[password, setPassoword] = useState("")
+  const[password, setPassoword] = useState('')
   const senha = document.getElementById("password")
   const icone = document.getElementById("olho")
 

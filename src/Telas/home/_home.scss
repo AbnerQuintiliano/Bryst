@@ -73,7 +73,10 @@
    @include style_calendario_estoque;
    display: flex;
    justify-content: space-between;
-}
+   [sim]{
+    color: aliceblue;
+   }
+  }
 
 .calendario_btn{
     @include titulo; 
@@ -87,7 +90,6 @@
     overflow:hidden;
     overflow-x:scroll;
     gap: 10px;
-    
 }
 .inner_calendario::-webkit-scrollbar{
     height: 5px;
@@ -107,7 +109,7 @@
 
     display: flex;
     justify-content: center;
-    color: #FFFFFF
+    color: #FFFFFF;
 }
 
 .estoque{
