@@ -85,6 +85,9 @@
   display: flex;
   justify-content: space-between;
 }
+.calendario [sim] {
+  color: aliceblue;
+}
 
 .calendario_btn {
   height: 1.75rem;
@@ -198,7 +201,7 @@
 .chat_avisos {
   border-radius: 20px;
   height: 60%;
-  width: 42%;
+  width: 50%;
   padding: 1.18% 1.18% 0.79% 1.18%;
   background-color: #111215;
   display: flex;

@@ -12,6 +12,7 @@ export const VWrapper = styled(_Wrapper)`
 export const ScrollVendas = styled(_WrapperTela)`
     flex-direction: row;
     overflow-x: scroll;
+    /* overflow-y: hidden; */
     gap: .5rem;
     ${_OverflowStyle}
 `
@@ -19,7 +20,7 @@ export const Conteudo = styled.div`
   min-width: 40%; 
   padding: 0.4rem 0.5rem;
   background-color: ${props => props.theme.black.fundoClaro};
-  color: #FFFFFF;
+  color: ${props => props.theme.black.Letra};
   border-radius: 20px;
 
   display: flex;
@@ -87,7 +88,7 @@ export const Card = styled.div`
 
   background-color: ${props => props.theme.black.deFundo};
   & img{
-    width: clamp(125px, 8vw, 125px);
+    width: 100px;
     border-radius: 20px;
   }
   & div{
@@ -99,7 +100,6 @@ export const Card = styled.div`
   }
 `
 export const Total =styled.div`
-  /* flex: 1; */
   height: 10%;
   width: 100%;
 
@@ -158,28 +158,29 @@ export function SScrollCard({children}){
   );
 };
 
-export const Caralho = ({children}) => {
-  const [scrollLeft, setScrollLeft] = useState(0);
+// export const Caralho = ({children}) => {
+//   const [scrollLeft, setScrollLeft] = useState(0);
 
-  const handleWheel = (e) => {
-    e.preventDefault();
-    const delta = Math.sign(e.deltaY);
+//   const handleWheel = (e) => {
+//     e.preventDefault();
+//     const delta = Math.sign(e.deltaY);
 
-    // Ajusta a posição do scroll
-    const newScrollLeft = scrollLeft + delta * 100;
-    setScrollLeft(Math.max(0, Math.min(newScrollLeft, carouselRef.current.scrollWidth - carouselRef.current.clientWidth)));
-  };
+//     // Ajusta a posição do scroll
+//     const newScrollLeft = scrollLeft + delta * 100;
+//     setScrollLeft(Math.max(0, Math.min(newScrollLeft, carouselRef.current.scrollWidth - carouselRef.current.clientWidth)));
+//   };
 
-  const carouselRef = React.createRef();
+//   const carouselRef = React.createRef();
 
-  return (
-    <ScrollVendas
-      className="carousel"
-      onWheel={handleWheel}
-      ref={carouselRef}
-      style={{ transform: `translateX(-${scrollLeft}px)` }}
-    >
-      {children}
-    </ScrollVendas>
-  );
-};
+//   return (
+//     <ScrollVendas
+//       className="carousel"
+//       onWheel={handleWheel}
+//       ref={carouselRef}
+//       style={{ transform: `translateX(-${scrollLeft}px)` }}
+//     >
+//       {children}
+//     </ScrollVendas>
+//   );
+// };
+

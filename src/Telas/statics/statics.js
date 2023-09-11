@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/styles.css"
 import blusa from "../../img/sim.jpeg";
-import { _Main } from "../../components/_variaveis";
+// import { _Main } from "../../components/_variaveis";
 import MainTela from "../../components/MainTela";
 export default function Home(){
     return(

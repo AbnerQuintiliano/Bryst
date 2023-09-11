@@ -7,26 +7,47 @@ import olho2 from '../../img/olho2.svg';
 import './login.css';
 import { Link } from 'react-router-dom';
 
-
-
 function Login() {
   const[user, setUser] = useState("")
-  const[password, setPassoword] = useState('')
+  const[password, setPassoword] = useState("")
   const senha = document.getElementById("password")
   const icone = document.getElementById("olho")
+  
+  
+  function Olho() {
+    const inputField = document.getElementById("password");
+    const hiddenDiv = document.getElementById("esconder2");
+
+    if (inputField.value.trim() !== "") {
+        hiddenDiv.style.display = "block";
+    } else {
+        hiddenDiv.style.display = "none";
+    }
+  }
+
+  function Pessoa() {
+    const inputField = document.getElementById("mail");
+    const hiddenDiv = document.getElementById("esconder1");
+
+    if (inputField.value.trim() !== "") {
+        hiddenDiv.style.display = "block";
+    } else {
+        hiddenDiv.style.display = "none";
+    }
+  }
 
   function verSenha() {
-   let inputTypePassword = senha.type === "password"
-   
-   if (inputTypePassword){
-      senha.setAttribute("type","text")
-      icone.setAttribute("src", olho1)
-   } else{
-      senha.setAttribute("type","password")
-      icone.setAttribute("src", olho2)
+    let inputTypePassword = senha.type === "password"
+    if (inputTypePassword){
+       senha.setAttribute("type","text")
+       icone.setAttribute("src", olho1)
+    } else {
+       senha.setAttribute("type","password")
+       icone.setAttribute("src", olho2)
+    }
    }
+  
 
-  }
 
   return (
 
@@ -43,12 +64,14 @@ function Login() {
             <div className="estilo-input">
               <input 
               className= {user !== "" ? 'has-val input' : 'input'}
+              id="mail"
               type="text"      /*BAGUIETI QUE FAZ O EMAIL FICAR EM CIMA DA PALAVRA*/
               value={user} 
-              onChange={e => setUser(e.target.value)}/>
+              onChange={e => setUser(e.target.value)}
+              onInput={Pessoa}/>
               <span className="focus-input" data-placeholder="Usuário"></span>
 
-              <div className="icon">
+              <div className="esconder" id="esconder1">
                 <img src={person}/>
               </div>
             </div>
@@ -59,11 +82,12 @@ function Login() {
               id="password"
               type="password"
               value={password} /*IGUAL AO DO EMAIL*/
-              onChange={e => setPassoword(e.target.value)} />
+              onChange={e => setPassoword(e.target.value)} 
+              onInput={Olho}/>
               <span className="focus-input" data-placeholder="Senha"></span>
         
-                <div className="icon">
-                  <img src={olho2} id="olho" onClick={verSenha} />  {/*icone do carinha do email*/}
+                <div className="esconder" id="esconder2">
+                  <img src={olho2} id="olho"  onClick={verSenha} />  {/*icone do carinha do email*/}
                 </div>
             
             </div>
@@ -85,3 +109,4 @@ function Login() {
 }
 
 export default Login;
+

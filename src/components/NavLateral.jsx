@@ -3,7 +3,6 @@ import usuario from "../img/usuario.svg"
 import home from "../img/home.svg"
 import statics from "../img/statics.svg"
 import estoque from "../img/estoque.svg"
-import calendario from "../img/calendario.svg"
 import log from "../img/Rectangle 3 (1).svg";
 import styled from "styled-components";
 
@@ -34,6 +33,7 @@ const _NavLateral = styled.nav`
     }
     
     @media (max-width: 650px) {
+        padding: 2.5em 0 5.5rem 0;
         flex: 30px;
     }
     @media (max-width: 450px) {
@@ -49,7 +49,6 @@ export default function NavLateral(props){
             <Link to='/Home' className="btn_nav" ativo={props.Home}>< img  src={home} /></Link>
             <Link to='/Estoque' className="btn_nav" ativo={props.Estoque}><img src={estoque} /></Link>
             <Link to='/Statics' className="btn_nav" ativo={props.Statics}>< img src={statics} /></Link>
-            <Link to='/Calendario' className="btn_nav"><img src={calendario} /></Link>
             </_NavLateral>
         
     )

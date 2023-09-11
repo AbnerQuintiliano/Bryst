@@ -2,6 +2,10 @@ import styled from "styled-components"
 import {_Wrapper, _WrapperTela } from "../../../../components/_variaveis"
 
 export const TWrapper = styled(_Wrapper)`
+    [click="add"]{
+      width: auto;
+      padding: 0 .7rem 0 .7rem;
+    }
   @media (max-width: 700px) {
         height: 80vh;
     }
@@ -13,18 +17,19 @@ export const TWrapper = styled(_Wrapper)`
   }
 `
 
-export const Conteudo = styled.div`
-    padding: 0.4rem 0.75rem;
-    background-color: ${props => props.theme.black.fundoClaro};
-    color: #FFFFFF;
-    border-radius: 20px;
+export const Conteudo = styled.span`
+  padding: 0.4rem 0.75rem;
+  background-color: ${props => props.theme.black.fundoClaro};
+  color: ${props => props.theme.black.Letra};
+  border-radius: 20px;
+  text-align: center;
+  font-size: clamp(65% , 3vw , 1rem);
 
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 `
 
 export const WrapperConteudo = styled(_WrapperTela)`
-    flex: 1px; //eu nao sei pq deu certo ;-;
     overflow-y: scroll;
     padding-right: 0;
     &::-webkit-scrollbar{

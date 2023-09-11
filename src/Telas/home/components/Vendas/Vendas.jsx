@@ -1,12 +1,12 @@
-import {  ScrollVendas ,Conteudo, Header , ScrollCard , Card, VWrapper, Total} from "./_Vendas";
+import {  ScrollVendas ,Conteudo, Header , Card, VWrapper, Total} from "./_Vendas";
 import roupa from "../../../../img/sim.jpeg"
-import { SScrollCard } from "./_Vendas"
-import {  Caralho } from "./_Vendas"
+import { SScrollCard , Caralho} from "./_Vendas"
+import { BtnTitulo } from "../../../../components/_variaveis";
 
 export default function Vendas() {
     return (
         <VWrapper>
-                <button>Vendas</button>
+                <BtnTitulo>Vendas</BtnTitulo>
             <ScrollVendas>
                 <Conteudo>
                     <Header>

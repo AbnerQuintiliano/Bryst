@@ -9,13 +9,15 @@ export const theme = {
         primaria:'#7688C9',
         deFundo: '#17181C',
         dasTabelas: '#111215',
-        fundoClaro:'#1B1E27'
+        fundoClaro:'#1B1E27',
+        Letra:'#FFFFFF'
     },
     white:{
         primaria:'#7688C9',
         deFundo: '#FFFFFF',
         dasTabelas: '#F5F5F5',
-        fundoClaro:'#EAEAEA'
+        fundoClaro:'#EAEAEA',
+        Letra:"#150F00"
     }
 
 }
@@ -44,24 +46,41 @@ export const _ContainerTela = styled.main` //competir com o nav
         align-self: flex-start;
     }
 `
+
+export const BtnTitulo = styled.button`
+    min-height: 1.5rem;
+        width: fit-content;
+        padding: 0 1.5rem;
+        margin-right: 1%;
+        border-radius: 20px;
+        font-size: 1rem;
+
+        color: #FFFFFF;
+        background-color: #1B1E27;
+        font-weight: 600;
+        &[possivel]{
+            transition: all 600ms ease;
+            cursor: pointer;
+            &:hover{
+                outline: solid 1px ${props => props.theme.black.primaria};
+            }
+        }
+`
+
 export const _Wrapper = styled.section` //engloba todo o estilo dos componentes
-    /* flex: 50%; */
     width: 100%;
     border-radius: 20px;
     padding: .6rem;
     background-color: ${props => props.theme.black.dasTabelas};
+    
 
     display: flex;
     gap: 0.5rem;
-    flex-direction:${props => props.row ? 'row' : 'column'};
-    &[a]{
-        @media (max-width: 700px) {
-        height: 80vh;
-        }
-    }
-    button{
-        height: 1.75rem;
-        width: 7.5rem;
+    flex-direction: column;
+    & Titulo{
+        min-height: 1.5rem;
+        width: fit-content;
+        padding: 0 1.5rem;
         margin-right: 1%;
         border-radius: 20px;
         font-size: 1rem;
@@ -73,7 +92,7 @@ export const _Wrapper = styled.section` //engloba todo o estilo dos componentes
             transition: all 600ms ease;
             cursor: pointer;
             &:hover{
-                border: solid 1px ${props => props.theme.black.primaria};
+                outline: solid 1px ${props => props.theme.black.primaria};
             }
         }
     }

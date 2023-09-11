@@ -10,7 +10,7 @@ import Login from "./Telas/login/Login";
 import User from "./Telas/user/user.js";
 import Inicio from "./Telas/inicio.js";
 import Statics from "./Telas/statics/statics.js";
-import Estoque from "./Telas/estoque/estoque.js";
+import Estoque from "./Telas/estoque/estoque.jsx";
 
 export default function rotas(){
     return(
