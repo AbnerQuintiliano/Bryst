@@ -1,8 +1,8 @@
 import React , {useRef , useState} from "react"
 import styled from "styled-components"
-import { _Wrapper } from "../../../components/_variaveis"
-import { Card, ScrollVendas } from "../../home/components/Vendas/_Vendas"
-import { ModalStyles } from "../../home/components/estoque/_estoque"
+import { _Wrapper } from "../../components/_variaveis"
+import { ScrollVendas } from "../home/components/Vendas/_Vendas"
+import { ModalStyles } from "../home/components/estoque/_estoque"
 
 export const SWrapper = styled(_Wrapper)`
   height: 100%;
@@ -167,12 +167,47 @@ export const Add = styled.div`
     background-color: ${props => props.theme.black.primaria};
   }
 `
+
 export const ModalAdd = styled(ModalStyles)`
   width: 50%;
   outline: solid 1px ${props => props.theme.black.primaria};
   /* background-color: ${props => props.theme.black.deFundo}; */
 `
 
+export const Campos = styled.input`
+  width: 80%;
+  height: ${props => props.img? '3rem' : "1.75rem"};
+  font-size: 1rem;
+  color: ${props => props.theme.black.Letra};
+  background-color: ${props => props.theme.black.deFundo};
+  padding: 2%;
+  border-radius: 20px;
+  text-align: center;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  outline: unset;
+`
+export const Formulario = styled.form`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  &>div{
+    width: 90%;
+    display: flex;
+    gap: 1rem;
+  }
+  &>img{
+    height: 175px;
+    width: 175px;
+    border-radius: 20px;
+  }
+`
 
 export function SScroll({children}){
     const scrollContainerRef = useRef(null);

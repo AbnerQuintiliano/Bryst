@@ -5,9 +5,9 @@ import {GlobalStyle} from "./components/_GlobalStyle";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./components/_variaveis";
 
-import Home from "./Telas/home/home.js";
+import Home from "./Telas/home/home.jsx";
 import Login from "./Telas/login/Login";
-import User from "./Telas/user/user.js";
+import User from "./Telas/user/user.jsx";
 import Inicio from "./Telas/inicio.js";
 import Statics from "./Telas/statics/statics.js";
 import Estoque from "./Telas/estoque/estoque.jsx";

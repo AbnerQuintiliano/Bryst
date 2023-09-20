@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MainTela from "../../components/MainTela";
 import { BtnTitulo } from "../../components/_variaveis";
-import { SWrapper , Produto, Pesquisa , SScroll, Dados , Titulo , Top, Btn , Add, ModalAdd, WrapperBtn, Excluir, Alterar, WrapperDados } from "./components/_Style";
+import { SWrapper , Produto, Pesquisa , SScroll, Dados , Titulo , Top, Btn , Add, ModalAdd, WrapperBtn, Excluir, Alterar, WrapperDados, Campos, Formulario } from "./_Style";
 import roupa from "../../img/sim.jpeg"
 import ButtonSelector from "./components/Buttom";
 import Modal from 'react-modal';
@@ -14,6 +14,19 @@ export default function Estoque(){
     const AbrirModal = () => setModal(true);
     const FecharModal = () => setModal(false);
 
+    const [image, setImage] = useState(null);
+    const handleImageUpload = (e) => {
+      const selectedImage = e.target.files[0];
+      if (selectedImage) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        setImage(e.target.result);
+      };
+
+      reader.readAsDataURL(selectedImage);
+    }
+    };
 
     return(
         <MainTela Estoque="true">
@@ -30,7 +43,23 @@ export default function Estoque(){
                           onRequestClose={FecharModal}
                           style={{overlay: {backgroundColor: 'rgba(27, 30, 39, 0.8)'}}}
                         >
-                            <h1></h1>
+                            <Formulario>
+                                <div>
+                                    <Campos placeholder="Id do Produto"></Campos>
+                                    <Campos placeholder="Marca"></Campos>
+                                </div>
+                                <div>
+                                    <Campos placeholder="Valor Unitario"></Campos>
+                                    <Campos placeholder="Tipo"></Campos>
+                                </div>
+                                <img src={image} />
+                                <Campos img="true" type="file" id="image" accept="image/*" onChange={handleImageUpload}></Campos>
+                                <Campos placeholder="Quantidade"></Campos>
+                                <Campos placeholder="Tamanhos"></Campos>
+                                <Campos placeholder="Cores"></Campos>
+                                <Alterar style={{height: '1.5rem'}}>Confirmar</Alterar>
+                            </Formulario>
+
                         </ModalAdd>
 
                     </Produto>

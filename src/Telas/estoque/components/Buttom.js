@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Btn } from './_Style';
+import { Btn } from '../_Style';
 
 
 function ButtonSelector(Fator) {

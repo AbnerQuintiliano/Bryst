@@ -4,6 +4,7 @@ import { WrapperConteudoVendas , Conteudo, Header , ScrollCard , Card, VWrapper,
 
 export default function Inicio(){
     return(
+      <>
         <Teste>
             <Card>sim</Card>
             <Card>sim</Card>
@@ -12,6 +13,7 @@ export default function Inicio(){
             <Card>sim</Card>
             <Card>sim</Card>
         </Teste>
+      </>
     )
     
   }

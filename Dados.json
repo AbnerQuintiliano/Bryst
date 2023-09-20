@@ -1,0 +1,66 @@
+[
+    {
+        "idCompra":"001",
+        "num":"001",
+        "data":"18/08/2023",
+        "time":"12:35",
+        "produtos":[
+            {
+                "img":"{roupa}", 
+                "ValorUN": "129.90",
+                "Qts": "2",
+                "Tam": "G",
+                "IdProd": "223",
+                "Cor": "Azul"
+            },
+            {
+                "img":"{roupa}", 
+                "ValorUN": "129.90",
+                "Qts": "2",
+                "Tam": "G",
+                "IdProd": "223",
+                "Cor": "Azul"
+            },
+            {
+                "img":"{roupa}", 
+                "ValorUN": "129.90",
+                "Qts": "2",
+                "Tam": "G",
+                "IdProd": "223",
+                "Cor": "Azul"
+            }
+        ]
+    },
+    {
+        "idCompra":"002",
+        "num":"002",
+        "data":"18/08/2023",
+        "time":"12:35",
+        "produtos":[
+            {
+                "img":"{roupa}", 
+                "ValorUN": "129.90",
+                "Qts": "2",
+                "Tam": "G",
+                "IdProd": "223",
+                "Cor": "Azul"
+            },
+            {
+                "img":"{roupa}", 
+                "ValorUN": "129.90",
+                "Qts": "2",
+                "Tam": "G",
+                "IdProd": "223",
+                "Cor": "Azul"
+            },
+            {
+                "img":"{roupa}", 
+                "ValorUN": "129.90",
+                "Qts": "2",
+                "Tam": "G",
+                "IdProd": "223",
+                "Cor": "Azul"
+            }
+        ]
+    }
+]

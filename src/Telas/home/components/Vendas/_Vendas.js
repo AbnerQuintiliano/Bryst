@@ -61,7 +61,7 @@ export const Header = styled.div`
   }
 `
 export const ScrollCard = styled.div`
-  height: 75%;
+  height: 80%;
   width: 100%;
   gap: .5rem;
   
@@ -79,6 +79,7 @@ export const ScrollCard = styled.div`
 
 export const Card = styled.div`
   min-width: 45%;
+  height: auto;
   border-radius: 20px;
 
   display: flex;
@@ -92,7 +93,7 @@ export const Card = styled.div`
     border-radius: 20px;
   }
   & div{
-    font-size: 0.9rem;
+    font-size: 0.75rem;
   }
 
   @media (max-width:760px){
@@ -100,7 +101,7 @@ export const Card = styled.div`
   }
 `
 export const Total =styled.div`
-  height: 10%;
+  height: clamp(2rem , 10% , 4.5rem );
   width: 100%;
 
   display: flex;

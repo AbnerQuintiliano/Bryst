@@ -1,13 +1,24 @@
+import React, { useRef, useState } from "react"
 import {  ScrollVendas ,Conteudo, Header , Card, VWrapper, Total} from "./_Vendas";
 import roupa from "../../../../img/sim.jpeg"
-import { SScrollCard , Caralho} from "./_Vendas"
+import { SScrollCard } from "./_Vendas"
 import { BtnTitulo } from "../../../../components/_variaveis";
+import  Teste  from './Teste.jsx'
 
 export default function Vendas() {
+
+    const [Hover , setHover] = useState(false);
+    const elementHover = useRef(false)
+    console.log(elementHover);
+    const SHover = () => setHover(true);
+    const NHover = () => setHover(false);
+
     return (
         <VWrapper>
                 <BtnTitulo>Vendas</BtnTitulo>
             <ScrollVendas>
+                <Conteudo>
+                </Conteudo>
                 <Conteudo>
                     <Header>
                         <div num="">001</div>
@@ -18,8 +29,15 @@ export default function Vendas() {
                     </Header>
                     <SScrollCard>
                         <Card>
-                            <img src={roupa}/>
-                            <div>Tipo: Moletom</div> 
+                            <div>Id Prod: 223</div>
+                            <img src={roupa}/> 
+                            <div>Valor UN : 129.90</div>
+                            <div>Qts : 2</div>
+                            <div>Tam : G</div>
+                            <div>Cor : Azul</div>
+                        </Card>
+                        <Card>
+                            <img src={roupa}/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
                             <div>Tam : G</div>
@@ -27,8 +45,7 @@ export default function Vendas() {
                             <div>Cor : Azul</div>
                         </Card>
                         <Card>
-                            <img src={roupa}/>
-                            <div>Tipo: Moletom</div> 
+                            <img src={roupa}/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
                             <div>Tam : G</div>
@@ -36,17 +53,7 @@ export default function Vendas() {
                             <div>Cor : Azul</div>
                         </Card>
                         <Card>
-                            <img src={roupa}/>
-                            <div>Tipo: Moletom</div> 
-                            <div>Valor UN : 129.90</div>
-                            <div>Qts : 2</div>
-                            <div>Tam : G</div>
-                            <div>Id Prod: 223</div>
-                            <div>Cor : Azul</div>
-                        </Card>
-                        <Card>
-                            <img src={roupa}/>
-                            <div>Tipo: Moletom</div> 
+                            <img src={roupa}/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
                             <div>Tam : G</div>
@@ -54,9 +61,8 @@ export default function Vendas() {
                             <div>Cor : Azul</div>
                         </Card>
                     </SScrollCard>
-                    <Total>
-                        <div>Total : 100.89R$</div>
-                        <div>Forma de pagamento :Pix</div>
+                    <Total key="1" ref={elementHover} onMouseEnter={SHover} onMouseLeave={NHover}>
+                        {Hover ? <Teste/> :<> <div>Total : 10.89R$</div><div>Forma de pagamento : Pix</div> </>}
                     </Total>
                 </Conteudo>
                 <Conteudo>
@@ -69,8 +75,7 @@ export default function Vendas() {
                     </Header>
                     <SScrollCard>
                         <Card>
-                            <img src={roupa}/>
-                            <div>Tipo: Moletom</div> 
+                            <img src={roupa}/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
                             <div>Tam : G</div>
@@ -78,8 +83,7 @@ export default function Vendas() {
                             <div>Cor : Azul</div>
                         </Card>
                         <Card>
-                            <img src={roupa}/>
-                            <div>Tipo: Moletom</div> 
+                            <img src={roupa}/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
                             <div>Tam : G</div>
@@ -87,8 +91,7 @@ export default function Vendas() {
                             <div>Cor : Azul</div>
                         </Card>
                         <Card>
-                            <img src={roupa}/>
-                            <div>Tipo: Moletom</div> 
+                            <img src={roupa}/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
                             <div>Tam : G</div>
@@ -96,8 +99,7 @@ export default function Vendas() {
                             <div>Cor : Azul</div>
                         </Card>
                         <Card>
-                            <img src={roupa}/>
-                            <div>Tipo: Moletom</div> 
+                            <img src={roupa}/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
                             <div>Tam : G</div>
@@ -105,9 +107,8 @@ export default function Vendas() {
                             <div>Cor : Azul</div>
                         </Card>
                     </SScrollCard>
-                    <Total>
-                        <div>Total : 100.89R$</div>
-                        <div>Forma de pagamento :Pix</div>
+                    <Total key="2" ref={elementHover} onMouseEnter={SHover} onMouseLeave={NHover}>
+                        {Hover && elementHover ?<Teste/>:<><div>Total : 100.89R$</div> <div>Forma de pagamento :Pix</div></>}
                     </Total>
                 </Conteudo>
                 <Conteudo>
