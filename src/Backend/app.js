@@ -1,21 +1,13 @@
 const express = require("express")
 const cors = require("cors")
+const conn = require("./db/conn");
 const app = express()
-const Users=require("./models/Login")
-app.post("/sim", async (req , res)=>{
-    console.log("Criando user")
-    const NovoUser = await Users.create(req.body);
-    res.status(201).json({message:"criado!", Users:NovoUser})
-})
+
+app.use(express.json()); //não mudar isso de lugar pelo amor de Deus
+app.use(cors())
+conn();
 
 const rotas = require("./routes/Router")
 app.use("/api" , rotas);
-app.use(cors())
-
-app.use(express.json())
-
-const conn = require("./db/conn");
-
-conn();
 
 app.listen(3001, () => console.log("servidor ativo"))
