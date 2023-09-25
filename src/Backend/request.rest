@@ -13,5 +13,18 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/api/UserP
+GET http://localhost:3001/api/User/Abner
+Content-Type: application/json
+
+###
+
+PUT http://localhost:3001/api/User/650bb5a8f2769aae68c155c3
+Content-Type: application/json
+
+{
+    "password":"mudei"
+}
+
+###
+DELETE http://localhost:3001/api/User/650bb5a8f2769aae68c155c3
 Content-Type: application/json

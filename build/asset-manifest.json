@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.35a2ffac.css",
+    "main.js": "/static/js/main.19ad63f2.js",
+    "static/media/estoque.svg": "/static/media/estoque.8b9704a9df7d8316bfa582cf6b702aa7.svg",
+    "static/media/olho1.svg": "/static/media/olho1.38ed51f591685d8fb66bd86755bec2b9.svg",
+    "static/media/home.svg": "/static/media/home.e2f449c5a887d2f0f08ba826a0c99998.svg",
+    "static/media/olho2.svg": "/static/media/olho2.e6667e35235cdcec845c29418df53574.svg",
+    "static/media/statics.svg": "/static/media/statics.f7637e71652df735ee6add0d36352d05.svg",
+    "static/media/person1.svg": "/static/media/person1.985adc7567770734e4ab4c57b9bda7ef.svg",
+    "static/media/usuario.svg": "/static/media/usuario.c07190018e216df935cac124536da587.svg",
+    "index.html": "/index.html",
+    "static/media/Rectangle 3 (1).svg": "/static/media/Rectangle 3 (1).c81955e820bc94ccb41e4e25d9f468b6.svg",
+    "static/media/logo.svg": "/static/media/logo.9e7a0ec0c89960810f35d9e29cfbd477.svg",
+    "static/media/setaL.svg": "/static/media/setaL.a0d14e2ba241fb495292063562699ea9.svg",
+    "static/media/setaR.svg": "/static/media/setaR.8170c49ff0c035a73e3e21b0c1b632b3.svg",
+    "main.35a2ffac.css.map": "/static/css/main.35a2ffac.css.map",
+    "main.19ad63f2.js.map": "/static/js/main.19ad63f2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.35a2ffac.css",
+    "static/js/main.19ad63f2.js"
+  ]
+}
