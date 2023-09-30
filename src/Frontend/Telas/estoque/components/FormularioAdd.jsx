@@ -74,7 +74,7 @@ export default function FormsModalEstoque({ isOpen, onClose }) {
         <ModalAdd
             isOpen={isOpen}
             onRequestClose={onClose}
-            style={{overlay: {backgroundColor: 'rgba(27, 30, 39, 0.8)'}}}
+            style={{overlay: {backgroundColor: 'rgba(27, 30, 39, 0.8)',backdropFilter: 'blur(10px)'}}}
         >
             <Formulario>
                 <div>

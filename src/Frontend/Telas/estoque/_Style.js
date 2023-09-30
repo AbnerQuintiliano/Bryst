@@ -154,23 +154,6 @@ export const Dados = styled.div`
   align-items: center;
 `
 
-// export const Add = styled.button`
-//   width: 75%;
-//   border-radius: 20px;
-//   color: ${props => props.theme.black.Letra};
-//   background-color: ${props => props.theme.black.deFundo};
-//   outline: solid 1px ${props => props.theme.black.primaria};
-//   font-size: 1.5rem;
-
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   transition: 500ms;
-//   &:hover{
-//     background-color: ${props => props.theme.black.primaria};
-//   }
-// `
-
 export function SScroll({children}){
     const scrollContainerRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);

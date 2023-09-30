@@ -3,7 +3,7 @@ import MainTela from "../../components/MainTela";
 import * as S from "./_style"
 import { BtnTitulo} from "../../components/_variaveis";
 import Tabela from "./components/Tabela";
-import FormModal from "./components/FormModal"
+import CreatModal from "./components/CreatModal"
 
 export default function User(){
 
@@ -22,7 +22,7 @@ export default function User(){
                         <BtnTitulo>Cadastro</BtnTitulo>
                         <S.CPesquisa placeholder="Pesquisar"></S.CPesquisa>
                         <S.BtnCreate possivel="" onClick={openModal}>+</S.BtnCreate>
-                        <FormModal isOpen={showModal} onClose={closeModal}></FormModal>
+                        <CreatModal isOpen={showModal} onClose={closeModal}></CreatModal>
                     </S.HeaderUser>
                     <S.Scrol>
                         <Tabela></Tabela>

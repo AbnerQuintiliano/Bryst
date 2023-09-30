@@ -19,8 +19,11 @@ export const theme = {
         dasTabelas: '#F5F5F5',
         fundoClaro:'#EAEAEA',
         Letra:"#150F00"
+    },
+    color:{
+        verde:'#2a8c4a',
+        vermelho:'#ff3b19'
     }
-
 }
 
 export const _Main = styled.div`
@@ -135,6 +138,7 @@ flex-direction: row;
 export const _OverflowStyle = css`
     &::-webkit-scrollbar{
       height: .35rem;
+      width: .35rem;
     }
     &:hover {
         /* Quando o mouse estiver sobre o contêiner, mostrar as barras de rolagem */
