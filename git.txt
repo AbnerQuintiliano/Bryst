@@ -1,5 +1,5 @@
 Principal
-	1-git inint --- trnasforma o diretorio em um repositorio no git
+	1-git init --- trnasforma o diretorio em um repositorio no git
 	2-git add . ou arquivo --- adiciona os arquivos do depositorio para o git
 	3-git commit -m "ue" --- coloca os arquivos para o repositorio
 	2/3- git commit -am "ue" --- forma mais rapida de commitar, mas não funciona se não for usado git add pelo manos uma vez no arquivo

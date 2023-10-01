@@ -4,6 +4,7 @@ import { ReactComponent as IcoDel }from "../../../img/delete.svg";
 import { ReactComponent as IcoEdit} from "../../../img/edit.svg";
 import EditModal from "./EditModal"
 import DeleteModal from "../../../components/DeleteModal"
+import Msg from "../../../components/Mensagem"
 // import img from "../../../img/edit.svg"
 // import { Add } from "../../../components/_variaveis";
 
@@ -32,7 +33,7 @@ const Table = styled.table`
             &:hover{
                 background-color: ${props => props.theme.black.deFundo};
             }
-            :hover{
+            >:hover{
                 color: ${props => props.theme.black.primaria};
             }
         }
@@ -51,14 +52,14 @@ const Delete = styled.div`
   height: 1.5rem;
   fill: ${props => props.theme.black.Letra};
   :hover{
-    fill: #FF3B19;
+    fill:${props => props.theme.color.vermelho};
   }
 `;
 const Edit = styled.div`
   height: 1.5rem;
   fill: ${props => props.theme.black.Letra};
   :hover{
-    fill: #2A8C4A;
+    fill: ${props => props.theme.color.verde};
   }
 `;
 
@@ -71,6 +72,7 @@ export default function Tabela() {
   const closeEditModal = () => {
     setEditModal(false);
   };
+
   const [ShowDeleteModal, setDeleteModal] = useState(false);
   const openDeleteModal = () => {
     setDeleteModal(true);
@@ -78,6 +80,22 @@ export default function Tabela() {
   const closeDeleteModal = () => {
     setDeleteModal(false);
   };
+
+  const [MsgDelete, setMsgDelete] = useState(false);
+  const handleMsgDelete = () => {
+    setMsgDelete(true);
+    setTimeout(() => {
+      setMsgDelete(false);
+    }, 3000);
+  };
+
+  const [MsgEdit, setMsgEdit] = useState(false);
+  const handleMsgEdit = () => {
+    setMsgEdit(true)
+    setTimeout(() => {
+      setMsgEdit(false)
+    },3000)
+  }
 
     return (
       <Table>
@@ -99,9 +117,22 @@ export default function Tabela() {
             <td>
               <Actions>
                 <Edit><IcoEdit onClick={openEditModal}/></Edit>
-                <EditModal isOpen={ShowEditModal} onClose={closeEditModal}/>
+                <EditModal 
+                  isOpen={ShowEditModal} 
+                  onClose={closeEditModal}
+                  Notification={handleMsgEdit}  
+                />
+                {MsgEdit && <Msg message={"Usuário atualizado com sucesso!"}/>}
+
                 <Delete onClick={openDeleteModal}><IcoDel/></Delete>
-                <DeleteModal isOpen={ShowDeleteModal} onClose={closeDeleteModal}>Deseja excluir o usuário em questão?</DeleteModal>
+                <DeleteModal 
+                  isOpen={ShowDeleteModal} 
+                  onClose={closeDeleteModal} 
+                  Notification={handleMsgDelete}
+                >
+                  Deseja excluir o usuário em questão?
+                </DeleteModal>
+                {MsgDelete && <Msg message={"Excluido com sucesso!"}/>}
               </Actions>
             </td>
           </tr>
@@ -112,7 +143,7 @@ export default function Tabela() {
             <td>Dado 6</td>
             <td>
               <Actions>
-                <Edit><IcoEdit onClick={() => console.log("edit")}/></Edit>
+                <Edit><IcoEdit/></Edit>
                 <Delete onClick={()=>console.log("delete")}><IcoDel/></Delete>
               </Actions>
             </td>

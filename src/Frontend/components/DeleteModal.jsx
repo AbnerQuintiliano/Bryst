@@ -28,11 +28,12 @@ const Btn = styled(Add)`
 
 Modal.setAppElement('#root');
 
-export default function DeleteModal({ isOpen, onClose ,children }) {
+export default function DeleteModal({ isOpen, onClose ,children , Notification }) {
+
 
   const Confirm = () => {
-    window.alert('Excluido com sucesso');
     onClose();
+    Notification()
   };
 
   return (

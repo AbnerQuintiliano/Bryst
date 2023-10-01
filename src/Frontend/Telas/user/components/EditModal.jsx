@@ -1,4 +1,4 @@
-import React ,{useState} from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import Modal from "react-modal";
 import { ModalStyles , Add} from "../../../components/_variaveis";
@@ -68,21 +68,21 @@ const Confirmar = styled(Add)`
   width: 40%;
   height: 1.75rem;
   font-size: 1.25rem;
-  outline: solid 1px ${props => props.theme.black.primaria};
+  outline: solid 1px ${props => props.theme.color.verde};
   &:hover{
-    background-color: ${props => props.theme.black.primaria};
+    background-color: ${props => props.theme.color.verde};
     outline: unset;
   }
 `
 
 Modal.setAppElement('#root');
 
-export default function EditModal({ isOpen, onClose }) {
+export default function EditModal({ isOpen, onClose, Notification }) {
 
   const { register, handleSubmit , formState:{errors} } = useForm(); 
   const onSubmit=(data) => {
     console.log(data)
-    window.alert('Updade do usuário feito com sucesso');
+    Notification();
     onClose();
   }
 
