@@ -157,30 +157,3 @@ export function SScrollCard({children}){
       </ScrollCard>
   );
 };
-
-// export const Caralho = ({children}) => {
-//   const [scrollLeft, setScrollLeft] = useState(0);
-
-//   const handleWheel = (e) => {
-//     e.preventDefault();
-//     const delta = Math.sign(e.deltaY);
-
-//     // Ajusta a posição do scroll
-//     const newScrollLeft = scrollLeft + delta * 100;
-//     setScrollLeft(Math.max(0, Math.min(newScrollLeft, carouselRef.current.scrollWidth - carouselRef.current.clientWidth)));
-//   };
-
-//   const carouselRef = React.createRef();
-
-//   return (
-//     <ScrollVendas
-//       className="carousel"
-//       onWheel={handleWheel}
-//       ref={carouselRef}
-//       style={{ transform: `translateX(-${scrollLeft}px)` }}
-//     >
-//       {children}
-//     </ScrollVendas>
-//   );
-// };
-

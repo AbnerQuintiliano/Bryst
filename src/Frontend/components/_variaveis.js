@@ -117,7 +117,7 @@ export const Conteudo = styled.div`
     width: ${props => props};
     padding: 0.4rem 0.75rem;
     background-color: ${props => props.theme.black.fundoClaro};
-    color: #FFFFFF;
+    color: ${props => props.theme.black.Letra};
     border-radius: 20px;
 
     display: flex;
@@ -202,4 +202,31 @@ export const Add = styled.button`
   &:hover{
     background-color: ${props => props.theme.black.primaria};
   }
+`
+export const Label = styled.label`
+font-size: .9rem;
+align-self: ${props => props.center ? 'center' : 'flex-start'};
+padding-left: ${props => props.center ? '0' : '1rem'};
+`
+export const StyleCampo = css` //inputs
+  width: 100%;
+  height: 2rem;
+  font-size: 1.2rem;
+  color: ${props => props.theme.black.Letra};
+  background-color: ${props => props.theme.black.deFundo};
+  border: 1px solid ${props => props.err ? 'red' : props.theme.black.deFundo};
+
+  padding: 2%;
+  border-radius: 20px;
+  text-align: center;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  outline: unset;
+`
+export const Error = styled.span`
+  font-size: .8rem;
+  padding-top: .25rem;
+  color: #FF3B19;
 `

@@ -68,22 +68,22 @@ const Confirmar = styled(Add)`
   width: 40%;
   height: 1.75rem;
   font-size: 1.25rem;
-  outline: solid 1px ${props => props.theme.black.primaria};
+  outline: solid 1px ${props => props.theme.color.verde};
   &:hover{
-    background-color: ${props => props.theme.black.primaria};
+    background-color: ${props => props.theme.color.verde};
     outline: unset;
   }
 `
 
 Modal.setAppElement('#root');
 
-export default function CreatModal({ isOpen, onClose }) {
+export default function CreatModal({ isOpen, onClose , handleMsg }) {
 
   const { register, handleSubmit , formState:{errors} } = useForm(); 
   const onSubmit=(data) => {
     console.log(data)
     onClose();
-    window.alert("Usuário criado com sucesso!")
+    handleMsg();
   }
 
   return (
@@ -95,7 +95,7 @@ export default function CreatModal({ isOpen, onClose }) {
       <Formulario>
         <div>
           <Label>Usuário</Label>
-          <Campos err={errors?.user} {...register("user" ,{required: true})}></Campos>
+          <Campos err={errors?.user} {...register("user" ,{required: true})} autoComplete="off"></Campos>
           {errors?.user?.type === 'required' && <Error>Necessário preencher o campo</Error>}
         </div>
         <div>
@@ -106,7 +106,7 @@ export default function CreatModal({ isOpen, onClose }) {
         </div>
         <div>
           <Label>Nome do Usuário</Label>
-          <Campos err={errors?.userName} {...register("userName" ,{required: true})}></Campos>
+          <Campos err={errors?.userName} {...register("userName" ,{required: true})} autoComplete="off"></Campos>
           {errors?.userName?.type === 'required' && <Error>Necessário preencher o campo</Error>}
         </div>
         <div>

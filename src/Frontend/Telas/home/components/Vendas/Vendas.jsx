@@ -5,6 +5,7 @@ import roupa from "../../../../img/sim.jpeg"
 import { SScrollCard } from "./_Vendas"
 import { BtnTitulo , Add} from "../../../../components/_variaveis";
 import  Buttons  from './buttons.jsx'
+import Msg from "../../../../components/Mensagem"
 
 export default function Vendas() {
 
@@ -21,13 +22,22 @@ export default function Vendas() {
         setModal(false);
       };
 
+    const [whoMsg , setMsg] = useState(false);
+    const handleMsg = () => {
+        setMsg(true)
+        setTimeout(() => {
+            setMsg(false)
+        }, 3000)
+    }
+
     return (
         <VWrapper>
                 <BtnTitulo>Vendas</BtnTitulo>
             <ScrollVendas>
                 <Conteudo>
                     <Add onClick={openModal}>Adicionar</Add>
-                    <FormsModalVendas isOpen={Modal} onClose={closeModal}></FormsModalVendas>
+                    <FormsModalVendas isOpen={Modal} onClose={closeModal} handleMsg={handleMsg}></FormsModalVendas>
+                    {whoMsg && <Msg message={"Venda realizada com sucesso!"}/>}
                 </Conteudo>
                 <Conteudo>
                     <Header>

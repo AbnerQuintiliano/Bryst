@@ -4,6 +4,7 @@ import * as S from "./_style"
 import { BtnTitulo} from "../../components/_variaveis";
 import Tabela from "./components/Tabela";
 import CreatModal from "./components/CreatModal"
+import Msg from "../../components/Mensagem"
 
 export default function User(){
 
@@ -15,6 +16,14 @@ export default function User(){
       setShowModal(false);
     };
 
+    const [whoMsg, setMsg] = useState(false);
+    const handleMsg = () => {
+        setMsg(true)
+        setTimeout(() => {
+            setMsg(false)
+        }, 3000)
+    }
+
     return(
         <MainTela User="true">
                 <S.CWrapper>
@@ -22,7 +31,8 @@ export default function User(){
                         <BtnTitulo>Cadastro</BtnTitulo>
                         <S.CPesquisa placeholder="Pesquisar"></S.CPesquisa>
                         <S.BtnCreate possivel="" onClick={openModal}>+</S.BtnCreate>
-                        <CreatModal isOpen={showModal} onClose={closeModal}></CreatModal>
+                        <CreatModal isOpen={showModal} onClose={closeModal} handleMsg={handleMsg}></CreatModal>
+                        {whoMsg && <Msg message={"Usuário criado com sucesso!"}/>}
                     </S.HeaderUser>
                     <S.Scrol>
                         <Tabela></Tabela>
