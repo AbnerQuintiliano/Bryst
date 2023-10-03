@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
-import { useForm } from "react-hook-form";
+import { useForm , useFieldArray } from "react-hook-form";
 import { ModalStyles , Add , StyleCampo , Label , Error} from "../../../../components/_variaveis";
 import { Card , SScrollCard } from "./_Vendas";
 
@@ -20,6 +20,7 @@ const WrapperLC = styled.div `
 const Campos = styled.input`
   ${StyleCampo};
   background-color: ${props => props.theme.black.fundoClaro};
+
 `
 const Valor = styled.span`
   font-size: 1.2rem;
@@ -79,13 +80,24 @@ const Close = styled.button`
 Modal.setAppElement('#root');
 
 export default function FormsModalVendas({ isOpen, onClose , handleMsg}) {
-  const {register, handleSubmit , formState:{errors}} = useForm();
+  const {register, handleSubmit , control , formState:{errors}} = useForm();
   const onSubmit=(data) => {
     console.log(data)
     onClose();
     handleMsg();
   }
 
+  const{fields , append , remove} = useFieldArray({
+    control,
+    name:"produto"
+  })
+
+  const [statusAdd , setAdd] = useState()
+
+  const handleAdd = () => { 
+    append({id:null, Tamanho:'', Cor:'' ,Quantidade: 1 });
+   setAdd(false)
+  }
   return (
       <ModalAdd
           isOpen={isOpen}
@@ -93,37 +105,43 @@ export default function FormsModalVendas({ isOpen, onClose , handleMsg}) {
           style={{overlay:{backgroundColor: 'rgba(27, 30, 39, 0.8)',backdropFilter: 'blur(10px)'}}}
       >
           <Formulario>
+            <Total><span>Id - 001</span> <span>Por - Marcos</span></Total>
             <SScrollCard>
-              <Card style={{position:'relative'}}>
-                <Close>X</Close>
-                <WrapperLC>
-                  <Label center="true">Id do produto</Label>
-                  <Campos err={errors?.Id} {...register("Id" ,{required: true})} autoComplete="off"></Campos>
-                  {errors?.Id?.type === 'required' && <Error>Necessário preencher o campo</Error>}
-                </WrapperLC>
-                <WrapperLC>
-                  <Label center="true">Tamanho</Label>
-                  <Campos err={errors?.Tamanho} {...register("Tamanho" ,{required: true , maxLength:3})} autoComplete="off"></Campos>
-                  {errors?.Tamanho?.type === 'required' && <Error>Necessário preencher o campo</Error>}
-                  {errors?.Tamanho?.type === 'maxLength' && <Error>O maximo de caracteres e 3</Error>}
-                </WrapperLC>
-                <WrapperLC>
-                  <Label center="true">Cor</Label>
-                  <Campos err={errors?.Cor} {...register("Cor" ,{required: true})} autoComplete="off"></Campos>
-                  {errors?.Cor?.type === 'required' && <Error>Necessário preencher o campo</Error>}
-                </WrapperLC>
-                <WrapperLC>
-                  <Label center="true" >Quantidade</Label>
-                  <Campos err={errors?.Qts} {...register("Qts" ,{required: true})} autoComplete="off"></Campos>
-                  {errors?.Qts?.type === 'required' && <Error>Necessário preencher o campo</Error>}
-                </WrapperLC>
-                <Valor>Valor: 240 R$</Valor>
+              {fields.map((Compra, index) => (
+                <Card key={Compra.id} style={{position:'relative'}}>
+                  <Close onClick={() => remove(index)}>X</Close>
+                  <WrapperLC>
+                    <Label center="true">Id do produto</Label>
+                    <Campos err={errors?.produto?.[index].id} {...register(`produto.${index}.id` ,{required: true, valueAsNumber:true})} autoComplete="off" type="number"></Campos>
+                    {errors?.produto?.[index]?.id?.type === 'required' && <Error>Necessário preencher o campo</Error>}
+                  </WrapperLC>
+                  <WrapperLC>
+                    <Label center="true">Tamanho</Label>
+                    <Campos err={errors?.produto?.[index]?.Tamanho} {...register(`produto.${index}.Tamanho` ,{required: true , maxLength:3})} autoComplete="off"></Campos>
+                    {errors?.produto?.[index]?.Tamanho?.type === 'required' && <Error>Necessário preencher o campo</Error>}
+                    {errors?.produto?.[index]?.Tamanho?.type === 'maxLength' && <Error>O maximo de caracteres e 3</Error>}
+                  </WrapperLC>
+                  <WrapperLC>
+                    <Label center="true">Cor</Label>
+                    <Campos err={errors?.produto?.[index]?.Cor} {...register(`produto.${index}.Cor` ,{required: true})} autoComplete="off"></Campos>
+                    {errors?.produto?.[index]?.Cor?.type === 'required' && <Error>Necessário preencher o campo</Error>}
+                  </WrapperLC>
+                  <WrapperLC>
+                    <Label center="true">Quantidade</Label>
+                    <Campos err={errors?.produto?.[index]?.Quantidade} {...register(`produto.${index}.Quantidade` ,{required: true , valueAsNumber:true})} autoComplete="off" type="number"></Campos>
+                    {errors?.produto?.[index]?.Quantidade?.type === 'required' && <Error>Necessário preencher o campo</Error>}
+                  </WrapperLC>
+                  <Valor>Valor: 240 R$</Valor>
+                </Card>
+              ))}
+              <Card>
+                <Add onClick={() => handleAdd()}>+</Add>
+                { statusAdd && <Error add="true">Necessário adicionar produto</Error> }
               </Card>
-               <Card><Add>+</Add></Card> 
             </SScrollCard>
             <Total><span>Total : 4.000 R$</span> <span>24 Unidades</span></Total>
 
-              <Confirmar type="button" onClick={() => handleSubmit(onSubmit)()}>Confirmar</Confirmar>
+              <Confirmar type="button" onClick={() => fields.length > 0 ? handleSubmit(onSubmit)() : setAdd(true)}>Confirmar</Confirmar>
           </Formulario>
       </ModalAdd>
   );

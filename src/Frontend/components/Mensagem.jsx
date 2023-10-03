@@ -28,35 +28,27 @@ const Mensagem = styled.div`
   color: ${props => props.theme.black.Letra};
   padding: .5rem 1rem ;
   border-radius: 20px;
-  /* transition: opacity 0.3s; */
-  animation: ${props => (props.entering ? slideIn : slideOut)} 0.5s;
-  visibility: ${props => (props.exited ? 'hidden' : 'visible')};
+  animation: ${props => (props.entering === 'Entrada' ? slideIn : slideOut)} 0.5s;
 `;
 
 const Notification = ({ message }) => {
-  const [state, setState] = useState('entering');
+  const [state, setState] = useState('Entrada');
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setState('exiting');
+      setState('Saida');
     }, 2500);
 
     return () => clearTimeout(timer);
   }, []);
 
-  const handleAnimationEnd = () => {
-    if (state === 'exiting') {
-      setState('exited');
-    }
-  };
-
-  return <Mensagem
-  entering={state === 'entering'}
-  exiting={state === 'exiting'}
-  exited={state === 'exited'}
-  onAnimationEnd={handleAnimationEnd}>
+  return(
+  <Mensagem
+  entering = {state}
+  >
     {message}
-  </Mensagem>;
+  </Mensagem>
+  )
 };
 
 export default Notification;

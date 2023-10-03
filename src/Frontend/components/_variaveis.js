@@ -224,9 +224,16 @@ export const StyleCampo = css` //inputs
   justify-content: space-around;
   align-items: center;
   outline: unset;
+  &::-webkit-outer-spin-button , &::-webkit-inner-spin-button { //setas o type number
+  appearance: none;
+  margin: 0;
+}
 `
 export const Error = styled.span`
   font-size: .8rem;
   padding-top: .25rem;
   color: #FF3B19;
+  position: ${props => props.add && 'absolute'};
+  top: ${props => props.add && '55%'};
+
 `

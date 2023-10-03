@@ -46,6 +46,10 @@ export default function Vendas() {
                             <data>18/08/2023</data>
                             <time>12:35</time>
                         </div>
+                        <div>
+                            <data>Autor</data>
+                            <time>Crisp</time>
+                        </div>
                     </Header>
                     <SScrollCard>
                         <Card>
