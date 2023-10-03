@@ -61,7 +61,8 @@ export const Header = styled.div`
   }
 `
 export const ScrollCard = styled.div`
-  height: 80%;
+  /* height: 80%; */
+  height: ${props => props.height || '80%' };
   width: 100%;
   gap: .5rem;
   
@@ -117,7 +118,7 @@ export const Total =styled.div`
   }
 `
 
-export function SScrollCard({children}){
+export function SScrollCard(props){
   const scrollContainerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(null);
@@ -144,16 +145,15 @@ export function SScrollCard({children}){
     const walk = (x - startX) * 3; // Ajuste a velocidade do scroll conforme necessário
     scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
-
   return (
-      <ScrollCard
+      <ScrollCard {...props}
         ref={scrollContainerRef}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
       >
-              {children}
+        {props.children}
       </ScrollCard>
   );
 };

@@ -36,7 +36,7 @@ export default function Vendas() {
             <ScrollVendas>
                 <Conteudo>
                     <Add onClick={openModal}>Adicionar</Add>
-                    <FormsModalVendas isOpen={Modal} onClose={closeModal} handleMsg={handleMsg}></FormsModalVendas>
+                    <FormsModalVendas isOpen={Modal} onClose={closeModal} Notification={handleMsg}/>
                     {whoMsg && <Msg message={"Venda realizada com sucesso!"}/>}
                 </Conteudo>
                 <Conteudo>

@@ -124,18 +124,18 @@ export const Btn = styled.button`
 
 export const Excluir = styled(Btn)`
   width: 40%;
-  outline: solid 1px #ff3b19;
+  outline: solid 1px ${props => props.theme.color.vermelho};
   &:hover{
-    background-color: #ff3b19;
+    background-color: ${props => props.theme.color.vermelho};
     outline: unset;
   }
 `
 
 export const Alterar = styled(Btn)`
   width: 40%;
-  outline: solid 1px #2a8c4a;
+  outline: solid 1px ${props => props.theme.color.verde};
   &:hover{
-    background-color: #2a8c4a;
+    background-color: ${props => props.theme.color.verde};
     outline: unset;
   }
 `

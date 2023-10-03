@@ -152,8 +152,7 @@ export const _OverflowStyle = css`
         /* Estilos para a barra de rolagem */
         &::-webkit-scrollbar-thumb {
             background-color: #2D3347;
-            border-radius: 20px;
-            
+            border-radius: 20px;   
             &:hover{
                 background-color: ${props => props.theme.black.primaria};
                 

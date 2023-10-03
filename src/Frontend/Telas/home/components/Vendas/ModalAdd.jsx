@@ -79,12 +79,12 @@ const Close = styled.button`
 
 Modal.setAppElement('#root');
 
-export default function FormsModalVendas({ isOpen, onClose , handleMsg}) {
+export default function FormsModalVendas({ isOpen, onClose , Notification}) {
   const {register, handleSubmit , control , formState:{errors}} = useForm();
   const onSubmit=(data) => {
     console.log(data)
     onClose();
-    handleMsg();
+    Notification();
   }
 
   const{fields , append , remove} = useFieldArray({
@@ -96,7 +96,7 @@ export default function FormsModalVendas({ isOpen, onClose , handleMsg}) {
 
   const handleAdd = () => { 
     append({id:null, Tamanho:'', Cor:'' ,Quantidade: 1 });
-   setAdd(false)
+    setAdd(false)
   }
   return (
       <ModalAdd
@@ -106,13 +106,13 @@ export default function FormsModalVendas({ isOpen, onClose , handleMsg}) {
       >
           <Formulario>
             <Total><span>Id - 001</span> <span>Por - Marcos</span></Total>
-            <SScrollCard>
+            <SScrollCard height="70%">
               {fields.map((Compra, index) => (
                 <Card key={Compra.id} style={{position:'relative'}}>
-                  <Close onClick={() => remove(index)}>X</Close>
+                  <Close type="button" onClick={() => remove(index)}>X</Close>
                   <WrapperLC>
                     <Label center="true">Id do produto</Label>
-                    <Campos err={errors?.produto?.[index].id} {...register(`produto.${index}.id` ,{required: true, valueAsNumber:true})} autoComplete="off" type="number"></Campos>
+                    <Campos err={errors?.produto?.[index]?.id} {...register(`produto.${index}.id` ,{required: true, valueAsNumber:true})} autoComplete="off" type="number"></Campos>
                     {errors?.produto?.[index]?.id?.type === 'required' && <Error>Necessário preencher o campo</Error>}
                   </WrapperLC>
                   <WrapperLC>
@@ -132,6 +132,7 @@ export default function FormsModalVendas({ isOpen, onClose , handleMsg}) {
                     {errors?.produto?.[index]?.Quantidade?.type === 'required' && <Error>Necessário preencher o campo</Error>}
                   </WrapperLC>
                   <Valor>Valor: 240 R$</Valor>
+                  {console.log(Compra.id)}
                 </Card>
               ))}
               <Card>
@@ -140,7 +141,6 @@ export default function FormsModalVendas({ isOpen, onClose , handleMsg}) {
               </Card>
             </SScrollCard>
             <Total><span>Total : 4.000 R$</span> <span>24 Unidades</span></Total>
-
               <Confirmar type="button" onClick={() => fields.length > 0 ? handleSubmit(onSubmit)() : setAdd(true)}>Confirmar</Confirmar>
           </Formulario>
       </ModalAdd>

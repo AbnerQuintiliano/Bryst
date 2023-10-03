@@ -16,7 +16,7 @@ export default function User(){
       setShowModal(false);
     };
 
-    const [whoMsg, setMsg] = useState(false);
+    const [HowIsMsg, setMsg] = useState(false);
     const handleMsg = () => {
         setMsg(true)
         setTimeout(() => {
@@ -32,7 +32,7 @@ export default function User(){
                         <S.CPesquisa placeholder="Pesquisar"></S.CPesquisa>
                         <S.BtnCreate possivel="" onClick={openModal}>+</S.BtnCreate>
                         <CreatModal isOpen={showModal} onClose={closeModal} handleMsg={handleMsg}></CreatModal>
-                        {whoMsg && <Msg message={"Usuário criado com sucesso!"}/>}
+                        {HowIsMsg && <Msg message={"Usuário criado com sucesso!"}/>}
                     </S.HeaderUser>
                     <S.Scrol>
                         <Tabela></Tabela>
