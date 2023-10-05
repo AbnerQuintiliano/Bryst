@@ -26,7 +26,6 @@ export default function Buttons() {
         setTimeout( () => {setDeleteMsg(false)} , 3000);
     }
 
-
     const [HowIsUpdateModal , setUpdateModal] = useState(false);
     const ModalUpdateClose = () => {setUpdateModal(false);};
     const ModalUpdateOpen = () => {setUpdateModal(true)};
@@ -35,7 +34,6 @@ export default function Buttons() {
         setUpdateMsg(true);
         setTimeout( () => {setUpdateMsg(false)} , 3000);
     }
-
     return(
         <>
             <Exclui onClick={ModalDeleteOpen}>Excluir</Exclui>

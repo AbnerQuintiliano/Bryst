@@ -29,7 +29,6 @@ export default function Vendas() {
             setMsg(false)
         }, 3000)
     }
-
     return (
         <VWrapper>
                 <BtnTitulo>Vendas</BtnTitulo>

@@ -5,7 +5,7 @@ import { useForm , useFieldArray } from "react-hook-form";
 import { ModalStyles , Add , StyleCampo , Label , Error} from "../../../../components/_variaveis";
 import { Card , SScrollCard } from "./_Vendas";
 
-const ModalAdd = styled(ModalStyles)`
+const ModalVendas = styled(ModalStyles)`
   height: 95vh;
   width: max(50% , 300px);
 `
@@ -20,7 +20,6 @@ const WrapperLC = styled.div `
 const Campos = styled.input`
   ${StyleCampo};
   background-color: ${props => props.theme.black.fundoClaro};
-
 `
 const Valor = styled.span`
   font-size: 1.2rem;
@@ -38,11 +37,6 @@ const Formulario = styled.section`
     width: 95%;
     display: flex;
     gap: .5rem;
-  }
-  &>img{
-    height: 200px;
-    width: 200px;
-    border-radius: 20px;
   }
 `
 const Confirmar = styled(Add)`
@@ -99,7 +93,7 @@ export default function FormsModalVendas({ isOpen, onClose , Notification}) {
     setAdd(false)
   }
   return (
-      <ModalAdd
+      <ModalVendas
           isOpen={isOpen}
           onRequestClose={onClose}
           style={{overlay:{backgroundColor: 'rgba(27, 30, 39, 0.8)',backdropFilter: 'blur(10px)'}}}
@@ -132,7 +126,6 @@ export default function FormsModalVendas({ isOpen, onClose , Notification}) {
                     {errors?.produto?.[index]?.Quantidade?.type === 'required' && <Error>Necessário preencher o campo</Error>}
                   </WrapperLC>
                   <Valor>Valor: 240 R$</Valor>
-                  {console.log(Compra.id)}
                 </Card>
               ))}
               <Card>
@@ -143,6 +136,6 @@ export default function FormsModalVendas({ isOpen, onClose , Notification}) {
             <Total><span>Total : 4.000 R$</span> <span>24 Unidades</span></Total>
               <Confirmar type="button" onClick={() => fields.length > 0 ? handleSubmit(onSubmit)() : setAdd(true)}>Confirmar</Confirmar>
           </Formulario>
-      </ModalAdd>
+      </ModalVendas>
   );
   }
