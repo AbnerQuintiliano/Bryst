@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import { useForm , useFieldArray } from "react-hook-form";
 import { ModalStyles , Add , StyleCampo , Label , Error} from "../../../../components/_variaveis";
 import { Card , SScrollCard } from "./_Vendas";
+Modal.setAppElement('#root');
 
 const ModalVendas = styled(ModalStyles)`
   height: 95vh;
@@ -31,7 +32,7 @@ const Formulario = styled.section`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   &>div{
     width: 95%;
@@ -71,8 +72,6 @@ const Close = styled.button`
   }
 `
 
-Modal.setAppElement('#root');
-
 export default function FormsModalVendas({ isOpen, onClose , Notification}) {
   const {register, handleSubmit , control , formState:{errors}} = useForm();
   const onSubmit=(data) => {
@@ -105,23 +104,23 @@ export default function FormsModalVendas({ isOpen, onClose , Notification}) {
                 <Card key={Compra.id} style={{position:'relative'}}>
                   <Close type="button" onClick={() => remove(index)}>X</Close>
                   <WrapperLC>
-                    <Label center="true">Id do produto</Label>
+                    <Label $center>Id do produto</Label>
                     <Campos err={errors?.produto?.[index]?.id} {...register(`produto.${index}.id` ,{required: true, valueAsNumber:true})} autoComplete="off" type="number"></Campos>
                     {errors?.produto?.[index]?.id?.type === 'required' && <Error>Necessário preencher o campo</Error>}
                   </WrapperLC>
                   <WrapperLC>
-                    <Label center="true">Tamanho</Label>
+                    <Label $center>Tamanho</Label>
                     <Campos err={errors?.produto?.[index]?.Tamanho} {...register(`produto.${index}.Tamanho` ,{required: true , maxLength:3})} autoComplete="off"></Campos>
                     {errors?.produto?.[index]?.Tamanho?.type === 'required' && <Error>Necessário preencher o campo</Error>}
                     {errors?.produto?.[index]?.Tamanho?.type === 'maxLength' && <Error>O maximo de caracteres e 3</Error>}
                   </WrapperLC>
                   <WrapperLC>
-                    <Label center="true">Cor</Label>
+                    <Label $center>Cor</Label>
                     <Campos err={errors?.produto?.[index]?.Cor} {...register(`produto.${index}.Cor` ,{required: true})} autoComplete="off"></Campos>
                     {errors?.produto?.[index]?.Cor?.type === 'required' && <Error>Necessário preencher o campo</Error>}
                   </WrapperLC>
                   <WrapperLC>
-                    <Label center="true">Quantidade</Label>
+                    <Label $center>Quantidade</Label>
                     <Campos err={errors?.produto?.[index]?.Quantidade} {...register(`produto.${index}.Quantidade` ,{required: true , valueAsNumber:true})} autoComplete="off" type="number"></Campos>
                     {errors?.produto?.[index]?.Quantidade?.type === 'required' && <Error>Necessário preencher o campo</Error>}
                   </WrapperLC>

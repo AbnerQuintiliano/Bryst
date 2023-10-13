@@ -22,9 +22,9 @@ export const HeaderUser = styled.div`
     }
 `
 export const BtnCreate = styled(BtnTitulo)`
-    margin-left: 1%;
-    margin-right: 0;
+    width: 8rem;
     @media (max-width: 450px) {
+        width: 25%;
         position: absolute;
         right: 15px;
     }

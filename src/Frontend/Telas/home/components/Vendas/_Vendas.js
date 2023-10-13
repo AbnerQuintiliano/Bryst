@@ -1,6 +1,15 @@
 import React, { useRef, useState } from 'react';
-import styled from "styled-components";
-import {_WrapperTela , Wrapper, _OverflowStyle} from "../../../../components/_variaveis"
+import styled , {keyframes} from "styled-components";
+import {_WrapperTela , Wrapper, _OverflowStyle } from "../../../../components/_variaveis"
+
+export const JoinIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 export const VWrapper = styled(Wrapper)`
   flex-grow: 2;
@@ -61,12 +70,13 @@ export const Header = styled.div`
   }
 `
 export const ScrollCard = styled.div`
-  /* height: 80%; */
+  height: 100%;
   height: ${props => props.height || '80%' };
   width: 100%;
   gap: .5rem;
   
   display: flex;
+  align-items: center;
   flex-direction: row;
   overflow-x: scroll;
   ${_OverflowStyle}
@@ -76,11 +86,14 @@ export const ScrollCard = styled.div`
   @media(max-width: 700px){
     height: 80%;
   }
+    @media(max-width: 500px){
+    height:${ props => props.$HeightCel || '65vh'};
+  }
 `
 
 export const Card = styled.div`
   min-width: 45%;
-  height: auto;
+  height: 100%;
   border-radius: 20px;
 
   display: flex;
@@ -98,7 +111,8 @@ export const Card = styled.div`
   }
 
   @media (max-width:760px){
-    min-width: 175px;
+    min-width: 50vw;
+    /* height: 50vh; */
   }
 `
 export const Total =styled.div`
@@ -112,6 +126,13 @@ export const Total =styled.div`
 
   border-radius: 20px;
   background-color: ${props=> props.theme.black.deFundo};
+  transition: opacity 0.5s ease-in-out;
+  /* opacity: ${({ $isVisible }) => ($isVisible ? 0.5 : 1)}; */
+  &:has(div){
+    & > div{
+      animation: ${JoinIn} 1s ease-in;
+    }
+  }
   @media(max-width: 1000px){
     font-size: 65%;
     height: 7.5%;

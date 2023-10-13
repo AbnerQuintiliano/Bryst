@@ -62,14 +62,15 @@ export const BtnTitulo = styled.button`
     color: ${props => props.theme.black.Letra};
     background-color: ${props => props.theme.black.fundoClaro};
     font-weight: 600;
-    &[possivel]{
+    ${props => props.$click && css`
         transition: all 600ms ease;
         cursor: pointer;
         &:hover{
             outline: solid 1px ${props => props.theme.black.primaria};
             background-color: ${props => props.theme.black.primaria};
         }
-    }
+    
+    `};
 `
 
 export const Wrapper = styled.section` //engloba todo o estilo dos componentes
@@ -204,8 +205,8 @@ export const Add = styled.button`
 `
 export const Label = styled.label`
 font-size: .9rem;
-align-self: ${props => props.center ? 'center' : 'flex-start'};
-padding-left: ${props => props.center ? '0' : '1rem'};
+align-self: ${props => props.$center ? 'center' : 'flex-start'};
+padding-left: ${props => props.$center ? '0' : '1rem'};
 `
 export const StyleCampo = css` //inputs
   width: 100%;

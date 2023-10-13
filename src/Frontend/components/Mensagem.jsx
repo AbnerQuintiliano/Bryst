@@ -28,7 +28,7 @@ const Mensagem = styled.div`
   color: ${props => props.theme.black.Letra};
   padding: .5rem 1rem ;
   border-radius: 20px;
-  animation: ${props => (props.entering === 'Entrada' ? slideIn : slideOut)} 0.5s;
+  animation: ${props => (props.$entering === 'Entrada' ? slideIn : slideOut)} 0.5s;
 `;
 
 const Notification = ({ message }) => {
@@ -44,7 +44,7 @@ const Notification = ({ message }) => {
 
   return(
   <Mensagem
-  entering = {state}
+  $entering = {state}
   >
     {message}
   </Mensagem>

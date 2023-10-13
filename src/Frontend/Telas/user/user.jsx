@@ -30,7 +30,7 @@ export default function User(){
                     <S.HeaderUser>
                         <BtnTitulo>Cadastro</BtnTitulo>
                         <S.CPesquisa placeholder="Pesquisar"></S.CPesquisa>
-                        <S.BtnCreate possivel="" onClick={openModal}>+</S.BtnCreate>
+                        <S.BtnCreate $click onClick={openModal}>+</S.BtnCreate>
                         <CreatModal isOpen={showModal} onClose={closeModal} handleMsg={handleMsg}></CreatModal>
                         {HowIsMsg && <Msg message={"Usuário criado com sucesso!"}/>}
                     </S.HeaderUser>

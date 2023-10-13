@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import {Wrapper, _WrapperTela } from "../../../../components/_variaveis"
+import styled from "styled-components";
+import {Wrapper, _WrapperTela , ModalStyles , Add , StyleCampo , _OverflowStyle } from "../../../../components/_variaveis"
 
 export const TWrapper = styled(Wrapper)`
     [click="add"]{
@@ -25,26 +25,43 @@ export const Conteudo = styled.span`
   text-align: center;
   font-size: clamp(65% , 3vw , 1rem);
 
+  position: relative;
   display: flex;
   justify-content: center;
+  white-space: nowrap;
+  overflow-x: auto;
+  
+`
+export const ModalAddTarefa = styled(ModalStyles)`
+  height: 25vh;
+  width: max(50% , 300px);
+`
+
+export const Campos = styled.input`
+  ${StyleCampo};
+  background-color: ${props => props.theme.black.deFundo};
+`
+export const WrapperLC = styled.div `
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:5px;
+`
+export const Confirmar = styled(Add)`
+  width: 40%;
+  height: 1.75rem;
+  font-size: 1.25rem;
+
+  outline: solid 1px ${props => props.theme.color.verde};
+  &:hover{
+    background-color: ${props => props.theme.color.verde};
+    outline: unset;
+  }
 `
 
 export const WrapperConteudo = styled(_WrapperTela)`
     overflow-y: scroll;
     padding-right: 0;
-    &::-webkit-scrollbar{
-      width: .35rem;
-      border-radius: 20px;
-    }
-    
-    &:hover {
-    /* Quando o mouse estiver sobre o contêiner, mostrar as barras de rolagem */
-    overflow: auto;
-    
-    /* Estilos para a barra de rolagem */
-    &::-webkit-scrollbar-thumb {
-      background-color: ${props => props.theme.black.primaria};
-      border-radius: 10px;
-    }
-  }
+    ${_OverflowStyle}
 `

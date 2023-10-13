@@ -19,9 +19,9 @@ const Btn = styled(Add)`
   height: 1.75rem;
   font-size: 1.25rem;
   color: ${props => props.theme.black.Letra};
-  outline: solid 1px ${props => props?.type ? props.theme.color.verde : props.theme.color.vermelho};
+  outline: solid 1px ${props => props?.$Confirm ? props.theme.color.verde : props.theme.color.vermelho};
   &:hover{
-    background-color: ${props => props?.type ? props.theme.color.verde : props.theme.color.vermelho};
+    background-color: ${props => props?.$Confirm ? props.theme.color.verde : props.theme.color.vermelho};
     outline: unset;
   }
 `
@@ -43,7 +43,7 @@ export default function DeleteModal({ isOpen, onClose ,children , Notification }
       style={{overlay: {backgroundColor: 'rgba(27, 30, 39, 0.8)',backdropFilter: 'blur(10px)'}}}
     >
       <Mensagem>{children}</Mensagem>
-      <Btn type="sim" onClick={Confirm}>Sim</Btn>
+      <Btn $Confirm onClick={Confirm}>Sim</Btn>
       <Btn onClick={onClose}>Não</Btn>
     </ModalDelete>
   );
