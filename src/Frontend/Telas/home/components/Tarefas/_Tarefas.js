@@ -28,9 +28,7 @@ export const Conteudo = styled.span`
   position: relative;
   display: flex;
   justify-content: center;
-  white-space: nowrap;
-  overflow-x: auto;
-  
+  white-space: nowrap;  
 `
 export const ModalAddTarefa = styled(ModalStyles)`
   height: 25vh;

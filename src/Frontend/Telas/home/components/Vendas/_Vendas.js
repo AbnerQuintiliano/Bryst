@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import styled , {keyframes} from "styled-components";
-import {_WrapperTela , Wrapper, _OverflowStyle } from "../../../../components/_variaveis"
+import styled , {css, keyframes} from "styled-components";
+import { Wrapper, _OverflowStyle } from "../../../../components/_variaveis"
 
 export const JoinIn = keyframes`
   from {
@@ -18,13 +18,6 @@ export const VWrapper = styled(Wrapper)`
   }
 `
 
-export const ScrollVendas = styled(_WrapperTela)`
-    flex-direction: row;
-    overflow-x: scroll;
-    /* overflow-y: hidden; */
-    gap: .5rem;
-    ${_OverflowStyle}
-`
 export const Conteudo = styled.div`
   min-width: 40%; 
   padding: 0.4rem 0.5rem;
@@ -69,16 +62,14 @@ export const Header = styled.div`
     
   }
 `
-export const ScrollCard = styled.div`
-  height: 100%;
+export const ScrollCard = styled.section`
   height: ${props => props.height || '80%' };
-  width: 100%;
-  gap: .5rem;
+  width: ${({$Special}) => ($Special ||  '100%' )};
+  gap: .35rem;
   
   display: flex;
-  align-items: center;
-  flex-direction: row;
-  overflow-x: scroll;
+  flex-direction: ${({$direction}) => ($direction? 'column' : 'row')};
+  overflow: auto;
   ${_OverflowStyle}
   & div{
     cursor: default;
@@ -89,6 +80,10 @@ export const ScrollCard = styled.div`
     @media(max-width: 500px){
     height:${ props => props.$HeightCel || '65vh'};
   }
+  ${({$Special}) => ($Special && css`
+    justify-content:space-between;
+    align-items: center ;
+  `)}
 `
 
 export const Card = styled.div`
@@ -109,10 +104,8 @@ export const Card = styled.div`
   & div{
     font-size: 0.75rem;
   }
-
   @media (max-width:760px){
     min-width: 50vw;
-    /* height: 50vh; */
   }
 `
 export const Total =styled.div`

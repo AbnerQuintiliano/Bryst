@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import {  ScrollVendas ,Conteudo, Header , Card, VWrapper, Total} from "./_Vendas";
+import {Conteudo, Header , Card, VWrapper, Total, ScrollCard} from "./_Vendas";
 import FormsModalVendas from "./ModalAdd";
 import { useModal } from "../../../../hooks/useModal";
 import roupa from "../../../../img/sim.jpeg";
@@ -26,7 +26,7 @@ export default function Vendas() {
     return (
         <VWrapper>
                 <BtnTitulo>Vendas</BtnTitulo>
-            <ScrollVendas>
+            <ScrollCard height='100%' $HeightCel='100%'>
                 <Conteudo>
                     <Add onClick={openModal}>Adicionar</Add>
                     <FormsModalVendas isOpen={Modal} onClose={closeModal} Notification={handleMsg}/>
@@ -48,7 +48,7 @@ export default function Vendas() {
                             <time>Crisp</time>
                         </div>
                     </Header>
-                    <SScrollCard $HeightCel='55vh'>
+                    <SScrollCard $HeightCel='60vh'>
                         <Card>
                             <div>Id Prod: 223</div>
                             <img src={roupa} alt=""/> 
@@ -93,7 +93,7 @@ export default function Vendas() {
                 {HowMsgAlt && <Msg message={"Venda alterada com sucesso!"}/>}
                 {HowMsgDel && <Msg message={"Venda excluida com sucesso!"}/>}
                 <Conteudo/>
-            </ScrollVendas>
+            </ScrollCard>
     </VWrapper>
     )
 }

@@ -1,28 +1,19 @@
-import React , {useState}from "react";
+import React from "react";
 import MainTela from "../../components/MainTela";
 import * as S from "./_style"
 import { BtnTitulo} from "../../components/_variaveis";
 import Tabela from "./components/Tabela";
 import CreatModal from "./components/CreatModal"
 import Msg from "../../components/Mensagem"
+import { SScrollCard } from "../home/components/Vendas/_Vendas";
+import { useModal } from "../../hooks/useModal";
+import { useMensage } from "../../hooks/useMensage";
 
 export default function User(){
 
-    const [showModal, setShowModal] = useState(false);
-    const openModal = () => {
-      setShowModal(true);
-    };
-    const closeModal = () => {
-      setShowModal(false);
-    };
+    const {Modal , openModal , closeModal} = useModal()
+    const {HowMsg, handleMsg} = useMensage()
 
-    const [HowIsMsg, setMsg] = useState(false);
-    const handleMsg = () => {
-        setMsg(true)
-        setTimeout(() => {
-            setMsg(false)
-        }, 3000)
-    }
 
     return(
         <MainTela User="true">
@@ -31,12 +22,12 @@ export default function User(){
                         <BtnTitulo>Cadastro</BtnTitulo>
                         <S.CPesquisa placeholder="Pesquisar"></S.CPesquisa>
                         <S.BtnCreate $click onClick={openModal}>+</S.BtnCreate>
-                        <CreatModal isOpen={showModal} onClose={closeModal} handleMsg={handleMsg}></CreatModal>
-                        {HowIsMsg && <Msg message={"Usuário criado com sucesso!"}/>}
+                        <CreatModal isOpen={Modal} onClose={closeModal} handleMsg={handleMsg}></CreatModal>
+                        {HowMsg && <Msg message={"Usuário criado com sucesso!"}/>}
                     </S.HeaderUser>
-                    <S.Scrol>
-                        <Tabela></Tabela>
-                    </S.Scrol>
+                    <SScrollCard height='auto'>
+                        <Tabela/>
+                    </SScrollCard>
                 </S.CWrapper>
         </MainTela>
     )

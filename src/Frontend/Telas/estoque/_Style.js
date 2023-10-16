@@ -1,7 +1,5 @@
-import React , {useRef , useState} from "react"
 import styled from "styled-components"
 import { Wrapper } from "../../components/_variaveis"
-import { ScrollVendas } from "../home/components/Vendas/_Vendas"
 
 export const SWrapper = styled(Wrapper)`
   height: 100%;
@@ -35,13 +33,6 @@ export const Pesquisa = styled.input`
   } 
 `
 
-export const Scroll = styled(ScrollVendas)`
-    height: 100%;
-    &::-webkit-scrollbar{
-      height: .5rem;
-    }
-`
-
 export const Produto = styled.section`
     min-width: clamp(200px , 25% , 400px);
     border-radius: 20px;
@@ -61,7 +52,6 @@ export const Produto = styled.section`
       align-items: center;
     }
     & img{
-      /* width: clamp(150px , 75% , 200px); */
       width: clamp(50% , 2vw , 150%);
       border-radius: 20px;
     }
@@ -84,9 +74,9 @@ export const WrapperDados = styled.section`
   }
 `
 
-export const Titulo = styled.span`
+export const LabelEstoque = styled.label`
   position: absolute;
-  top: clamp( -2.5vw , 2.75vw ,-15px);
+  top: -60%;
   font-size: clamp(.5rem , 1vw , .75rem);
   padding: 2% 10%;
   border-radius: 20px;
@@ -95,13 +85,12 @@ export const Titulo = styled.span`
 
 export const WrapperBtn = styled.span`
   width: 90%;
-  height: clamp(20px , 2vw , 1.75rem );
 
   display: flex;
   justify-content: space-evenly;
 `
 
-export const Btn = styled.button`
+export const BtnEscolha = styled.button`
   background-color: unset;
   color: ${props => props.theme.black.Letra};
   height: clamp(100% , 1vw , 1rem);
@@ -122,7 +111,7 @@ export const Btn = styled.button`
   }
 `
 
-export const Excluir = styled(Btn)`
+export const Excluir = styled(BtnEscolha)`
   width: 40%;
   outline: solid 1px ${props => props.theme.color.vermelho};
   &:hover{
@@ -131,7 +120,7 @@ export const Excluir = styled(Btn)`
   }
 `
 
-export const Alterar = styled(Btn)`
+export const Alterar = styled(BtnEscolha)`
   width: 40%;
   outline: solid 1px ${props => props.theme.color.verde};
   &:hover{
@@ -153,44 +142,3 @@ export const Dados = styled.div`
   justify-content: space-around;
   align-items: center;
 `
-
-export function SScroll({children}){
-    const scrollContainerRef = useRef(null);
-    const [isDragging, setIsDragging] = useState(false);
-    const [startX, setStartX] = useState(null);
-    const [scrollLeft, setScrollLeft] = useState(null);
-  
-    const handleMouseDown = (e) => {
-      setIsDragging(true);
-      setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-      setScrollLeft(scrollContainerRef.current.scrollLeft);
-    };
-  
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-  
-    const handleMouseLeave = () => {
-      setIsDragging(false);
-    };
-  
-    const handleMouseMove = (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - scrollContainerRef.current.offsetLeft;
-      const walk = (x - startX) * 3;
-      scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-    };
-  
-    return (
-        <Scroll
-          ref={scrollContainerRef}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
-          onMouseMove={handleMouseMove}
-        >
-                {children}
-        </Scroll>
-    );
-  };

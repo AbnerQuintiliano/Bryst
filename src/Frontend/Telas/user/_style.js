@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Pesquisa } from "../estoque/_Style";
-import { BtnTitulo, Wrapper , _OverflowStyle} from "../../components/_variaveis";
+import { BtnTitulo, Wrapper} from "../../components/_variaveis";
 
 export const CWrapper = styled(Wrapper)`
     height: 100%;
@@ -28,10 +28,4 @@ export const BtnCreate = styled(BtnTitulo)`
         position: absolute;
         right: 15px;
     }
-`
-
-export const Scrol = styled.div`
-    overflow-x:auto;
-    overflow-y:auto;
-    ${_OverflowStyle}
 `

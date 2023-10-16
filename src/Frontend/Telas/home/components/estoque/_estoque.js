@@ -1,4 +1,4 @@
-import { ScrollVendas , Card } from "../Vendas/_Vendas";
+import { Card } from "../Vendas/_Vendas";
 import { TWrapper } from "../Tarefas/_Tarefas.js";
 
 import  styled  from "styled-components";
@@ -8,9 +8,6 @@ width: 50%;
 @media (max-width:700px) {
   width: 100%;
 }
-`
-
-export const ScrollConteudo = styled(ScrollVendas)`
 `
 
 export const WrapperProdutos = styled(Card)`

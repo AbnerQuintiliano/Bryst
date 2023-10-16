@@ -1,10 +1,42 @@
 import React, { useRef, useState } from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ScrollCard , Card } from "./home/components/Vendas/_Vendas";
+
+const FileInput = styled.input`
+  display: none;
+`;
+
+const CustomFileLabel = styled.label`
+  background-color: ${({theme}) => (theme.black.deFundo)};
+  color: #333;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #ddd;
+  }
+`;
+
+const Container = styled.div`
+  display: inline-block; /* Certifique-se de que o rótulo e o botão fiquem no mesmo nível */
+  height: 100px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+`;
 
 export default function Inicio(){
     return(
       <>
+        <Container>
+          <FileInput type="file" id="file" />
+          <CustomFileLabel htmlFor="file">Escolher arquivo</CustomFileLabel>
+        </Container>
         <Teste>
             <Card>sim</Card>
             <Card>sim</Card>

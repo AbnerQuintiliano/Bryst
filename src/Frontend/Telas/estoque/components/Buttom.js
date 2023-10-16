@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Btn } from '../_Style';
+import { BtnEscolha } from '../_Style';
 
 
 function ButtonSelector(Fator) {
@@ -18,7 +18,7 @@ function ButtonSelector(Fator) {
   return (
     <>
       {buttons.map((button) => (
-        <Btn
+        <BtnEscolha
           key={button.id}
           onClick={() => handleButtonClick(button.id)}
           style={{
@@ -26,7 +26,7 @@ function ButtonSelector(Fator) {
           }}
         >
           {button.text}
-        </Btn>
+        </BtnEscolha>
       ))}
     </>
   );

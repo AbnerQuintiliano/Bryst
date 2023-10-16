@@ -1,43 +1,43 @@
-import React,{useState} from "react";
+import React from "react";
 import styled from "styled-components";
 import { ReactComponent as IcoDel }from "../../../img/delete.svg";
 import { ReactComponent as IcoEdit} from "../../../img/edit.svg";
 import EditModal from "./EditModal"
 import DeleteModal from "../../../components/DeleteModal"
 import Msg from "../../../components/Mensagem"
-// import img from "../../../img/edit.svg"
-// import { Add } from "../../../components/_variaveis";
+import { useModal } from "../../../hooks/useModal";
+import { useMensage } from "../../../hooks/useMensage";
 
 const Table = styled.table`
-    width: 100%;
-    background-color: ${props => props.theme.black.fundoClaro};
-    ${props => console.log(props.theme)}
-    border-collapse: collapse;
-    border-radius: 20px;
-    overflow: hidden;
-    th{
-        padding: .5rem;
-        white-space: nowrap; 
-    }
-    tbody{
-        td{
-            white-space: nowrap; 
-            text-align: center;
-            border-top: 2px solid  ${props => props.theme.black.dasTabelas};
-            padding: .5rem;
-            &:has(div){
-              padding: 0;
-            }
-        }
-        tr{
-            &:hover{
-                background-color: ${props => props.theme.black.deFundo};
-            }
-            >:hover{
-                color: ${props => props.theme.black.primaria};
-            }
-        }
-    }
+   width: 100%;
+   background-color: ${props => props.theme.black.fundoClaro};
+   ${props => console.log(props.theme)}
+   border-collapse: collapse;
+   border-radius: 20px;
+   overflow: hidden;
+   th{
+      padding: .5rem;
+      white-space: nowrap; 
+   }
+   tbody{
+       td{
+           white-space: nowrap; 
+           text-align: center;
+           border-top: 2px solid  ${props => props.theme.black.dasTabelas};
+           padding: .5rem;
+           &:has(div){
+             padding: 0;
+           }
+       }
+       tr{
+           &:hover{
+               background-color: ${props => props.theme.black.deFundo};
+           }
+           >:hover{
+               color: ${props => props.theme.black.primaria};
+           }
+       }
+   }
 `
 const Actions = styled.div`
   display: flex;
@@ -65,98 +65,44 @@ const Edit = styled.div`
 
 export default function Tabela() {
 
-  const [ShowEditModal, setEditModal] = useState(false);
-  const openEditModal = () => {
-    setEditModal(true);
-  };
-  const closeEditModal = () => {
-    setEditModal(false);
-  };
+   const {Modal:ModalEdit , openModal:openModalEdit , closeModal:closeModalEdit} = useModal();
+   const {HowMsg:HowMsgEdit , handleMsg:handleMsgEdit} = useMensage();
 
-  const [ShowDeleteModal, setDeleteModal] = useState(false);
-  const openDeleteModal = () => {
-    setDeleteModal(true);
-  };
-  const closeDeleteModal = () => {
-    setDeleteModal(false);
-  };
+   const {Modal:ModalDelete , openModal:openModalDelete , closeModal:closeModalDelete} = useModal();
+   const {HowMsg:HowMsgDelete , handleMsg:handleMsgDelete} = useMensage();
 
-  const [MsgDelete, setMsgDelete] = useState(false);
-  const handleMsgDelete = () => {
-    setMsgDelete(true);
-    setTimeout(() => {
-      setMsgDelete(false);
-    }, 3000);
-  };
-
-  const [MsgEdit, setMsgEdit] = useState(false);
-  const handleMsgEdit = () => {
-    setMsgEdit(true)
-    setTimeout(() => {
-      setMsgEdit(false)
-    },3000)
-  }
-
-    return (
+   return (
       <Table>
-        <thead>
-          <tr>
+      <thead>
+         <tr>
             <th>ID</th>
             <th>Usuário</th>
             <th>Senha</th>
             <th>Cargo</th>
             <th>Ação</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td> 1 </td>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>1</td>
             <td>Abner de Oliveira Quintiliano </td>
             <td>QuantiaCerta1</td>
             <td>Administrador</td>
             <td>
-              <Actions>
-                <Edit><IcoEdit onClick={openEditModal}/></Edit>
-                <EditModal 
-                  isOpen={ShowEditModal} 
-                  onClose={closeEditModal}
-                  Notification={handleMsgEdit}  
-                />
-                {MsgEdit && <Msg message={"Usuário atualizado com sucesso!"}/>}
+               <Actions>
+                     <Edit><IcoEdit onClick={openModalEdit}/></Edit>
+                     <EditModal isOpen={ModalEdit} onClose={closeModalEdit} Notification={handleMsgEdit}/>
+                     {HowMsgEdit && <Msg message={"Usuário atualizado com sucesso!"}/>}
 
-                <Delete onClick={openDeleteModal}><IcoDel/></Delete>
-                <DeleteModal 
-                  isOpen={ShowDeleteModal} 
-                  onClose={closeDeleteModal} 
-                  Notification={handleMsgDelete}
-                >
-                  Deseja excluir o usuário em questão?
-                </DeleteModal>
-                {MsgDelete && <Msg message={"Excluido com sucesso!"}/>}
-              </Actions>
+                     <Delete onClick={openModalDelete}><IcoDel/></Delete>
+                     <DeleteModal isOpen={ModalDelete} onClose={closeModalDelete} Notification={handleMsgDelete}>
+                        Deseja excluir o usuário em questão?
+                     </DeleteModal>
+                     {HowMsgDelete && <Msg message={"Excluido com sucesso!"}/>}
+               </Actions>
             </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Dado 4</td>
-            <td>Dado 5</td>
-            <td>Dado 6</td>
-            <td>
-              <Actions>
-                <Edit><IcoEdit/></Edit>
-                <Delete onClick={()=>console.log("delete")}><IcoDel/></Delete>
-              </Actions>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Dado 4</td>
-            <td>Dado 5</td>
-            <td>Dado 6</td>
-            <td></td>
-          </tr>
-          
-        </tbody>
+         </tr>
+      </tbody>
       </Table>
-    );
-  }
+   );
+}

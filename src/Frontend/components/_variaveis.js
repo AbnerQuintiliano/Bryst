@@ -1,10 +1,6 @@
 import { styled ,  css } from "styled-components";
 import Modal from 'react-modal'
 
-// export const CorPrimaria = "#4A62BD";
-// export const CorDeFundo = "#17181C";
-// export const corDasTabelas = "#111215";
-// export const CorFundoClaro = "#1B1E27";
 export const theme = {
     black:{
         primaria:'#7688C9',
@@ -91,8 +87,8 @@ export const Wrapper = styled.section` //engloba todo o estilo dos componentes
         border-radius: 20px;
         font-size: 1rem;
 
-        color: #FFFFFF;
-        background-color: #1B1E27;
+        color: ${({theme}) => (theme.black.Letra)};
+        background-color: ${props => props.theme.black.fundoClaro};
         font-weight: 600;
         &[click]{
             transition: all 600ms ease;
@@ -186,13 +182,15 @@ export const ModalStyles = styled(Modal)`
   }
 `
 export const Add = styled.button`
-  width: 75%;
+  width: ${({$width}) => ( $width || '75%')};
   
   border-radius: 20px;
   color: ${props => props.theme.black.Letra};
   background-color: ${props => props.theme.black.deFundo};
   outline: solid 1px ${props => props.theme.black.primaria};
   font-size: 1.5rem;
+  white-space: nowrap;
+
 
   display: flex;
   align-self: center;
@@ -203,6 +201,9 @@ export const Add = styled.button`
     background-color: ${props => props.theme.black.primaria};
   }
 `
+
+//styled usado nos forms
+
 export const Label = styled.label`
 font-size: .9rem;
 align-self: ${props => props.$center ? 'center' : 'flex-start'};
@@ -212,9 +213,9 @@ export const StyleCampo = css` //inputs
   width: 100%;
   height: 2rem;
   font-size: 1.2rem;
-  color: ${props => props.theme.black.Letra};
+  color: ${({theme}) => (theme.black.Letra)};
   background-color: ${props => props.theme.black.deFundo};
-  border: 1px solid ${props => props.err ? 'red' : props.theme.black.deFundo};
+  border: 1px solid ${props => props.$err ? 'red' : props.theme.black.deFundo};
 
   padding: 2%;
   border-radius: 20px;
@@ -225,15 +226,16 @@ export const StyleCampo = css` //inputs
   align-items: center;
   outline: unset;
   &::-webkit-outer-spin-button , &::-webkit-inner-spin-button { //setas o type number
-  appearance: none;
-  margin: 0;
+    appearance: none;
+    margin: 0;
 }
 `
 export const Error = styled.span`
   font-size: .8rem;
   padding-top: .25rem;
   color: #FF3B19;
-  position: ${props => props.add && 'absolute'};
-  top: ${props => props.add && '55%'};
-
+  text-align: center;
+  position: ${props => props.$absolute && 'absolute'};
+  top: ${({$absolute}) => ($absolute)};
+  
 `

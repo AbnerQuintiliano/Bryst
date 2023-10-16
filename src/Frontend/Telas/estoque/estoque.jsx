@@ -1,12 +1,13 @@
 import React from "react";
 import MainTela from "../../components/MainTela";
 import { BtnTitulo, Add } from "../../components/_variaveis";
-import {SWrapper, Produto, Pesquisa, SScroll, Dados, Titulo, Top, WrapperBtn, Excluir, Alterar, WrapperDados} from "./_Style";
+import {SWrapper, Produto, Pesquisa, Dados, LabelEstoque, Top, WrapperBtn, Excluir, Alterar, WrapperDados} from "./_Style";
 import FormsModalEstoque from "./components/FormularioAdd";
 import roupa from "../../img/sim.jpeg";
 import ButtonSelector from "./components/Buttom";
 import Modal from "react-modal";
 import { useModal } from "../../hooks/useModal";
+import { ScrollCard } from "../home/components/Vendas/_Vendas";
 
 Modal.setAppElement("#root");
 
@@ -20,7 +21,7 @@ export default function Estoque() {
           <BtnTitulo>Estoque</BtnTitulo>
           <Pesquisa type="search" placeholder="Pesquisar" id="teste" enterKeyHint="search"></Pesquisa>
         </Top>
-        <SScroll>
+        <ScrollCard height='100%' $HeightCel='100%'>
           <Produto>
             <Add onClick={openModal}> Adicionar </Add>
             <FormsModalEstoque
@@ -30,38 +31,38 @@ export default function Estoque() {
           </Produto>
           <Produto>
             <div>
-              <Titulo>Id produto</Titulo>
+              <LabelEstoque>Id produto</LabelEstoque>
               <Dados>233</Dados>
             </div>
 
             <div>
-              <Titulo>Marca</Titulo>
+              <LabelEstoque>Marca</LabelEstoque>
               <Dados>Nike Falso meo</Dados>
             </div>
 
             <img src={roupa} alt="" />
 
             <div>
-              <Titulo>Tipo</Titulo>
+              <LabelEstoque>Tipo</LabelEstoque>
               <Dados>Moletom</Dados>
             </div>
             <div>
-              <Titulo>Valor Unitario</Titulo>
+              <LabelEstoque>Valor Unitario</LabelEstoque>
               <Dados>129.90 R$</Dados>
             </div>
             <div>
-              <Titulo>Quantidade</Titulo>
+              <LabelEstoque>Quantidade</LabelEstoque>
               <Dados>2</Dados>
             </div>
             <div>
-              <Titulo>Tamanhos</Titulo>
+              <LabelEstoque>Tamanhos</LabelEstoque>
               <Dados>
                 {" "}
                 <ButtonSelector />{" "}
               </Dados>
             </div>
             <div>
-              <Titulo>Cores</Titulo>
+              <LabelEstoque>Cores</LabelEstoque>
               <Dados>
                 <ButtonSelector />
               </Dados>
@@ -75,11 +76,11 @@ export default function Estoque() {
           <Produto>
             <WrapperDados>
               <div>
-                <Titulo>Id produto</Titulo>
+                <LabelEstoque>Id produto</LabelEstoque>
                 <Dados>233</Dados>
               </div>
               <div>
-                <Titulo>Marca</Titulo>
+                <LabelEstoque>Marca</LabelEstoque>
                 <Dados>Nike</Dados>
               </div>
             </WrapperDados>
@@ -87,27 +88,27 @@ export default function Estoque() {
             <img src={roupa} alt="" />
             <WrapperDados>
               <div>
-                <Titulo>Tipo</Titulo>
+                <LabelEstoque>Tipo</LabelEstoque>
                 <Dados>Moletom</Dados>
               </div>
               <div>
-                <Titulo>Valor Un</Titulo>
+                <LabelEstoque>Valor Un</LabelEstoque>
                 <Dados>129.90 R$</Dados>
               </div>
             </WrapperDados>
             <div>
-              <Titulo>Quantidade</Titulo>
+              <LabelEstoque>Quantidade</LabelEstoque>
               <Dados>2</Dados>
             </div>
             <div>
-              <Titulo>Tamanhos</Titulo>
+              <LabelEstoque>Tamanhos</LabelEstoque>
               <Dados>
                 {" "}
                 <ButtonSelector />{" "}
               </Dados>
             </div>
             <div>
-              <Titulo>Cores</Titulo>
+              <LabelEstoque>Cores</LabelEstoque>
               <Dados>
                 <ButtonSelector />
               </Dados>
@@ -123,7 +124,7 @@ export default function Estoque() {
           <Produto></Produto>
           <Produto></Produto>
           <Produto></Produto>
-        </SScroll>
+        </ScrollCard>
       </SWrapper>
     </MainTela>
   );

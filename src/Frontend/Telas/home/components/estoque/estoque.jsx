@@ -1,8 +1,9 @@
 import React from "react";
 import Modal from 'react-modal';
-import {EWrapper , ScrollConteudo, WrapperProdutos , MaisInfo } from "./_estoque";
+import {EWrapper , WrapperProdutos , MaisInfo } from "./_estoque";
 import { BtnTitulo } from '../../../../components/_variaveis'
 import img from "../../../../img/sim.jpeg"
+import { SScrollCard } from "../Vendas/_Vendas";
 
 Modal.setAppElement('#root')
 
@@ -10,7 +11,7 @@ export default function Estoque() {
     return(
         <EWrapper>
             <BtnTitulo>Falta no Estoque</BtnTitulo>
-            <ScrollConteudo>
+            <SScrollCard $HeightCel='100%'>
                 <WrapperProdutos>
                     <MaisInfo>Moletom</MaisInfo>
                     <div>Id:223</div>
@@ -51,7 +52,7 @@ export default function Estoque() {
                     <MaisInfo>Sim</MaisInfo>
                     <MaisInfo>Sim</MaisInfo>
                 </WrapperProdutos>
-            </ScrollConteudo>
+            </SScrollCard>
         </EWrapper>
     )
 };

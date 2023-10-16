@@ -26,7 +26,7 @@ const Valor = styled.span`
   font-size: 1.2rem;
 `
 
-const Formulario = styled.section`
+const Formulario = styled.form`
   width: 100%;
   height: 100%;
 
@@ -34,7 +34,7 @@ const Formulario = styled.section`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  &>div{
+  &>div, & > section{
     width: 95%;
     display: flex;
     gap: .5rem;
@@ -75,7 +75,7 @@ const Close = styled.button`
 export default function FormsModalVendas({ isOpen, onClose , Notification}) {
   const {register, handleSubmit , control , formState:{errors}} = useForm();
   const onSubmit=(data) => {
-    console.log(data)
+    console.log(data.produto)
     onClose();
     Notification();
   }
@@ -128,8 +128,8 @@ export default function FormsModalVendas({ isOpen, onClose , Notification}) {
                 </Card>
               ))}
               <Card>
-                <Add onClick={() => handleAdd()}>+</Add>
-                { statusAdd && <Error add="true">Necessário adicionar produto</Error> }
+                <Add type='button' onClick={() => handleAdd()}>+</Add>
+                { statusAdd && <Error $absolute='50%'>Necessário adicionar produto</Error> }
               </Card>
             </SScrollCard>
             <Total><span>Total : 4.000 R$</span> <span>24 Unidades</span></Total>
