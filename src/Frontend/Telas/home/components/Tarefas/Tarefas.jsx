@@ -1,13 +1,12 @@
 import React from "react";
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
-import { BtnTitulo , Label , Error} from "../../../../components/_variaveis";
+import * as V from "../../../../components/_variaveis";
 import * as T from "./_Tarefas"
 import { Conteudo } from "./Conteudo";
 import Msg from "../../../../components/Mensagem";
-import { useModal } from "../../../../hooks/useModal";
-import { useMensage } from "../../../../hooks/useMensage";
-import { ScrollCard } from "../Vendas/_Vendas";
+import { useModal ,useMensage } from "../../../../hooks/MyHooks";
+
 Modal.setAppElement('#root');
 export default function Tarefas() {
    
@@ -24,26 +23,25 @@ export default function Tarefas() {
    const {HowMsg, handleMsg} = useMensage()
    
    return(
-   <T.TWrapper>
+   <V.Wrapper $MinWidth={'49%'}>
       <div>
-         <BtnTitulo >Tarefas</BtnTitulo>
-         <BtnTitulo $click onClick={openModal}>+</BtnTitulo>
+         <V.BtnTitulo >Tarefas</V.BtnTitulo>
+         <V.BtnTitulo $click onClick={openModal}>+</V.BtnTitulo>
          <T.ModalAddTarefa
             isOpen={Modal}
             onRequestClose={closeModal}
             style={{overlay:{backgroundColor: 'rgba(27, 30, 39, 0.8)',backdropFilter: 'blur(10px)'}}}
          >
-            <T.WrapperLC>
-               <Label>Coloque a Tarefa</Label>
-               <T.Campos $err={errors?.Tarefa} {...register('Tarefa',{required: true , maxLength:30})} autoComplete="off"></T.Campos>
-               {errors?.Tarefa?.type === 'required' && <Error>Necessário preencher o campo</Error>}
-               {errors?.Tarefa?.type === 'maxLength' && <Error>Muitas caracteres, o maximo e 30.</Error>}
-            </T.WrapperLC>
-            <T.Confirmar onClick={() => handleSubmit(onSubmit)()}>Criar tarefa</T.Confirmar>
+            <V.WrapperLC>
+               <V.Label>Coloque a Tarefa</V.Label>
+               <V.Campos $Background={V.theme.black.deFundo} $Err={errors?.Tarefa} {...register('Tarefa',{required: true , maxLength:30})} autoComplete="off"></V.Campos>
+               {errors?.Tarefa?.type === 'required' && <V.Error>Necessário preencher o campo</V.Error>}
+               {errors?.Tarefa?.type === 'maxLength' && <V.Error>Muitas caracteres, o maximo e 30.</V.Error>}
+            </V.WrapperLC>
+            <T.Confirmar onClick={handleSubmit(onSubmit)}>Criar tarefa</T.Confirmar>
          </T.ModalAddTarefa>
       </div>
-      <T.WrapperConteudo>
-         <ScrollCard height='100%' $direction>
+         <V.ScrollCard height='100%' $HeightCel='100%' $direction>
             <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
             <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
             <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
@@ -51,9 +49,8 @@ export default function Tarefas() {
             <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
             <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
             <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
-         </ScrollCard>
-      </T.WrapperConteudo>
+         </V.ScrollCard>
       {HowMsg && <Msg message={'Tarefa criada com sucesso!'}/> }
-   </T.TWrapper>
+   </V.Wrapper>
    )
 }

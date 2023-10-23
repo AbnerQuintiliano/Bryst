@@ -1,10 +1,9 @@
 import React, { useRef } from "react";
-import {Conteudo, Header , Card, VWrapper, Total, ScrollCard} from "./_Vendas";
+import {Conteudo, Header , Total} from "./_Vendas";
 import FormsModalVendas from "./ModalAdd";
 import { useModal } from "../../../../hooks/useModal";
 import roupa from "../../../../img/sim.jpeg";
-import { SScrollCard } from "./_Vendas";
-import { BtnTitulo , Add} from "../../../../components/_variaveis";
+import * as V from "../../../../components/_variaveis";
 import {BtnAlterar, BtnExcluir}  from './buttons.jsx';
 import Msg from "../../../../components/Mensagem";
 import { useMensage } from "../../../../hooks/useMensage";
@@ -24,11 +23,11 @@ export default function Vendas() {
 
 
     return (
-        <VWrapper>
-                <BtnTitulo>Vendas</BtnTitulo>
-            <ScrollCard height='100%' $HeightCel='100%'>
+        <V.Wrapper style={{flexGrow: '2',alignSelf: 'baseline'}}>
+                <V.BtnTitulo>Vendas</V.BtnTitulo>
+            <V.ScrollCard height='100%' $HeightCel='100%'>
                 <Conteudo>
-                    <Add onClick={openModal}>Adicionar</Add>
+                    <V.Add onClick={openModal}>Adicionar</V.Add>
                     <FormsModalVendas isOpen={Modal} onClose={closeModal} Notification={handleMsg}/>
                     {HowMsg && <Msg message={"Venda realizada com sucesso!"}/>}
                 </Conteudo>
@@ -48,44 +47,44 @@ export default function Vendas() {
                             <time>Crisp</time>
                         </div>
                     </Header>
-                    <SScrollCard $HeightCel='60vh'>
-                        <Card>
+                    <V.SScrollCard $HeightCel='60vh'>
+                        <V.Card>
                             <div>Id Prod: 223</div>
                             <img src={roupa} alt=""/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
                             <div>Tam : G</div>
                             <div>Cor : Azul</div>
-                        </Card>
-                        <Card>
+                        </V.Card>
+                        <V.Card>
                             <img src={roupa} alt=""/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
                             <div>Tam : G</div>
                             <div>Id Prod: 223</div>
                             <div>Cor : Azul</div>
-                        </Card>
-                        <Card>
+                        </V.Card>
+                        <V.Card>
                             <img src={roupa} alt=""/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
                             <div>Tam : G</div>
                             <div>Id Prod: 223</div>
                             <div>Cor : Azul</div>
-                        </Card>
-                        <Card>
+                        </V.Card>
+                        <V.Card>
                             <img src={roupa} alt=""/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
                             <div>Tam : G</div>
                             <div>Id Prod: 223</div>
                             <div>Cor : Azul</div>
-                        </Card>
-                    </SScrollCard>
+                        </V.Card>
+                    </V.SScrollCard>
                     <Total key="2" ref={elementHover} onMouseEnter={EnterHover} onMouseLeave={ExitHover}>
                         {HowHover && <>
-                            <BtnAlterar Complete={()=>{return(handleComplete(handleMsgAlt))}}/>
-                            <BtnExcluir Complete={()=>{return(handleComplete(handleMsgDel))}}/>
+                            <BtnAlterar Complete={()=>(handleComplete(handleMsgAlt))}/>
+                            <BtnExcluir Complete={()=>(handleComplete(handleMsgDel))}/>
                         </>}
                         {!HowHover && <><div>Total : 100.89R$</div> <div>Forma de pagamento :Pix</div></>}
                     </Total>
@@ -93,7 +92,7 @@ export default function Vendas() {
                 {HowMsgAlt && <Msg message={"Venda alterada com sucesso!"}/>}
                 {HowMsgDel && <Msg message={"Venda excluida com sucesso!"}/>}
                 <Conteudo/>
-            </ScrollCard>
-    </VWrapper>
+            </V.ScrollCard>
+    </V.Wrapper>
     )
 }

@@ -1,28 +1,20 @@
 import React from "react";
-import styled from "styled-components";
-import { Excluir , Alterar} from "../../../estoque/_Style";
-import { JoinIn } from "./_Vendas";
+import * as V from '../../../../components/_variaveis'
 import DeleteModal from '../../../../components/DeleteModal';
 import ModalUpdate from "./ModalAdd"
 import { useModal } from "../../../../hooks/useModal";
 
-const Exclui = styled(Excluir)`
-width: 25%;
-height: clamp(0.75rem  , 2vw ,  1.5rem);
-transition: 1s;
-animation: ${JoinIn} 1s ease-in;
-`
-const Altera = styled(Alterar)`
-width: 25%;
-height: clamp(0.75rem  , 2vw ,  1.5rem);
-transition: 1s;
-animation: ${JoinIn} 1s ease-in;
-`
 export const BtnExcluir = ({Complete}) => {
     const {Modal , openModal , closeModal} = useModal();
     return(
         <>
-            <Exclui onClick={openModal}>Excluir</Exclui>
+            <V.Button $Color={V.theme.color.vermelho}
+                $Width='25%' $Height='70%' 
+                $Font='1rem' $Transition 
+                onClick={openModal}
+                >
+                    Excluir
+                </V.Button>
             <DeleteModal isOpen={Modal} onClose={closeModal} Notification={Complete}>
                 Deseja excluir a compra?
             </DeleteModal>
@@ -34,7 +26,13 @@ export const BtnAlterar = ({Complete}) => {
     const {Modal, openModal, closeModal} = useModal();
     return(
         <>
-            <Altera onClick={openModal}>Alterar</Altera>
+            <V.Button $Color={V.theme.color.verde}
+                $Width='25%' $Height='70%' 
+                $Font='1rem' $Transition
+                onClick={openModal}
+            >
+                Alterar
+            </V.Button>
             <ModalUpdate isOpen={Modal} onClose={closeModal} Notification={Complete}/>
         </>
     )

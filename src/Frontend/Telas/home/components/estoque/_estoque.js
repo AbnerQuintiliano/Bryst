@@ -1,13 +1,8 @@
 import { Card } from "../Vendas/_Vendas";
-import { TWrapper } from "../Tarefas/_Tarefas.js";
-
+import { Wrapper } from "../../../../components/_variaveis";
 import  styled  from "styled-components";
 
-export const EWrapper = styled(TWrapper)`
-width: 50%;
-@media (max-width:700px) {
-  width: 100%;
-}
+export const EWrapper = styled(Wrapper)`
 `
 
 export const WrapperProdutos = styled(Card)`
