@@ -1,13 +1,10 @@
 import React, { useRef } from "react";
-import {Conteudo, Header , Total} from "./_Vendas";
 import FormsModalVendas from "./ModalAdd";
-import { useModal } from "../../../../hooks/useModal";
 import roupa from "../../../../img/sim.jpeg";
 import * as V from "../../../../components/_variaveis";
 import {BtnAlterar, BtnExcluir}  from './buttons.jsx';
 import Msg from "../../../../components/Mensagem";
-import { useMensage } from "../../../../hooks/useMensage";
-import { useHover } from "../../../../hooks/useHover";
+import { useHover ,useMensage , useModal} from "../../../../hooks/MyHooks";
 
 
 export default function Vendas() {
@@ -19,34 +16,31 @@ export default function Vendas() {
     const {HowMsg, handleMsg} = useMensage();
     const {HowMsg: HowMsgAlt, handleMsg: handleMsgAlt} = useMensage();
     const {HowMsg: HowMsgDel, handleMsg: handleMsgDel} = useMensage();
-    const handleComplete = (handle) => {return(handle(),ExitHover())}
+    const handleComplete = (handle) =>((handle(),ExitHover()))
 
 
     return (
-        <V.Wrapper style={{flexGrow: '2',alignSelf: 'baseline'}}>
+        // <V.Wrapper style={{flexGrow: '2',alignSelf: 'baseline'}}>
+        <V.Wrapper>
                 <V.BtnTitulo>Vendas</V.BtnTitulo>
             <V.ScrollCard height='100%' $HeightCel='100%'>
-                <Conteudo>
+                <V.Card $WMidia='85%' $Background={V.theme.black.fundoClaro}>
                     <V.Add onClick={openModal}>Adicionar</V.Add>
                     <FormsModalVendas isOpen={Modal} onClose={closeModal} Notification={handleMsg}/>
                     {HowMsg && <Msg message={"Venda realizada com sucesso!"}/>}
-                </Conteudo>
-                <Conteudo>
-                    <Header>
+                </V.Card>
+                <V.Card $WMidia='85%' $Background={V.theme.black.fundoClaro} style={{padding:'0.4rem 0.5rem'}}>
+                    <V.Header>
                         <div num="">001</div>
                         <div>
                             <data>18/08/2023</data>
                             <time>12:35</time>
                         </div>
                         <div>
-                            <data>18/08/2023</data>
-                            <time>M:Abner</time>
-                        </div>
-                        <div>
                             <data>Autor</data>
                             <time>Crisp</time>
                         </div>
-                    </Header>
+                    </V.Header>
                     <V.SScrollCard $HeightCel='60vh'>
                         <V.Card>
                             <div>Id Prod: 223</div>
@@ -81,17 +75,16 @@ export default function Vendas() {
                             <div>Cor : Azul</div>
                         </V.Card>
                     </V.SScrollCard>
-                    <Total key="2" ref={elementHover} onMouseEnter={EnterHover} onMouseLeave={ExitHover}>
+                    <V.Total key="2" ref={elementHover} onMouseEnter={EnterHover} onMouseLeave={ExitHover}>
                         {HowHover && <>
                             <BtnAlterar Complete={()=>(handleComplete(handleMsgAlt))}/>
                             <BtnExcluir Complete={()=>(handleComplete(handleMsgDel))}/>
                         </>}
-                        {!HowHover && <><div>Total : 100.89R$</div> <div>Forma de pagamento :Pix</div></>}
-                    </Total>
-                </Conteudo>
+                        {!HowHover && <><div>Total : 100.89R$</div> <div>pagamento : Pix</div></>}
+                    </V.Total>
+                </V.Card>
                 {HowMsgAlt && <Msg message={"Venda alterada com sucesso!"}/>}
                 {HowMsgDel && <Msg message={"Venda excluida com sucesso!"}/>}
-                <Conteudo/>
             </V.ScrollCard>
     </V.Wrapper>
     )

@@ -1,58 +1,54 @@
 import React from "react";
-import {EWrapper , WrapperProdutos , MaisInfo } from "./_estoque";
 import * as V from '../../../../components/_variaveis'
 import img from "../../../../img/sim.jpeg"
 
 
 export default function Estoque() {
     return(
-        <EWrapper $MinWidth={'49%'}>
+        <V.Wrapper $MinWidth={'49%'}>
             <V.BtnTitulo>Falta no Estoque</V.BtnTitulo>
             <V.SScrollCard height='100%' $HeightCel='100%'>
-                <WrapperProdutos>
-                    <MaisInfo>Moletom</MaisInfo>
+                <V.Card $CardFaltaEstoque $Width='clamp(70px , 15vw , 180px)' $Background={V.theme.black.fundoClaro}>
+                    <V.MaisInfo>Moletom</V.MaisInfo>
                     <div>Id:223</div>
                     <img src={img} alt=""/>
                     <div>Cor: Azul</div>
                     <div>Tam:G</div>
-                    <div red="">3 Un</div>
-                    <MaisInfo>Sim</MaisInfo>
-                    <MaisInfo>Sim</MaisInfo>
-                </WrapperProdutos>
-                <WrapperProdutos>
-                    <MaisInfo>Moletom</MaisInfo>
+                    <div style={{color: V.theme.color.vermelho}}>3 Un</div>
+                    <V.MaisInfo>Sim</V.MaisInfo>
+                    <V.MaisInfo>Sim</V.MaisInfo>
+                </V.Card>
+                <V.Card $CardFaltaEstoque $Width='clamp(70px , 15vw , 180px)' $Background={V.theme.black.fundoClaro}>
+                    <V.MaisInfo>Moletom</V.MaisInfo>
                     <div>Id:223</div>
                     <img src={img} alt=""/>
                     <div>Cor: Azul</div>
                     <div>Tam:G</div>
-                    <div red="">3 Un</div>
-                    <MaisInfo>Sim</MaisInfo>
-                    <MaisInfo>Sim</MaisInfo>
-                </WrapperProdutos>
-                <WrapperProdutos>
-                    <MaisInfo>Moletom</MaisInfo>
+                    <div style={{color: V.theme.color.vermelho}}>3 Un</div>
+                    <V.MaisInfo>Sim</V.MaisInfo>
+                    <V.MaisInfo>Sim</V.MaisInfo>
+                </V.Card>
+                <V.Card $CardFaltaEstoque $Width='clamp(70px , 15vw , 180px)' $Background={V.theme.black.fundoClaro}>
+                    <V.MaisInfo>Moletom</V.MaisInfo>
                     <div>Id:223</div>
                     <img src={img} alt=""/>
                     <div>Cor: Azul</div>
                     <div>Tam:G</div>
-                    <div red="">3 Un</div>
-                    <MaisInfo>Sim</MaisInfo>
-                    <MaisInfo>Sim</MaisInfo>
-                </WrapperProdutos>
-                <WrapperProdutos>
-                    <MaisInfo>Moletom</MaisInfo>
+                    <div style={{color: V.theme.color.vermelho}}>3 Un</div>
+                    <V.MaisInfo>Sim</V.MaisInfo>
+                    <V.MaisInfo>Sim</V.MaisInfo>
+                </V.Card>
+                <V.Card $CardFaltaEstoque $Width='clamp(70px , 15vw , 180px)' $Background={V.theme.black.fundoClaro}>
+                    <V.MaisInfo>Moletom</V.MaisInfo>
                     <div>Id:223</div>
                     <img src={img} alt=""/>
                     <div>Cor: Azul</div>
                     <div>Tam:G</div>
-                    <div red="">3 Un</div>
-                    <MaisInfo>Sim</MaisInfo>
-                    <MaisInfo>Sim</MaisInfo>
-                </WrapperProdutos>
-                <WrapperProdutos/>
-                <WrapperProdutos/>
-                <WrapperProdutos/>
+                    <div style={{color: V.theme.color.vermelho}}>3 Un</div>
+                    <V.MaisInfo>Sim</V.MaisInfo>
+                    <V.MaisInfo>Sim</V.MaisInfo>
+                </V.Card>
             </V.SScrollCard>
-        </EWrapper>
+        </V.Wrapper>
     )
 };

@@ -1,5 +1,4 @@
 import React from "react"
-import * as T from "./_Tarefas"
 import styled, { css } from "styled-components";
 import {ReactComponent as IcoDel} from '../../../../img/delete.svg';
 import DeleteModal from "../../../../components/DeleteModal";
@@ -10,12 +9,11 @@ import * as V from '../../../../components/_variaveis'
 
 const Delete = styled.button`
     width: 30px;
-    fill: ${props => props.theme.black.Letra};
+    fill: ${V.theme.black.Letra};
     position: absolute;
-    animation:${props => props.$hover === 'true' && css` ${V.JoinIn} .5s ease-in;`};
+    animation:${($hover) => ($hover === 'true' && css` ${V.JoinIn} .5s ease-in;`)};
     opacity: ${({ $hover }) => ($hover === 'false' && 0 )};
-    transition:${({ $hover }) => ($hover === 'false' && '.5s' )};
-    transition: .6s ;
+    transition: .5s ;
     background: linear-gradient(to right, transparent -30%, ${props => props.theme.black.fundoClaro} 40%);
     
     top: 51%;
@@ -34,12 +32,15 @@ export const Conteudo = (props) => {
 
     return(
         <>
-            <T.Conteudo onMouseEnter={EnterHover} onMouseLeave={ExitHover}>
+            <V.Card $Width='100%' $Height='auto' $WMidia='0'$HMidia='0'
+                $Background={V.theme.black.fundoClaro} style={{padding:'0.4rem 0.75rem', whiteSpace: 'nowrap' , fontSize:'clamp(80% , 3vw , 1rem)'}} 
+                onMouseEnter={EnterHover} onMouseLeave={ExitHover} 
+            >
                 {props.children}
                 <Delete $hover={`${HowHover}`} onClick={openModal}>
                     <IcoDel style={{width:'clamp(16px , 3vw , 1.5rem)'}}/>
                 </Delete>
-            </T.Conteudo>
+            </V.Card>
 
             <DeleteModal isOpen={Modal} onClose={closeModal} Notification={handleMsg} >
                 Deseja excluir a tarefa?

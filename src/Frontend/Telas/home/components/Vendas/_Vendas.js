@@ -1,23 +1,24 @@
-import styled , {css} from "styled-components";
+import styled from "styled-components";
 import * as V from "../../../../components/_variaveis"
 
 
 
-export const Conteudo = styled.div`
-  min-width: 40%; 
-  padding: 0.4rem 0.5rem;
-  background-color: ${props => props.theme.black.fundoClaro};
-  color: ${props => props.theme.black.Letra};
-  border-radius: 20px;
+// export const Conteudo = styled.div`
+//   min-width: 40%; 
+//   padding: 0.4rem 0.5rem;
+//   background-color: ${props => props.theme.black.fundoClaro};
+//   color: ${props => props.theme.black.Letra};
+//   border-radius: 20px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-    @media (max-width: 600px) {
-      min-width: 60vw;
-    }
-`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-around;
+//     @media (max-width: 600px) {
+//       min-width: 60vw;
+//     }
+// `
 export const Header = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 0 5%;
@@ -29,6 +30,7 @@ export const Header = styled.div`
     }
   }
   & > div{
+    font-size: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,53 +49,7 @@ export const Header = styled.div`
     
   }
 `
-export const ScrollCard = styled.section`
-  height: ${props => props.height || '80%' };
-  width: ${({$Width}) => ($Width ||  '100%' )};
-  gap: .35rem;
-  
-  display: flex;
-  flex-direction: ${({$direction}) => ($direction? 'column' : 'row')};
-  overflow: auto;
-  ${V._OverflowStyle}
-  & div{
-    cursor: default;
-  }
-    @media(max-width: 500px){
-    height:${ props => props.$HeightCel || '65vh'};
-  }
-  ${({$Special}) => ($Special && css`
-    width: ${({$Special}) => ($Special ||  '100%' )};;
-    justify-content:space-between;
-    align-items: center ;
-  `)}
-  background-color: red;
-`
 
-export const Card = styled.div`
-  width: 45%;
-  min-width: 45%;
-  height: 100%;
-  border-radius: 20px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-
-  background-color: ${props => props.theme.black.deFundo};
-  background-color: red;//remover
-  & img{
-    width: 100px;
-    border-radius: 20px;
-  }
-  & div{
-    font-size: 0.75rem;
-  }
-  @media (max-width:760px){
-    min-width: 50vw;
-  }
-`
 export const Total =styled.div`
   height: clamp(2rem , 10% , 3rem );
   width: 100%;

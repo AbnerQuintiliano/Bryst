@@ -10,7 +10,7 @@ export const BtnExcluir = ({Complete}) => {
         <>
             <V.Button $Color={V.theme.color.vermelho}
                 $Width='25%' $Height='70%' 
-                $Font='1rem' $Transition 
+                $Font='max(1.25vw, 0.75rem)' $Transition 
                 onClick={openModal}
                 >
                     Excluir
@@ -26,9 +26,8 @@ export const BtnAlterar = ({Complete}) => {
     const {Modal, openModal, closeModal} = useModal();
     return(
         <>
-            <V.Button $Color={V.theme.color.verde}
-                $Width='25%' $Height='70%' 
-                $Font='1rem' $Transition
+            <V.Button $Transition $Color={V.theme.color.verde}
+                $Width='25%' $Height='70%' $Font='max(1.25vw, 0.75rem)' 
                 onClick={openModal}
             >
                 Alterar

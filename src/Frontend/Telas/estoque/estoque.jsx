@@ -6,12 +6,17 @@ import FormsModalEstoque from "./components/FormularioAdd";
 import roupa from "../../img/sim.jpeg";
 import ButtonSelector from "./components/Buttom";
 import Modal from "react-modal";
-import { useModal } from "../../hooks/useModal";
+import Msg from "../../components/Mensagem";
+import DeleteModal from "../../components/DeleteModal";
+import { useModal, useMensage } from "../../hooks/MyHooks";
 
 Modal.setAppElement("#root");
 
 export default function Estoque() {
-   const { Modal, openModal, closeModal } = useModal();
+   const { Modal:ModalAdd, openModal:openModalAdd, closeModal:closeModalAdd } = useModal();
+   const { Modal:ModalDel, openModal:OpenModalDel, closeModal:CloseModalDel } = useModal();
+   const { Modal:ModalAlt, openModal:OpenModalAlt, closeModal:CloseModalAlt } = useModal();
+   const {HowMsg:HowMsgDel, handleMsg:handleMsgDel} = useMensage()
 
    return (
    <MainTela Estoque="true">
@@ -22,8 +27,8 @@ export default function Estoque() {
          </V.Top>
          <V.ScrollCard height="100%" $HeightCel="100%">
             <Produto>
-               <V.Add onClick={openModal}> Adicionar </V.Add>
-               <FormsModalEstoque isOpen={Modal} onClose={closeModal}/>
+               <V.Button onClick={openModalAdd}> Adicionar </V.Button>
+               <FormsModalEstoque isOpen={ModalAdd} onClose={closeModalAdd}/>
             </Produto>
             <Produto>
                <div>
@@ -68,8 +73,18 @@ export default function Estoque() {
                   <Dados>2</Dados>
                </div>
                <WrapperBtn>
-                  <V.Button $Width='45%' $Height='1.5rem' $Font='1rem' $Color={V.theme.color.vermelho}>Excluir</V.Button>
-                  <V.Button $Width='45%' $Height='1.5rem' $Font='1rem' $Color={V.theme.color.verde}>Alterar</V.Button>
+                  <V.Button $Width='45%' $Height='1.5rem'
+                     $Font='1rem' $Color={V.theme.color.verde}
+                     onClick={OpenModalAlt}
+                  >
+                     Alterar
+                  </V.Button>
+                  <V.Button $Width='45%' $Height='1.5rem' 
+                     $Font='1rem' $Color={V.theme.color.vermelho} 
+                     onClick={OpenModalDel}
+                  >
+                     Excluir
+                  </V.Button>
                </WrapperBtn>
             </Produto>
             <Produto></Produto>
@@ -80,6 +95,12 @@ export default function Estoque() {
             <Produto></Produto>
          </V.ScrollCard>
       </V.Wrapper>
+
+      <FormsModalEstoque isOpen={ModalAlt} onClose={CloseModalAlt}/>
+      <DeleteModal isOpen={ModalDel} onClose={CloseModalDel} Notification={handleMsgDel}>Deseja excluir produto?</DeleteModal>
+      {HowMsgDel && <Msg message='Produto excluido com sucesso!'/>}
+
+
    </MainTela>
    );
 }

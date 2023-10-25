@@ -1,48 +1,7 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import Modal from "react-modal";
 import * as V from "../../../components/_variaveis";
-import { Card } from "../../home/components/Vendas/_Vendas";
 import { useForm , useFieldArray } from "react-hook-form";
-
-
-const Formulario = styled.form`
-   width: 100%;
-   height: 100%;
-
-   display: flex;
-   flex-direction: column;
-   justify-content: space-around;
-   align-items: center;
-   & > div {
-      width: 90%;
-      display: flex;
-      gap: 1rem;
-   }
-   & > img {
-      position: absolute;
-      left: 106% ;
-      height: 20vw;
-      width: 20vw;
-      border-radius: 20px;
-      @media (max-width: 450px) {
-         display: none;
-      }
-   }
-`;
-
-const CardTQ = styled(Card)`
-   background-color: ${({theme}) => (theme.black.fundoClaro)};
-   min-width: 70%;
-   max-width: 70%;
-   padding: 0 0 1rem 0; //apenas pq no formulario do estoque ta me incomodando
-   height: 100%;
-   position: relative;
-   & > div{
-      width: 90%;
-   }
-`
-
 
 Modal.setAppElement("#root");
 
@@ -113,48 +72,48 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
          onRequestClose={onClose}
          style={{overlay: { backgroundColor: "rgba(27, 30, 39, 0.8)", backdropFilter: "blur(10px)"}}}
       >
-         <Formulario>
-            <div>
+         <V.Formulario>
+            <V._ContainerItens $Width='90%' $Height='auto' $NoMedia>
                <V.WrapperLC>
                   <V.Label>Id</V.Label>
                   <V.Campos placeholder="Id do Produto"  autoComplete="off" type='number' $Err={errors?.id} {...register('id',{required:true ,valueAsNumber:true})}></V.Campos>
-                  {errors?.id?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
+                  {errors?.id?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                </V.WrapperLC>
                <V.WrapperLC>
                   <V.Label>Marca</V.Label>
                   <V.Campos placeholder="Marca" autoComplete="off" $Err={errors?.marca} {...register('marca',{required:true})}></V.Campos>
-                  {errors?.marca?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
+                  {errors?.marca?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                </V.WrapperLC>
-            </div>
-            <div>
+            </V._ContainerItens>
+            <V._ContainerItens $Width='90%' $Height='auto' $NoMedia>
                <V.WrapperLC>
                   <V.Label>Valor Un.</V.Label>
                   <V.Campos placeholder="Valor Unitario" autoComplete="off" type='number' $Err={errors?.Quantidade} {...register('Quantidade',{required:true ,valueAsNumber:true})}></V.Campos>
-                  {errors?.Quantidade?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
+                  {errors?.Quantidade?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                </V.WrapperLC>
                <V.WrapperLC>
                   <V.Label>Tipo</V.Label>
                   <V.Campos placeholder="Tipo" autoComplete="off" $Err={errors?.Tipo} {...register('Tipo',{required:true})}></V.Campos>
-                  {errors?.Tipo?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
+                  {errors?.Tipo?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                </V.WrapperLC>
-            </div>
+            </V._ContainerItens>
             <img src={image} alt="" />
             <V.WrapperLC>
                <V.Campos $img type="file" id="image" accept="image/*" {...register('Img')} onChange={handleImageUpload}></V.Campos>
-               <V.Add $click $width='100%' type='button' onClick={() => {document.getElementById('image').click();}}>Adicione a Imagem</V.Add>
+               <V.Button $click $width='100%' type='button' onClick={() => {document.getElementById('image').click();}}>Adicione a Imagem</V.Button>
             </V.WrapperLC>
-            <V.ScrollCard height='45%' $Width='95%' $HeightCel='50vh'>
+            <V.ScrollCard height='50%' $Width='95%' $HeightCel='50vh'>
                {fieldsColors.map((Cores,CoresIndex) => {
                ColorsIndexbyConfirm.push(CoresIndex)
                ColorsTemTamanhos.push({Tamanho:false, ExistTam:false})
                return(
-                  <Card style={{position:"relative"}} key={Cores.id}>
+                  <V.Card $WMidia='75%' key={Cores.id}>
                      {console.log(ColorsTemTamanhos)}
                      <V.Close type="button" onClick={() => handleRemoveColors(CoresIndex)}>X</V.Close>
                      <V.WrapperLC>
                         <V.Label $center>Cor</V.Label>
                         <V.Campos $Background={V.theme.black.fundoClaro} autoComplete="off" $Err={errors?.Cores?.[CoresIndex]?.Cor} {...register(`Cores[${CoresIndex}].Cor`,{required:true , maxLength:10})}></V.Campos>
-                        {errors?.Cores?.[CoresIndex]?.Cor?.type === 'required' && <V.Error $absolute='90%'>Necessário preencher o campo</V.Error>}
+                        {errors?.Cores?.[CoresIndex]?.Cor?.type === 'required' && <V.Error $absolute='90%'>Necessário preencher</V.Error>}
                         {errors?.Cores?.[CoresIndex]?.Cor?.type === 'maxLength' && <V.Error $absolute='90%'>O máximo e 10 caracteres</V.Error>}
                      </V.WrapperLC>
                      <V.SScrollCard height='70%' $Special='95%' $HeightCel='70%' >
@@ -164,37 +123,37 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
                               ColorsTemTamanhos[CoresIndex].ExistTam = true
                            }
                            return(
-                           <CardTQ key={Cores.id + TamanhosIndex}>
+                           <V.Card $WMidia='80%' $Background={V.theme.black.fundoClaro} $Width='70%' key={Cores.id + TamanhosIndex}>
                               <V.Close type='button' $MinSpace onClick={() => {handleDeleteTamanho(CoresIndex ,TamanhosIndex)}}>X</V.Close>
                               <V.WrapperLC>
                                  <V.Label $center>Tamanho</V.Label>
                                  <V.Campos $Err={errors?.Cores?.[CoresIndex]?.Tamanhos?.[TamanhosIndex]?.Tamanho} placeholder="Tamanho" autoComplete="off" {...register(`Cores.${CoresIndex}.Tamanhos.${TamanhosIndex}.Tamanho`,{required:true , maxLength: 3})}></V.Campos>
-                                 {errors?.Cores?.[CoresIndex]?.Tamanhos?.[TamanhosIndex]?.Tamanho?.type === 'required' && <V.Error $absolute='90%'>Necessário preencher o campo</V.Error>}
+                                 {errors?.Cores?.[CoresIndex]?.Tamanhos?.[TamanhosIndex]?.Tamanho?.type === 'required' && <V.Error $absolute='90%'>Necessário preencher</V.Error>}
                                  {errors?.Cores?.[CoresIndex]?.Tamanhos?.[TamanhosIndex]?.Tamanho?.type === 'maxLength' && <V.Error $absolute='90%'>O máximo e 3 caracteres</V.Error>}
                               </V.WrapperLC>
                               <V.WrapperLC>
                                  <V.Label $center>Quantidade</V.Label>
                                  <V.Campos $Err={errors?.Cores?.[CoresIndex]?.Tamanhos?.[TamanhosIndex]?.Quantidade} placeholder="Quantidade" autoComplete="off" type="number" {...register(`Cores.[${CoresIndex}].Tamanhos.${TamanhosIndex}.Quantidade` ,{required:true, valueAsNumber:true})}></V.Campos>
-                                 {errors?.Cores?.[CoresIndex]?.Tamanhos?.[TamanhosIndex]?.Quantidade?.type === 'required' && <V.Error $absolute='90%'>Necessário preencher o campo</V.Error>}
+                                 {errors?.Cores?.[CoresIndex]?.Tamanhos?.[TamanhosIndex]?.Quantidade?.type === 'required' && <V.Error $absolute='90%'>Necessário preencher</V.Error>}
                               </V.WrapperLC>
-                           </CardTQ>
+                           </V.Card>
                         )})}
-                        <CardTQ $Width='95%'>
-                           <V.Add type='button' onClick={() => ((handleAddTamanho(CoresIndex)))} >+</V.Add>
+                        <V.Card $WMidia='80%' $Background={V.theme.black.fundoClaro} $Width='70%'>
+                           <V.Button type='button' onClick={() => ((handleAddTamanho(CoresIndex)))} >+</V.Button>
                            {ColorsTemTamanhos[CoresIndex]?.Tamanho === false && <V.Error $absolute='55%'>Necessário adicionar pelo menos um tamanho</V.Error>}
-                        </CardTQ>
+                        </V.Card>
                      </V.SScrollCard>
-                  </Card>
+                  </V.Card>
                )})}
-               <Card style={{position:'relative'}}>
-                  <V.Add type='button' onClick={handleAddColors}>+</V.Add>
+               <V.Card style={{position:'relative'}}>
+                  <V.Button type='button' onClick={handleAddColors}>+</V.Button>
                   { QtsdeCores <= 0 && <V.Error $absolute='70%'>Necessário adiciona ao menos uma cor</V.Error>}   
-               </Card>
+               </V.Card>
             </V.ScrollCard>
-            <V.Button $Width='30%' $Height='2rem' $Color={V.theme.color.verde} $Font='1.25rem' type='button' onClick={()=>(handleConfirm())} style={{ height: "1.5rem" }}>
+            <V.Button $Width='max(30%, 100px)' $Height='2rem' $Color={V.theme.color.verde} $Font='1.25rem' type='button' onClick={()=>(handleConfirm())} style={{ height: "1.5rem" }}>
                Confirmar
             </V.Button>
-         </Formulario>
+         </V.Formulario>
       </V.ModalStyles>
    );
 }

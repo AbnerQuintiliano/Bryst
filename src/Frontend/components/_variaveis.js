@@ -81,7 +81,7 @@ export const BtnTitulo = styled.button` //buttons de indentificação e add
     `};
 `
 
-export const Pesquisa = styled.input`
+export const Pesquisa = styled.input` //input de pesquisa
   min-height: 1.5rem;
   width: 75%;
   border-radius: 20px;
@@ -96,7 +96,7 @@ export const Pesquisa = styled.input`
   } 
 `
 
-export const Top = styled.div`
+export const Top = styled.div` //delimita o topo com Btntitulo e pesquisa
     width: 100%;
     display: flex;
     justify-content: ${({$Justify}) => ($Justify)};
@@ -137,18 +137,18 @@ export const _WrapperTela = styled.div` //agrupa apenas o conteudo do componente
     gap: 0.25rem;
     
 `
-export const Card = styled.div`
-  width: 45%;
-  min-width: 45%;
-  height: 100%;
+export const Card = styled.div` //Os cards
+  width: ${({$Width}) => ($Width || '45%')};
+  height: ${({$Height}) => ($Height || '100%')};
+  min-width: ${({$Width}) => ($Width || '45%')};
   border-radius: 20px;
+  position: relative;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-
-  background-color: ${props => props.theme.black.deFundo};
+  justify-content: ${({$Justify}) => ($Justify => 'space-around')};
+  background-color: ${({$Background, theme}) => ( $Background || theme.black.deFundo)};
   & img{
     width: 100px;
     border-radius: 20px;
@@ -156,19 +156,90 @@ export const Card = styled.div`
   & div{
     font-size: 0.75rem;
   }
-  @media (max-width:760px){
-    min-width: 50vw;
+  @media (max-width: 780px) {
+    min-width: ${({$WMidia}) => ($WMidia || '60%')};
+    min-height: ${({$HMidia}) => ($HMidia || '80%')};
+  }
+  ${({$CardFaltaEstoque}) => ($CardFaltaEstoque  && css`
+    & img{ width: 100px; display: none; }
+    @media (max-width:700px) {
+      & img{ display: block; }
+    }
+  `)}
+`
+
+export const MaisInfo  = styled.span` //são os dados que aparecem apenas no cel do Aviso Estoque
+  display: none;
+  font-size: 0.9rem;
+  color: ${props => props.theme.black.Letra};
+  @media (max-width: 700px) {
+    display: block;
+  }
+` 
+export const Header = styled.div` //especifico do card das vendas
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5%;
+  & [num]{
+    font-size: 1.5rem;
+    font-weight: 600;
+    @media(max-width: 850px){
+      font-size: 1.1rem;
+    }
+  }
+  & > div{
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & data{
+      font-size: 90%;
+      @media(max-width: 850px){
+        font-size: 65%;
+      }
+    }
+    & time{
+      font-size: 70%;
+      @media(max-width: 850px){
+        font-size: 50%;
+      }
+    }
+    
   }
 `
 
-export const _ContainerItens = styled.div`
-width: 100%;
-height: 30%; 
+export const Total =styled.div` //onde fica total e forma de pgmt + buttons
+  height: clamp(2rem , 10% , 3rem );
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 1rem;
+
+  border-radius: 20px;
+  background-color: ${props=> props.theme.black.deFundo};
+  transition: opacity 0.5s ease-in-out;
+  &:has(div){
+    & > div{
+      animation: ${JoinIn} 1s ease-in;
+    }
+  }
+  @media(max-width: 1000px){
+    font-size: 65%;
+    height: 7.5%;
+  }
+`
+
+export const _ContainerItens = styled.div` //agrupa grupos de componente // utilizado mais na home
+width: ${({$Width}) => ( $Width || '100%')};
+height: ${({$Height}) => ( $Height || '30%')}; 
 gap: .5rem;
 display: flex;
 flex-direction: row;
     @media (max-width: 700px) {
-        flex-direction: column;
+        flex-direction: ${({$NoMedia}) => (!$NoMedia && 'column')};
     }
 `
 
@@ -246,6 +317,26 @@ export const Button = styled.button` //button usado para add itens mudar para Bu
 
 //------------------------------------------------styled usado nos forms------------------------------------------------
 
+export const Formulario = styled.form` //engloba tudo
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  & > img {
+    position: absolute;
+    left: 106% ;
+    height: 20vw;
+    width: 20vw;
+    border-radius: 20px;
+    @media (max-width: 450px) {
+      display: none;
+    }
+  }
+`;
+
 export const Label = styled.label` //label
 font-size: .9rem;
 align-self: ${props => props.$center ? 'center' : 'flex-start'};
@@ -256,8 +347,8 @@ export const StyleCampo = css` //inputs
   height: 2rem;
   font-size: 1.2rem;
   color: ${({theme}) => (theme.black.Letra)};
-  background-color: ${props => props.theme.black.deFundo};
-  border: 1px solid ${props => props.$err ? props.theme.color.vermelho : props.theme.black.deFundo};
+  background-color: ${({$Background}) => ($Background || theme.black.deFundo)};
+  border: 1px solid ${({$Err,$Background}) => ($Err ? theme.color.vermelho : $Background || theme.black.deFundo)};
 
   padding: 2%;
   border-radius: 20px;
@@ -275,11 +366,13 @@ export const StyleCampo = css` //inputs
 
 export const Campos = styled.input`
   ${StyleCampo}
-  background-color: ${({$Background, theme}) => ($Background || theme.black.deFundo)};
-  border-color: ${({$Background, theme}) => ($Background || theme.black.deFundo)};
-  border-color: ${({$Err}) => ($Err && theme.color.vermelho)};
   height: ${({$img}) => ($img && '3rem')};
-  display: ${({$img}) => ($img && 'none')}; //remover
+  display: ${({$img}) => ($img && 'none')}; //remover dependendo se o add img n der certo
+`
+export const CampoOption = styled.select`
+  all:unset;
+  ${StyleCampo}
+  padding: 0;
 `
 
 export const Error = styled.span` //erros
@@ -291,7 +384,7 @@ export const Error = styled.span` //erros
   top: ${({$absolute}) => ($absolute)};
 `
 
-export const WrapperLC = styled.div ` //engloba tudo label e input
+export const WrapperLC = styled.div ` //engloba label e input
   width: 80%;
 
   display: flex;
@@ -353,18 +446,22 @@ export const ScrollCard = styled.section` //estilo do Scroll
     
     display: flex;
     flex-direction: ${({$direction}) => ($direction? 'column' : 'row')};
+    ${({$Justify}) => (css`
+      justify-content: ${$Justify};
+    `)}
+
     overflow: auto;
     ${_OverflowStyle}
     & div{
-        cursor: default;
+      cursor: default;
     }
     @media(max-width: 500px){
-        height:${ props => props.$HeightCel || '65vh'};
+      height:${ props => props.$HeightCel || '65vh'};
     }
     ${({$Special}) => ($Special && css`
-        width: ${({$Special}) => ($Special ||  '100%' )};;
-        justify-content:space-between;
-        align-items: center ;
+      width: ${({$Special}) => ($Special ||  '100%' )};;
+      justify-content:space-between;
+      align-items: center ;
     `)}
 `
 
