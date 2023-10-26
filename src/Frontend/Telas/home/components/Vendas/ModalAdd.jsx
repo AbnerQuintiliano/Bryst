@@ -1,23 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import Modal from "react-modal";
 import { useForm , useFieldArray } from "react-hook-form";
 import * as V from "../../../../components/_variaveis";
 Modal.setAppElement('#root');
-
-const Valor = styled.span`
-  font-size: 1.2rem;
-`
-
-const Total = styled.section`
-  width: 95%;
-  border-radius: 20px;
-  height: 2rem;
-  background-color: ${props => props.theme.black.deFundo};
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-`
 
 export default function FormsModalVendas({ isOpen, onClose , Notification}) {
    const {register, handleSubmit , control , formState:{errors}} = useForm();
@@ -48,7 +33,7 @@ export default function FormsModalVendas({ isOpen, onClose , Notification}) {
          style={{overlay:{backgroundColor: 'rgba(27, 30, 39, 0.8)',backdropFilter: 'blur(10px)'}}}
       >
          <V.Formulario>
-            <Total><span>Id - 002</span> <span>Por - Marcos</span></Total>
+            <V.Card $Direction='row' $Height='2rem' $Width='95%' $WMidia='0' $HMidia='0'><span>Id - 002</span> <span>Por - Marcos</span></V.Card>
             <V.SScrollCard $Width='95%' height="70%">
                {fields.map((Compra, index) => (
                   <V.Card key={Compra.id} style={{position:'relative'}}>
@@ -74,21 +59,31 @@ export default function FormsModalVendas({ isOpen, onClose , Notification}) {
                         <V.Campos $Background={V.theme.black.fundoClaro} $Err={errors?.produto?.[index]?.Quantidade} {...register(`produto.${index}.Quantidade` ,{required: true , valueAsNumber:true})} autoComplete="off" type="number"></V.Campos>
                         {errors?.produto?.[index]?.Quantidade?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
                      </V.WrapperLC>
-                     <Valor>Valor: 240 R$</Valor>
+                     <span>Valor: 240 R$</span>
                   </V.Card>
                ))}
                <V.Card>
-                  <V.Button type='button' onClick={handleAdd}>+</V.Button>
-                  { statusAdd && <V.Error $absolute='50%'>Necessário adicionar produto</V.Error> }
+                  <V.Button $Height='2rem' type='button' onClick={handleAdd}>+</V.Button>
+                  { statusAdd && <V.Error $absolute='55%'>Necessário adicionar produto</V.Error> }
                </V.Card>
             </V.SScrollCard>
-            <Total><span>Total : 4.000 R$</span> <span>24 Unidades</span></Total>
-               <V.Button $Width='35%'
-                  $Color={V.theme.color.verde} type="button" 
-                  onClick={handleConfirm}
-               >
-                  Confirmar
-               </V.Button>
+            
+            <V.Card $Direction='row' $Height='2rem' $Width='95%' $WMidia='0' $HMidia='0'>
+               <span>24 Unidades</span>
+               <span>Total : 4.000 R$</span>
+            </V.Card>
+            <V.CampoOption $width='80%' $height='2rem' $Err={errors?.FormaPg} {...register("FormaPg" ,{required: true ,validate:(value) => {return value !== "0"}})}>
+                  <option value="0">Pagamento...</option>
+                  <option value="Pix/dinheiro">Pix/dinheiro</option>
+                  <option value="Débito">Cartão de débito</option>
+                  <option value="Crédito">Cartão de crédito</option>
+               </V.CampoOption>
+            <V.Button $Width='max(35%,125px)' $Height='2rem'
+               $Color={V.theme.color.verde} type="button" 
+               onClick={handleConfirm}
+            >
+               Confirmar
+            </V.Button>
          </V.Formulario>
       </V.ModalStyles>
    );

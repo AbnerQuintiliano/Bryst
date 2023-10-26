@@ -82,7 +82,7 @@ export const BtnTitulo = styled.button` //buttons de indentificação e add
 `
 
 export const Pesquisa = styled.input` //input de pesquisa
-  min-height: 1.5rem;
+  min-height: 1.75rem;
   width: 75%;
   border-radius: 20px;
   font-size: 1rem;
@@ -145,7 +145,7 @@ export const Card = styled.div` //Os cards
   position: relative;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({$Direction}) => ($Direction ||'column')} ;
   align-items: center;
   justify-content: ${({$Justify}) => ($Justify => 'space-around')};
   background-color: ${({$Background, theme}) => ( $Background || theme.black.deFundo)};
@@ -216,7 +216,6 @@ export const Total =styled.div` //onde fica total e forma de pgmt + buttons
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  font-size: 1rem;
 
   border-radius: 20px;
   background-color: ${props=> props.theme.black.deFundo};
@@ -224,6 +223,8 @@ export const Total =styled.div` //onde fica total e forma de pgmt + buttons
   &:has(div){
     & > div{
       animation: ${JoinIn} 1s ease-in;
+      font-size: clamp(.75rem , 3vw, 1rem );
+      white-space: nowrap;
     }
   }
   @media(max-width: 1000px){
@@ -269,27 +270,27 @@ export const ModalStyles = styled(Modal)` //styled do modal
   }
 `
 
-export const Add = styled.button` //button usado para add itens mudar para Button
-  width: ${({$width}) => ( $width || '75%')};
+// export const Add = styled.button` //button usado para add itens mudar para Button
+//   width: ${({$width}) => ( $width || '75%')};
   
-  border-radius: 20px;
-  color: ${props => props.theme.black.Letra};
-  /* background-color: ${props => props.theme.black.deFundo}; */
-  background-color: ${({$Background ,theme}) => ($Background || theme.black.deFundo)};
-  outline: solid 1px ${({$Color, theme}) => ($Color || theme.black.primaria)};
-  font-size: 1.5rem;
-  white-space: nowrap;
+//   border-radius: 20px;
+//   color: ${props => props.theme.black.Letra};
+//   /* background-color: ${props => props.theme.black.deFundo}; */
+//   background-color: ${({$Background ,theme}) => ($Background || theme.black.deFundo)};
+//   outline: solid 1px ${({$Color, theme}) => ($Color || theme.black.primaria)};
+//   font-size: 1.5rem;
+//   white-space: nowrap;
 
 
-  display: flex;
-  align-self: center;
-  align-items: center;
-  justify-content: center;
-  transition: 500ms;
-  &:hover{
-    background-color: ${({$Color, theme}) => ($Color || theme.black.primaria)};
-  }
-`
+//   display: flex;
+//   align-self: center;
+//   align-items: center;
+//   justify-content: center;
+//   transition: 500ms;
+//   &:hover{
+//     background-color: ${({$Color, theme}) => ($Color || theme.black.primaria)};
+//   }
+// `
 
 export const Button = styled.button` //button usado para add itens mudar para Button
   width: ${({$Width}) => ( $Width || '75%')};
@@ -344,7 +345,7 @@ padding-left: ${props => props.$center ? '0' : '1rem'};
 `
 export const StyleCampo = css` //inputs
   width: ${({$width}) => ( $width || '100%')};
-  height: 2rem;
+  height: ${({$height}) => ( $height || '2rem')};
   font-size: 1.2rem;
   color: ${({theme}) => (theme.black.Letra)};
   background-color: ${({$Background}) => ($Background || theme.black.deFundo)};

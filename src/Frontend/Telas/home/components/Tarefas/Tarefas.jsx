@@ -38,7 +38,7 @@ export default function Tarefas() {
                {errors?.Tarefa?.type === 'required' && <V.Error>Necessário preencher o campo</V.Error>}
                {errors?.Tarefa?.type === 'maxLength' && <V.Error>Muitas caracteres, o maximo e 30.</V.Error>}
             </V.WrapperLC>
-            <V.Button $Color={V.theme.color.verde} onClick={handleSubmit(onSubmit)}>Criar tarefa</V.Button>
+            <V.Button $Width='max(35%,150px)' $Height='2rem' $Color={V.theme.color.verde} onClick={handleSubmit(onSubmit)}>Criar tarefa</V.Button>
          </V.ModalStyles>
       </div>
          <V.ScrollCard height='100%' $HeightCel='100%' $direction>

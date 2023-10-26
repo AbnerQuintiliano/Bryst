@@ -20,16 +20,15 @@ export default function Vendas() {
 
 
     return (
-        // <V.Wrapper style={{flexGrow: '2',alignSelf: 'baseline'}}>
         <V.Wrapper>
                 <V.BtnTitulo>Vendas</V.BtnTitulo>
             <V.ScrollCard height='100%' $HeightCel='100%'>
-                <V.Card $WMidia='85%' $Background={V.theme.black.fundoClaro}>
-                    <V.Add onClick={openModal}>Adicionar</V.Add>
+                <V.Card $Width='40%' $WMidia='80%' $Background={V.theme.black.fundoClaro}>
+                    <V.Button  $Height='2rem' onClick={openModal}>Adicionar</V.Button>
                     <FormsModalVendas isOpen={Modal} onClose={closeModal} Notification={handleMsg}/>
                     {HowMsg && <Msg message={"Venda realizada com sucesso!"}/>}
                 </V.Card>
-                <V.Card $WMidia='85%' $Background={V.theme.black.fundoClaro} style={{padding:'0.4rem 0.5rem'}}>
+                <V.Card $Width='40%' $WMidia='80%' $Background={V.theme.black.fundoClaro} style={{padding:'0.4rem 0.5rem'}}>
                     <V.Header>
                         <div num="">001</div>
                         <div>
@@ -42,7 +41,7 @@ export default function Vendas() {
                         </div>
                     </V.Header>
                     <V.SScrollCard $HeightCel='60vh'>
-                        <V.Card>
+                        <V.Card $WMidia='80%' >
                             <div>Id Prod: 223</div>
                             <img src={roupa} alt=""/> 
                             <div>Valor UN : 129.90</div>
@@ -50,7 +49,7 @@ export default function Vendas() {
                             <div>Tam : G</div>
                             <div>Cor : Azul</div>
                         </V.Card>
-                        <V.Card>
+                        <V.Card $WMidia='80%'>
                             <img src={roupa} alt=""/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
@@ -58,7 +57,7 @@ export default function Vendas() {
                             <div>Id Prod: 223</div>
                             <div>Cor : Azul</div>
                         </V.Card>
-                        <V.Card>
+                        <V.Card $WMidia='80%'>
                             <img src={roupa} alt=""/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
@@ -66,7 +65,7 @@ export default function Vendas() {
                             <div>Id Prod: 223</div>
                             <div>Cor : Azul</div>
                         </V.Card>
-                        <V.Card>
+                        <V.Card $WMidia='80%'>
                             <img src={roupa} alt=""/> 
                             <div>Valor UN : 129.90</div>
                             <div>Qts : 2</div>
@@ -77,10 +76,10 @@ export default function Vendas() {
                     </V.SScrollCard>
                     <V.Total key="2" ref={elementHover} onMouseEnter={EnterHover} onMouseLeave={ExitHover}>
                         {HowHover && <>
-                            <BtnAlterar Complete={()=>(handleComplete(handleMsgAlt))}/>
-                            <BtnExcluir Complete={()=>(handleComplete(handleMsgDel))}/>
+                            <BtnAlterar ExitHover={ExitHover} Complete={()=>(handleComplete(handleMsgAlt))}/>
+                            <BtnExcluir ExitHover={ExitHover} Complete={()=>(handleComplete(handleMsgDel))}/>
                         </>}
-                        {!HowHover && <><div>Total : 100.89R$</div> <div>pagamento : Pix</div></>}
+                        {!HowHover && <><div>Total:100.89R$</div> <div>Pagamento:C.D</div></>}
                     </V.Total>
                 </V.Card>
                 {HowMsgAlt && <Msg message={"Venda alterada com sucesso!"}/>}

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import MainTela from "../../components/MainTela";
-// import * as S from "./_style"
 import * as V from "../../components/_variaveis";
 import Tabela from "./components/Tabela";
 import CreatModal from "./components/CreatModal"

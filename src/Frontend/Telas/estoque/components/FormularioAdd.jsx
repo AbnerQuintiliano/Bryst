@@ -100,7 +100,7 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
             <img src={image} alt="" />
             <V.WrapperLC>
                <V.Campos $img type="file" id="image" accept="image/*" {...register('Img')} onChange={handleImageUpload}></V.Campos>
-               <V.Button $click $width='100%' type='button' onClick={() => {document.getElementById('image').click();}}>Adicione a Imagem</V.Button>
+               <V.Button $click $Width='100%' type='button' onClick={() => {document.getElementById('image').click();}}>Adicione a Imagem</V.Button>
             </V.WrapperLC>
             <V.ScrollCard height='50%' $Width='95%' $HeightCel='50vh'>
                {fieldsColors.map((Cores,CoresIndex) => {
@@ -139,18 +139,18 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
                            </V.Card>
                         )})}
                         <V.Card $WMidia='80%' $Background={V.theme.black.fundoClaro} $Width='70%'>
-                           <V.Button type='button' onClick={() => ((handleAddTamanho(CoresIndex)))} >+</V.Button>
+                           <V.Button $Height='2rem' type='button' onClick={() => ((handleAddTamanho(CoresIndex)))} >+</V.Button>
                            {ColorsTemTamanhos[CoresIndex]?.Tamanho === false && <V.Error $absolute='55%'>Necessário adicionar pelo menos um tamanho</V.Error>}
                         </V.Card>
                      </V.SScrollCard>
                   </V.Card>
                )})}
-               <V.Card style={{position:'relative'}}>
-                  <V.Button type='button' onClick={handleAddColors}>+</V.Button>
+               <V.Card $WMidia='75%' style={{position:'relative'}}>
+                  <V.Button $Height='2rem' type='button' onClick={handleAddColors}>+</V.Button>
                   { QtsdeCores <= 0 && <V.Error $absolute='70%'>Necessário adiciona ao menos uma cor</V.Error>}   
                </V.Card>
             </V.ScrollCard>
-            <V.Button $Width='max(30%, 100px)' $Height='2rem' $Color={V.theme.color.verde} $Font='1.25rem' type='button' onClick={()=>(handleConfirm())} style={{ height: "1.5rem" }}>
+            <V.Button $Width='max(30%, 130px)' $Height='2rem' $Color={V.theme.color.verde} $Font='1.25rem' type='button' onClick={()=>(handleConfirm())}>
                Confirmar
             </V.Button>
          </V.Formulario>

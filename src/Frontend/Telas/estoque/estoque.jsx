@@ -73,13 +73,13 @@ export default function Estoque() {
                   <Dados>2</Dados>
                </div>
                <WrapperBtn>
-                  <V.Button $Width='45%' $Height='1.5rem'
+                  <V.Button $Width='40%' $Height='clamp(1.25rem, 2vw , 1.75rem )'
                      $Font='1rem' $Color={V.theme.color.verde}
                      onClick={OpenModalAlt}
                   >
                      Alterar
                   </V.Button>
-                  <V.Button $Width='45%' $Height='1.5rem' 
+                  <V.Button $Width='40%' $Height='clamp(1.25rem, 2vw , 1.75rem )' 
                      $Font='1rem' $Color={V.theme.color.vermelho} 
                      onClick={OpenModalDel}
                   >
