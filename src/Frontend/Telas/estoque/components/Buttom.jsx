@@ -10,9 +10,9 @@ function ButtonSelector(Fator) {
   };
 
   const buttons = [
-    { id: 1, text: 'P' },
-    { id: 2, text: 'M' },
-    { id: 3, text: 'G' },
+    { id: 1, text: 'Preto' },
+    { id: 2, text: 'Marrom' },
+    { id: 3, text: 'Roxo' },
   ];
 
   return (

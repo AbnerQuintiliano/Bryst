@@ -1,5 +1,5 @@
 const rotas = require("express").Router();
-const router = require("./Login")
+const router = require("./UserRouter")
 
 rotas.use("/", router);
 

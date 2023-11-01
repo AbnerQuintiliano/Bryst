@@ -2,8 +2,10 @@ POST  http://localhost:3001/api/UserC
 Content-Type: application/json
 
 {
-    "user":"Abner",
-    "password":"123"
+    "user":"Abner Quintiliano",
+    "password":"1234",
+    "userName":"Negão",
+    "office":"Administrador"
 }
 
 ###
@@ -13,12 +15,12 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/api/User/Abner
+GET http://localhost:3001/api/UserS/Abner de
 Content-Type: application/json
 
 ###
 
-PUT http://localhost:3001/api/User/650bb5a8f2769aae68c155c3
+PUT http://localhost:3001/api/User/653b10e9a4460eb53896e062
 Content-Type: application/json
 
 {
@@ -26,5 +28,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3001/api/User/650bb5a8f2769aae68c155c3
+DELETE http://localhost:3001/api/UserD/6541c303449e6d5526e0646a
 Content-Type: application/json

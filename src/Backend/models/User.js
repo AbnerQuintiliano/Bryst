@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const LoginSchema = new Schema(
+const UserSchema = new Schema(
     {
         id:{type: mongoose.Schema.Types.ObjectId},
         user: {
@@ -13,10 +13,18 @@ const LoginSchema = new Schema(
             type: String,
             required: true
         },
+        userName:{
+            type: String,
+            required: true
+        },
+        office:{
+            type: String,
+            required: true
+        },
     },
     { timestamps:true },{VesionKey:false}
 );
 
-const Login = mongoose.model( "usuarios" , LoginSchema );
+const User = mongoose.model( "usuarios" , UserSchema );
 
-module.exports = Login;
+module.exports = User;
