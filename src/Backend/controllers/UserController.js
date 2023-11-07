@@ -17,29 +17,36 @@ class loginController {
       try {
          const ExistUser = await User.findOne({user: { $regex: req.body.user, $options: 'i' }});
          const ExistUserName = await User.findOne({userName:{ $regex:req.body.userName , $options: 'i' }});
-         if (!ExistUser){
+         if(ExistUser){
+            console.log('user ja existe')
             if(ExistUserName){
-               res.status(422).json({erro:[{ message: `O nome usuário ${req.body.userName} ja existe no sistema`, userName:ExistUserName.userName }]});
+               console.log('user e userName ja existe')
+               res.status(422).json({
+                  erro:[
+                     { message: `O usuário ${req.body.user} ja existe no sistema`, user:ExistUser.user},
+                     { message: `O nome usuário ${req.body.userName} ja existe no sistema`, userName:ExistUserName.userName }
+                  ]
+               });
             }else{
-               const novoUser = await User.create(req.body);
-               res.status(201).json({ message: "criado com sucesso", usuarios: novoUser}); 
+               res.status(422).json({
+                  erro:[
+                     { message: `O usuário ${req.body.user} ja existe no sistema`, user:ExistUser.user},
+                     { message:null, userName:null}
+                  ]
+               });
             }
          }else if(ExistUserName){
-            console.log('ta indo')
             res.status(422).json({
                erro:[
-                  { message: `O usuário ${req.body.user} ja existe no sistema`, user:ExistUser.user},
+                  { message: null, user:null},
                   { message: `O nome usuário ${req.body.userName} ja existe no sistema`, userName:ExistUserName.userName }
                ]
             });
          }else{
-            res.status(422).json({erro:[{ message: `O usuário ${req.body.user} ja existe no sistema`, user:ExistUser.user},{}]});
+            const novoUser = await User.create(req.body);
+            res.status(201).json({ message: "criado com sucesso", usuarios: novoUser}); 
          }
-         // const ExistUserName = await User.findOne({user:{ $regex:req.body.userName , $options: 'i' }});
-         // if (ExistUserName){
-         //    res.status(422).json({ message: `O nome usuário ${req.body.userName} ja existe no sistema`, userName:ExistUserName.userName });
-         // }
-         
+
       } catch (erro) {
          res.status(500).json({ message: `${erro.message} - falha ao cadastrar usuário` });
       }
@@ -58,6 +65,7 @@ class loginController {
    }
    static async AtualizandoUser(req, res) {
       console.log("atualizando user")
+      
       try {
          const id = req.params.id;
 

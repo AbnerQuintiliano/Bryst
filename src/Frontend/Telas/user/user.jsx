@@ -39,7 +39,7 @@ export default function User(){
                     <CreatModal isOpen={Modal} onClose={closeModal} handleMsg={handleMsg}></CreatModal>
                     {HowMsg && <Msg message={"Usuário criado com sucesso!"}/>}
                     <V.SScrollCard height='auto' $HeightCel='auto'>
-                        <Tabela/>
+                        <Tabela CreateModal={Modal}/>
                     </V.SScrollCard>
                 </V.Wrapper>
         </MainTela>

@@ -1,69 +1,72 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import * as V from "../../../components/_variaveis"
+import axios from "axios";
 import styled from "styled-components";
 import { ReactComponent as IcoDel }from "../../../img/delete.svg";
 import { ReactComponent as IcoEdit} from "../../../img/edit.svg";
 import EditModal from "./EditModal"
 import DeleteModal from "../../../components/DeleteModal"
 import Msg from "../../../components/Mensagem"
-import { useModal } from "../../../hooks/useModal";
-import { useMensage } from "../../../hooks/useMensage";
+import { useModal, useMensage } from "../../../hooks/MyHooks";
 
 const Table = styled.table`
    width: 100%;
    background-color: ${props => props.theme.black.fundoClaro};
-   ${props => console.log(props.theme)}
    border-collapse: collapse;
    border-radius: 20px;
    overflow: hidden;
    th{
+      max-width: 250px;
+      overflow-x: hidden;
       padding: .5rem;
       white-space: nowrap; 
    }
    tbody{
-       td{
-           white-space: nowrap; 
-           text-align: center;
-           border-top: 2px solid  ${props => props.theme.black.dasTabelas};
-           padding: .5rem;
-           &:has(div){
-             padding: 0;
-           }
-       }
-       tr{
-           &:hover{
-               background-color: ${props => props.theme.black.deFundo};
-           }
-           >:hover{
-               color: ${props => props.theme.black.primaria};
-           }
-       }
+      td{
+         max-width: 300px;
+         white-space: nowrap; 
+         text-align: center;
+         border-top: 2px solid  ${props => props.theme.black.dasTabelas};
+         padding: .5rem;
+         &:has(div){
+            padding: 0;
+         }
+      }
+      tr{
+         &:hover{
+            background-color: ${props => props.theme.black.deFundo};
+         }
+         >:hover{
+            color: ${props => props.theme.black.primaria};
+         }
+      }
    }
 `
 const Actions = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  @media (max-width: 800px) {
-    padding: 0 1rem ;
-  }
+   display: flex;
+   justify-content: center;
+   gap: 2rem;
+   @media (max-width: 800px) {
+      padding: 0 1rem ;
+   }
 `
 
 const Delete = styled.div`
-  height: 1.5rem;
-  fill: ${props => props.theme.black.Letra};
-  :hover{
-    fill:${props => props.theme.color.vermelho};
-  }
+   height: 1.5rem;
+   fill: ${props => props.theme.black.Letra};
+   :hover{
+      fill:${props => props.theme.color.vermelho};
+   }
 `;
 const Edit = styled.div`
-  height: 1.5rem;
-  fill: ${props => props.theme.black.Letra};
-  :hover{
-    fill: ${props => props.theme.color.verde};
-  }
+   height: 1.5rem;
+   fill: ${props => props.theme.black.Letra};
+   :hover{
+      fill: ${props => props.theme.color.verde};
+   }
 `;
 
-export default function Tabela() {
+export default function Tabela({CreateModal}) {
 
    const {Modal:ModalEdit , openModal:openModalEdit , closeModal:closeModalEdit} = useModal();
    const {HowMsg:HowMsgEdit , handleMsg:handleMsgEdit} = useMensage();
@@ -71,37 +74,62 @@ export default function Tabela() {
    const {Modal:ModalDelete , openModal:openModalDelete , closeModal:closeModalDelete} = useModal();
    const {HowMsg:HowMsgDelete , handleMsg:handleMsgDelete} = useMensage();
 
+   const [UsersData, setUsersData] = useState([]);
+
+   useEffect (() => {
+      const Controller = new AbortController();
+      console.log('Atualizou...')
+      axios.get('http://localhost:3001/api/User',{signal:Controller.signal})
+         .then((response) => {
+            setUsersData(response.data);
+         })
+         .catch((error) => {
+            console.error('Erro ao buscar dados da API:', error);
+         });
+         return () => {
+            console.log('cancelou...')
+            Controller.abort();
+         }
+   }, [ModalEdit, CreateModal]);
+   const [IdModal, setIdModal] = useState()
+
    return (
       <Table>
       <thead>
          <tr>
-            <th>ID</th>
             <th>Usuário</th>
+            <th>Nome do Usuário</th>
             <th>Senha</th>
             <th>Cargo</th>
             <th>Ação</th>
          </tr>
       </thead>
       <tbody>
-         <tr>
-            <td>1</td>
-            <td>Abner de Oliveira Quintiliano </td>
-            <td>QuantiaCerta1</td>
-            <td>Administrador</td>
-            <td>
-               <Actions>
-                     <Edit><IcoEdit onClick={openModalEdit}/></Edit>
-                     <EditModal isOpen={ModalEdit} onClose={closeModalEdit} Notification={handleMsgEdit}/>
-                     {HowMsgEdit && <Msg message={"Usuário atualizado com sucesso!"}/>}
-
-                     <Delete onClick={openModalDelete}><IcoDel/></Delete>
-                     <DeleteModal isOpen={ModalDelete} onClose={closeModalDelete} Notification={handleMsgDelete}>
-                        Deseja excluir o usuário em questão?
-                     </DeleteModal>
-                     {HowMsgDelete && <Msg message={"Excluido com sucesso!"}/>}
-               </Actions>
-            </td>
-         </tr>
+         {UsersData.map((data) => (
+            <tr key={data._id}>
+               <td>
+                  <V.SScrollCard $HeightSB='0px' $Justify='center'>{data.user}</V.SScrollCard>  
+               </td>
+               <td>{data.userName}</td>
+               <td>
+                  <V.SScrollCard $HeightSB='0px' $Justify='center'>{data.password}</V.SScrollCard>
+               </td>
+               <td>{data.office}</td>
+               <td>
+                  <Actions>
+                        <Edit><IcoEdit onClick={() => ((openModalEdit(), setIdModal(data)))}/></Edit>
+                        {HowMsgEdit && <Msg message={"Usuário atualizado com sucesso!"}/>}
+                        <Delete onClick={() => ((openModalDelete(),setIdModal(data)))}><IcoDel/></Delete>
+                        {HowMsgDelete && <Msg message={"Excluido com sucesso!"}/>}
+                  </Actions>
+               </td>
+            </tr>
+         ))}
+         {/* Modais */}
+         {ModalEdit && <EditModal isOpen={ModalEdit} onClose={closeModalEdit} Notification={handleMsgEdit} Data={IdModal}/>}
+         <DeleteModal isOpen={ModalDelete} onClose={closeModalDelete} Notification={handleMsgDelete} Data={IdModal}>
+            Deseja excluir o usuário em questão?
+         </DeleteModal>
       </tbody>
       </Table>
    );

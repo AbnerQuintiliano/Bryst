@@ -11,7 +11,7 @@ const Mensagem = styled.span`
 
 Modal.setAppElement('#root');
 
-export default function DeleteModal({ isOpen, onClose ,children , Notification }) {
+export default function DeleteModal({ isOpen, onClose ,children ,Notification ,Data }) {
 
 
   const Confirm = () => {

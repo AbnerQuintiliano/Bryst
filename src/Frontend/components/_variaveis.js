@@ -417,8 +417,8 @@ export const Close = styled.button` //responsavel pelo delete coloco o X dentro 
 
 export const _OverflowStyle = css`
     &::-webkit-scrollbar{
-      height: .35rem;
-      width: .35rem;
+      height:${({$HeightSB}) => ($HeightSB || '.35rem')};
+      width: ${({$WidthSB}) => ($WidthSB || '.35rem')};
     }
     &:hover {
         /* Quando o mouse estiver sobre o contêiner, mostrar as barras de rolagem */

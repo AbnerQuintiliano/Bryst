@@ -20,7 +20,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3001/api/User/653b10e9a4460eb53896e062
+PUT http://localhost:3001/api/User/6544564d0dc621af6920f4aeby
 Content-Type: application/json
 
 {
@@ -28,5 +28,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3001/api/UserD/6541c303449e6d5526e0646a
+DELETE http://localhost:3001/api/UserD/6545bfcd272465730f7c9a2c
 Content-Type: application/json

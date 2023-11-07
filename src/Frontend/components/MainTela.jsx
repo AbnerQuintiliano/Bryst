@@ -6,7 +6,7 @@ export default function MainTela (props) {
         <S._Main>
                 <NavLateral {...props} />
                 <S._ContainerTela>
-                   {props.children}
+                    {props.children}
                 </S._ContainerTela>
         </S._Main>
     )

@@ -35,9 +35,9 @@ export default function CreatModal({ isOpen, onClose , handleMsg }) {
         SetUserName('')
         )))
       .catch((error) => ((
-        SetUser(error.response.data.message.erro),
-        SetUserName(error.response.data.message.erro),
-        console.log(error.response.data)
+        SetUser(error.response.data.erro[0]),
+        SetUserName(error.response.data.erro[1]),
+        console.log(error.response.data.erro)
       )))
   }
 
@@ -65,7 +65,7 @@ export default function CreatModal({ isOpen, onClose , handleMsg }) {
 
         <V.WrapperLC>
           <V.Label>Nome do Usuário</V.Label>
-          <V.Campos $Err={errors?.userName || (UserName === ValueUserName && UserName !== '')} {...register("userName" ,{required: true})} autoComplete="off"></V.Campos>
+          <V.Campos $Err={errors?.userName || (UserName.userName === ValueUserName && UserName !== '')} {...register("userName" ,{required: true})} autoComplete="off"></V.Campos>
           {errors?.userName?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
           {(UserName?.userName === ValueUserName && errors?.user?.type !== 'required') && <V.Error $absolute='95%'>{UserName.message}</V.Error>}
         </V.WrapperLC>
