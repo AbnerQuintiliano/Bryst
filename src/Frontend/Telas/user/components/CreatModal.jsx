@@ -6,7 +6,7 @@ import { useForm ,useWatch } from "react-hook-form";
 
 Modal.setAppElement('#root');
 
-export default function CreatModal({ isOpen, onClose , handleMsg }) {
+export default function CreatModal({ isOpen, onClose , Notification }) {
   const [User, SetUser] = useState('')
   const [UserName, SetUserName] = useState('')
 
@@ -23,24 +23,33 @@ export default function CreatModal({ isOpen, onClose , handleMsg }) {
     defaultValue:''
   })
 
-
   const onSubmit=(data) => {
     axios.post('http://localhost:3001/api/UserC',data)
       .then((response) => ((
         console.log(response),
+        Notification(),
         onClose(),
-        handleMsg(),
         reset(),
         SetUser(''),
         SetUserName('')
         )))
       .catch((error) => ((
         SetUser(error.response.data.erro[0]),
-        SetUserName(error.response.data.erro[1]),
-        console.log(error.response.data.erro)
+        SetUserName(error.response.data.erro[1])
       )))
   }
-
+  
+  const handleUserErro = (Campo, ValueComp) => {
+    let ValueConfirm = false
+    Campo?.map((Value) => (
+      Value.toLowerCase() === ValueComp.toLowerCase() && (ValueConfirm = true)
+    ))
+    return ValueConfirm
+  }
+  let ValueUserErro = false
+  User && (ValueUserErro = handleUserErro(User?.user, ValueUser));
+  let ValueUserNameErro = false
+  UserName && (ValueUserNameErro = handleUserErro(UserName?.userName, ValueUserName));
   return (
     <V.ModalStyles $Width='clamp(300px, 30vw, 40%)'
       $Height='70vh'
@@ -51,9 +60,9 @@ export default function CreatModal({ isOpen, onClose , handleMsg }) {
       <V.Formulario>
         <V.WrapperLC>
           <V.Label>Usuário</V.Label>
-          <V.Campos $Err={errors?.user || (User.user === ValueUser && User.user !== '')} {...register("user" ,{required: true})} autoComplete="off"></V.Campos>
+          <V.Campos $Err={errors?.user || ValueUserErro} {...register("user" ,{required: true})} autoComplete="off"></V.Campos>
           {errors?.user?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
-          {(User?.user === ValueUser && errors?.user?.type !== 'required') && <V.Error $absolute='95%'>{User.message}</V.Error>}
+          {(ValueUserErro && errors?.user?.type !== 'required') && <V.Error $absolute='95%'>{User.message}</V.Error>}
         </V.WrapperLC>
         
         <V.WrapperLC>
@@ -65,9 +74,9 @@ export default function CreatModal({ isOpen, onClose , handleMsg }) {
 
         <V.WrapperLC>
           <V.Label>Nome do Usuário</V.Label>
-          <V.Campos $Err={errors?.userName || (UserName.userName === ValueUserName && UserName !== '')} {...register("userName" ,{required: true})} autoComplete="off"></V.Campos>
+          <V.Campos $Err={errors?.userName || ValueUserNameErro} {...register("userName" ,{required: true})} autoComplete="off"></V.Campos>
           {errors?.userName?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
-          {(UserName?.userName === ValueUserName && errors?.user?.type !== 'required') && <V.Error $absolute='95%'>{UserName.message}</V.Error>}
+          {(ValueUserNameErro && errors?.user?.type !== 'required') && <V.Error $absolute='95%'>{UserName.message}</V.Error>}
         </V.WrapperLC>
 
         <V.WrapperLC>

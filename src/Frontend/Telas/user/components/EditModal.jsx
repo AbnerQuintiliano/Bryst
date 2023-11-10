@@ -1,21 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import * as V from "../../../components/_variaveis";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import axios from "axios";
 
 Modal.setAppElement("#root");
 
-export default function EditModal({ isOpen, onClose, Notification, Data }) {
-  const {register ,handleSubmit ,formState: { errors }} = useForm();
+
+export default function EditModal({ isOpen, onClose, NotificationErro, Notification, Data}) {
+  const {register ,handleSubmit , control,formState: { errors }} = useForm();
+  const [User, SetUser] = useState('')
+  const [UserName, SetUserName] = useState('')
+
+  const ValueUser = useWatch({
+    control,
+    name:'user',
+  })
+  const ValueUserName = useWatch({
+    control,
+    name:'userName',
+  })
+
   const onSubmit = (data) => {
     axios.put(`http://localhost:3001/api/User/${Data._id}`, data)
-    console.log(data);
-    Notification();
-    onClose();
+    .then((response) => ((
+      console.log(response),
+      Notification(),
+      onClose()
+    )))
+    .catch((error) => ((
+      SetUser(error.response.data.erro[0]),
+      error.response.data.erro[2] && (NotificationErro(), onClose()),
+      SetUserName(error.response.data.erro[1])
+    )))
   };
 
-  console.log(Data)
+  const handleUserErro = (Campo, ValueComp) => {
+    let ValueConfirm = false
+    Campo?.map((Value) => (
+      Value.toLowerCase() === ValueComp.toLowerCase() && (ValueConfirm = true)
+    ))
+    return ValueConfirm
+  }
+  let ValueUserErro = false
+  User && (ValueUserErro = handleUserErro(User?.user, ValueUser));
+  let ValueUserNameErro = false
+  UserName && (ValueUserNameErro = handleUserErro(UserName?.userName, ValueUserName));
+  
   return (
     <V.ModalStyles $Width="clamp(300px, 30vw, 40%)" $Height="70vh" isOpen={isOpen} onRequestClose={onClose} 
       style={{overlay: { backgroundColor: "rgba(27, 30, 39, 0.8)", backdropFilter: "blur(10px)"}}}
@@ -23,8 +54,9 @@ export default function EditModal({ isOpen, onClose, Notification, Data }) {
       <V.Formulario>
         <V.WrapperLC>
           <V.Label>Usuário</V.Label>
-          <V.Campos $Err={errors?.user} {...register("user" ,{required: true})} autoComplete="off" defaultValue={Data.user}></V.Campos>
+          <V.Campos $Err={errors?.user || ValueUserErro} {...register("user" ,{required: true})} autoComplete="off" defaultValue={Data.user}></V.Campos>
           {errors?.user?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
+          {(ValueUserErro && errors?.user?.type !== 'required') && <V.Error $absolute='95%'>{User.message}</V.Error>}
         </V.WrapperLC>
         <V.WrapperLC>
           <V.Label>Senha</V.Label>
@@ -34,8 +66,9 @@ export default function EditModal({ isOpen, onClose, Notification, Data }) {
         </V.WrapperLC>
         <V.WrapperLC>
           <V.Label>Nome do Usuário</V.Label>
-          <V.Campos $Err={errors?.userName} {...register("userName" ,{required: true})} autoComplete="off" defaultValue={Data.userName}></V.Campos>
+          <V.Campos $Err={errors?.userName || ValueUserNameErro} {...register("userName" ,{required: true})} autoComplete="off" defaultValue={Data.userName}></V.Campos>
           {errors?.userName?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
+          {(ValueUserNameErro && errors?.userName?.type !== 'required') && <V.Error $absolute='95%'>{UserName.message}</V.Error>}
         </V.WrapperLC>
         <V.WrapperLC>
         <V.Label>Cargo</V.Label>

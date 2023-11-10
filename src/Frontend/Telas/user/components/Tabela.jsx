@@ -66,10 +66,11 @@ const Edit = styled.div`
    }
 `;
 
-export default function Tabela({CreateModal}) {
+export default function Tabela({CreateModal ,Pesquisa}) {
 
    const {Modal:ModalEdit , openModal:openModalEdit , closeModal:closeModalEdit} = useModal();
    const {HowMsg:HowMsgEdit , handleMsg:handleMsgEdit} = useMensage();
+   const {HowMsg:HowMsgEditErro , handleMsg:handleMsgEditErro} = useMensage();
 
    const {Modal:ModalDelete , openModal:openModalDelete , closeModal:closeModalDelete} = useModal();
    const {HowMsg:HowMsgDelete , handleMsg:handleMsgDelete} = useMensage();
@@ -81,7 +82,7 @@ export default function Tabela({CreateModal}) {
       console.log('Atualizou...')
       axios.get('http://localhost:3001/api/User',{signal:Controller.signal})
          .then((response) => {
-            setUsersData(response.data);
+               setUsersData(response.data);
          })
          .catch((error) => {
             console.error('Erro ao buscar dados da API:', error);
@@ -90,8 +91,12 @@ export default function Tabela({CreateModal}) {
             console.log('cancelou...')
             Controller.abort();
          }
-   }, [ModalEdit, CreateModal]);
+   }, [ModalEdit, CreateModal ,ModalDelete]);
    const [IdModal, setIdModal] = useState()
+
+   const PasswordCovert = (Password) => (
+      Password.replace(/./g, '•')
+   )
 
    return (
       <Table>
@@ -105,20 +110,21 @@ export default function Tabela({CreateModal}) {
          </tr>
       </thead>
       <tbody>
-         {UsersData.map((data) => (
+         {UsersData.filter((data) => data.user.toLowerCase().includes(Pesquisa.toLowerCase())).map((data) => (
             <tr key={data._id}>
                <td>
-                  <V.SScrollCard $HeightSB='0px' $Justify='center'>{data.user}</V.SScrollCard>  
+                  <V.SScrollCard $HeightCel='none' $HeightSB='0px' $Justify='center'>{data.user}</V.SScrollCard>  
                </td>
                <td>{data.userName}</td>
                <td>
-                  <V.SScrollCard $HeightSB='0px' $Justify='center'>{data.password}</V.SScrollCard>
+                  <V.SScrollCard $HeightCel='none' $HeightSB='0px' $Justify='center'> {PasswordCovert(data.password)} </V.SScrollCard>
                </td>
                <td>{data.office}</td>
                <td>
                   <Actions>
                         <Edit><IcoEdit onClick={() => ((openModalEdit(), setIdModal(data)))}/></Edit>
                         {HowMsgEdit && <Msg message={"Usuário atualizado com sucesso!"}/>}
+                        {HowMsgEditErro && <Msg erro={true} message={'Não houve mudança nos dados'}/>}
                         <Delete onClick={() => ((openModalDelete(),setIdModal(data)))}><IcoDel/></Delete>
                         {HowMsgDelete && <Msg message={"Excluido com sucesso!"}/>}
                   </Actions>
@@ -126,10 +132,18 @@ export default function Tabela({CreateModal}) {
             </tr>
          ))}
          {/* Modais */}
-         {ModalEdit && <EditModal isOpen={ModalEdit} onClose={closeModalEdit} Notification={handleMsgEdit} Data={IdModal}/>}
-         <DeleteModal isOpen={ModalDelete} onClose={closeModalDelete} Notification={handleMsgDelete} Data={IdModal}>
-            Deseja excluir o usuário em questão?
-         </DeleteModal>
+         {ModalEdit && 
+            <EditModal isOpen={ModalEdit} onClose={closeModalEdit}
+               NotificationErro={handleMsgEditErro} Notification={handleMsgEdit} Data={IdModal}
+            />
+         }
+         {ModalDelete && 
+            <DeleteModal isOpen={ModalDelete} onClose={closeModalDelete} 
+               Notification={handleMsgDelete} Url={`http://localhost:3001/api/UserD/${IdModal._id}`}
+            >
+               Deseja excluir o usuário em questão?
+            </DeleteModal>
+         }
       </tbody>
       </Table>
    );

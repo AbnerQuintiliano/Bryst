@@ -24,14 +24,14 @@ const Mensagem = styled.div`
   top: 1rem;
   right: 1rem;
   background-color: ${props => `${props.theme.black.deFundo}80`};
-  outline: 1px solid ${props => props.theme.color.verde};
+  outline: 1px solid ${({theme, $Erro}) => ($Erro ? theme.color.vermelho : theme.color.verde)};
   color: ${props => props.theme.black.Letra};
   padding: .5rem 1rem ;
   border-radius: 20px;
   animation: ${props => (props.$entering === 'Entrada' ? slideIn : slideOut)} 0.5s;
 `;
 
-const Notification = ({ message }) => {
+const Notification = ({ message , erro }) => {
   const [state, setState] = useState('Entrada');
 
   useEffect(() => {
@@ -44,6 +44,7 @@ const Notification = ({ message }) => {
 
   return(
   <Mensagem
+  $Erro = {erro}
   $entering = {state}
   >
     {message}
