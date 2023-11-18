@@ -17,10 +17,14 @@ const UserSchema = new Schema(
             type: String,
             required: true
         },
-        office:{
+        email:{
             type: String,
             required: true
         },
+        office:{
+            type: String,
+            required: true
+        }
     },
     { timestamps:true },{VesionKey:false}
 );

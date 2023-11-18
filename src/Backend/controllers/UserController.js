@@ -8,51 +8,106 @@ const Verificação = async(req, res, IdUser=false) => {
          const TestUser = ValuesbyCompUser.includes(req.body.user.toLowerCase())
 
          let ExistUserNames = await User.find({userName:{ $regex:req.body.userName , $options: 'i' }});
-         // IdUser && (ExistUserNameById = ExistUserNames.filter((object) => (`${object._id}` === IdUser)))
          IdUser && (ExistUserNames = ExistUserNames.filter((object) => (`${object._id}` !== IdUser)))
          const ValuesbyCompUserName = ExistUserNames.map((UserNames) => (UserNames.userName.toLowerCase()))
          console.log(ValuesbyCompUserName + " CompUserName")
          const TestUserName = ValuesbyCompUserName.includes(req.body.userName.toLowerCase())
+
+         let ExistEmails = await User.find({email: { $regex: req.body.email, $options: 'i' }});
+         IdUser && (ExistEmails = ExistEmails.filter((object) => (`${object._id}` !== IdUser)))
+         const ValuesbyCompEmail = ExistEmails.map((Emails) => (Emails.email.toLowerCase()))
+         console.log(ValuesbyCompEmail + ' CompEmail')
+         const TestEmail = ValuesbyCompEmail.includes(req.body.email.toLowerCase())
          
          if(IdUser){
             let DataId 
             DataId= await User.find({_id:IdUser})
             var ExistUserNameById = DataId
-            ExistUserNameById = ExistUserNameById.map(({user, password, userName, office,...resto})=>({user, password, userName, office}))
+            ExistUserNameById = ExistUserNameById.map(({user, password, userName, email, office,...resto})=>({user, password, userName, email, office}))
          }
          if(IdUser && JSON.stringify(ExistUserNameById[0]) === JSON.stringify(req.body)){
             console.log('Não houve mudança nos dados')
             return false;
          }
+
          if(TestUser){
-            console.log('user ja existe')
             if(TestUserName){
+               if(TestEmail){
+                  console.log('user, userName e email ja existe')
+                  res.status(400).json({
+                     erro:[
+                        { message: `O usuário ${req.body.user} ja existe no sistema`, user:ExistUsers.map((Users) => (Users.user))},
+                        { message: `O nome usuário ${req.body.userName} ja existe no sistema`, userName:ExistUserNames.map((UserNames) => (UserNames.userName)) },
+                        { message: `O nome usuário ${req.body.email} ja existe no sistema`, email:ExistEmails.map((Emails) => (Emails.email)) }
+                     ]
+                  });
+                  return;
+               }
                console.log('user e userName ja existe')
                res.status(400).json({
                   erro:[
                      { message: `O usuário ${req.body.user} ja existe no sistema`, user:ExistUsers.map((Users) => (Users.user))},
-                     { message: `O nome usuário ${req.body.userName} ja existe no sistema`, userName:ExistUserNames.map((UserNames) => (UserNames.userName)) }
+                     { message: `O nome usuário ${req.body.userName} ja existe no sistema`, userName:ExistUserNames.map((UserNames) => (UserNames.userName)) },
+                     { message: null, userName:null }
                   ]
                });
             }else{
+               if(TestEmail){
+                  console.log('user e email ja existe')
+                  res.status(400).json({
+                     erro:[
+                        { message: `O usuário ${req.body.user} ja existe no sistema`, user:ExistUsers.map((Users) => (Users.user))},
+                        { message: null, userName:null},
+                        { message: `O nome usuário ${req.body.email} ja existe no sistema`, email:ExistEmails.map((Emails) => (Emails.email)) }
+                     ]
+                  });
+                  return;
+               }
+               console.log('user ja existe')
                res.status(400).json({
                   erro:[
                      { message: `O usuário ${req.body.user} ja existe no sistema`, user:ExistUsers.map((Users) => (Users.user))},
+                     { message:null, userName:null},
                      { message:null, userName:null}
                   ]
                });
             }
-         }else if(TestUserName){
-            res.status(400).json({
-               erro:[
-                  { message: null, user:null},
-                  { message: `O nome usuário ${req.body.userName} ja existe no sistema`, userName:ExistUserNames.map((UserNames) => (UserNames.userName)) }
-               ]
-            });
-         }else{
-            console.log('Verificação feita e permitida')
-            return true
-         }}
+         }else{ 
+            if(TestUserName){
+               if(TestEmail){
+                  console.log('nome usuario e email ja existe')
+                  res.status(400).json({
+                     erro:[
+                        { message: null, user:null},
+                        { message: `O nome usuário ${req.body.userName} ja existe no sistema`, userName:ExistUserNames.map((UserNames) => (UserNames.userName)) },
+                        { message: `O nome usuário ${req.body.email} ja existe no sistema`, email:ExistEmails.map((Emails) => (Emails.email)) }
+                     ]
+                  });
+                  return;
+               }
+               console.log('nome usuario ja existe')
+               res.status(400).json({
+                  erro:[
+                     { message: null, user:null},
+                     { message: `O nome usuário ${req.body.userName} ja existe no sistema`, userName:ExistUserNames.map((UserNames) => (UserNames.userName)) },
+                     { message: null, user:null}
+                  ]
+               });
+            }else{
+               if(TestEmail){
+                  console.log('email ja existe')
+                  res.status(400).json({
+                     erro:[
+                        { message: null, user:null},
+                        { message: null, userName:null },
+                        { message: `O nome usuário ${req.body.email} ja existe no sistema`, email:ExistEmails.map((Emails) => (Emails.email)) }
+                     ]
+                  });
+                  return;
+               }
+               console.log('Verificação feita e permitida')
+               return true
+         }}}
 
 class loginController {
    static async LeituraUser(req, res) {
@@ -103,6 +158,7 @@ class loginController {
             res.status(400).json({
                erro:[
                   { message: null, user:null},
+                  { message: null, userName:null },
                   { message: null, userName:null },
                   {message: true}
                ]

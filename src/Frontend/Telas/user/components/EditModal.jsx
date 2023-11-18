@@ -11,6 +11,7 @@ export default function EditModal({ isOpen, onClose, NotificationErro, Notificat
   const {register ,handleSubmit , control,formState: { errors }} = useForm();
   const [User, SetUser] = useState('')
   const [UserName, SetUserName] = useState('')
+  const [Email, SetEmail] = useState('')
 
   const ValueUser = useWatch({
     control,
@@ -19,6 +20,10 @@ export default function EditModal({ isOpen, onClose, NotificationErro, Notificat
   const ValueUserName = useWatch({
     control,
     name:'userName',
+  })
+  const ValueEmail = useWatch({
+    control,
+    name:'email',
   })
 
   const onSubmit = (data) => {
@@ -30,8 +35,9 @@ export default function EditModal({ isOpen, onClose, NotificationErro, Notificat
     )))
     .catch((error) => ((
       SetUser(error.response.data.erro[0]),
-      error.response.data.erro[2] && (NotificationErro(), onClose()),
-      SetUserName(error.response.data.erro[1])
+      SetUserName(error.response.data.erro[1]),
+      SetEmail(error.response.data.erro[2]),
+      error.response.data.erro[3] && (NotificationErro(), onClose())
     )))
   };
 
@@ -42,10 +48,14 @@ export default function EditModal({ isOpen, onClose, NotificationErro, Notificat
     ))
     return ValueConfirm
   }
+
   let ValueUserErro = false
   User && (ValueUserErro = handleUserErro(User?.user, ValueUser));
   let ValueUserNameErro = false
   UserName && (ValueUserNameErro = handleUserErro(UserName?.userName, ValueUserName));
+  let ValueEmailErro = false
+  Email && (ValueEmailErro = handleUserErro(Email?.email, ValueEmail));
+  const regexEmail = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
   
   return (
     <V.ModalStyles $Width="clamp(300px, 30vw, 40%)" $Height="70vh" isOpen={isOpen} onRequestClose={onClose} 
@@ -69,6 +79,13 @@ export default function EditModal({ isOpen, onClose, NotificationErro, Notificat
           <V.Campos $Err={errors?.userName || ValueUserNameErro} {...register("userName" ,{required: true})} autoComplete="off" defaultValue={Data.userName}></V.Campos>
           {errors?.userName?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
           {(ValueUserNameErro && errors?.userName?.type !== 'required') && <V.Error $absolute='95%'>{UserName.message}</V.Error>}
+        </V.WrapperLC>
+        <V.WrapperLC>
+          <V.Label>E-mail</V.Label>
+          <V.Campos type="email" $Err={errors?.email || ValueEmailErro} {...register("email" ,{required: true,validate:(value) => {return regexEmail.test(value)}})} autoComplete="off" defaultValue={Data.email}></V.Campos>
+          {errors?.email?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
+          {errors?.email?.type === 'validate' && <V.Error $absolute='95%'>Existe um erro na escrita do e-mail</V.Error>}
+          {(ValueEmailErro && errors?.email?.type !== 'required') && <V.Error $absolute='95%'>{Email.message}</V.Error>}
         </V.WrapperLC>
         <V.WrapperLC>
         <V.Label>Cargo</V.Label>

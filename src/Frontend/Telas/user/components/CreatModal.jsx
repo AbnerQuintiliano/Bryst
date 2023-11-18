@@ -9,6 +9,7 @@ Modal.setAppElement('#root');
 export default function CreatModal({ isOpen, onClose , Notification }) {
   const [User, SetUser] = useState('')
   const [UserName, SetUserName] = useState('')
+  const [Email, SetEmail] = useState('')
 
   const { register, handleSubmit, reset, control, formState:{errors}} = useForm(); 
 
@@ -22,23 +23,12 @@ export default function CreatModal({ isOpen, onClose , Notification }) {
     name:'userName',
     defaultValue:''
   })
+  const ValueEmail = useWatch({
+    control,
+    name:'email',
+    defaultValue:''
+  })
 
-  const onSubmit=(data) => {
-    axios.post('http://localhost:3001/api/UserC',data)
-      .then((response) => ((
-        console.log(response),
-        Notification(),
-        onClose(),
-        reset(),
-        SetUser(''),
-        SetUserName('')
-        )))
-      .catch((error) => ((
-        SetUser(error.response.data.erro[0]),
-        SetUserName(error.response.data.erro[1])
-      )))
-  }
-  
   const handleUserErro = (Campo, ValueComp) => {
     let ValueConfirm = false
     Campo?.map((Value) => (
@@ -50,6 +40,29 @@ export default function CreatModal({ isOpen, onClose , Notification }) {
   User && (ValueUserErro = handleUserErro(User?.user, ValueUser));
   let ValueUserNameErro = false
   UserName && (ValueUserNameErro = handleUserErro(UserName?.userName, ValueUserName));
+  let ValueEmailErro = false
+  Email && (ValueEmailErro = handleUserErro(Email?.email, ValueEmail));
+  const regexEmail = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
+
+  const onSubmit=(data) => {
+    axios.post('http://localhost:3001/api/UserC',data)
+      .then((response) => ((
+        console.log(response),
+        Notification(),
+        onClose(),
+        reset(),
+        SetUser(''),
+        SetUserName(''),
+        SetEmail('')
+        )))
+      .catch((error) => ((
+        SetUser(error.response.data.erro[0]),
+        SetUserName(error.response.data.erro[1]),
+        SetEmail(error.response.data.erro[2])
+      )))
+  }
+  
+
   return (
     <V.ModalStyles $Width='clamp(300px, 30vw, 40%)'
       $Height='70vh'
@@ -77,6 +90,14 @@ export default function CreatModal({ isOpen, onClose , Notification }) {
           <V.Campos $Err={errors?.userName || ValueUserNameErro} {...register("userName" ,{required: true})} autoComplete="off"></V.Campos>
           {errors?.userName?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
           {(ValueUserNameErro && errors?.user?.type !== 'required') && <V.Error $absolute='95%'>{UserName.message}</V.Error>}
+        </V.WrapperLC>
+
+        <V.WrapperLC>
+          <V.Label>E-mail</V.Label>
+          <V.Campos $Err={errors?.email || ValueEmailErro} {...register("email" ,{required: true,validate:(value) => {return regexEmail.test(value)}})} autoComplete="off" type="email"></V.Campos>
+          {errors?.email?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher o campo</V.Error>}
+          {(ValueEmailErro && errors?.user?.type !== 'required') && <V.Error $absolute='95%'>{Email.message}</V.Error>}
+          {errors?.email?.type === 'validate' && <V.Error $absolute='95%'>Existe um erro na escrita do e-mail</V.Error>}
         </V.WrapperLC>
 
         <V.WrapperLC>

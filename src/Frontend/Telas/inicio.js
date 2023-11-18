@@ -75,6 +75,7 @@ function Inicio() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <input type="email"/>
       {clothes.map((cloth, clothIndex) => (
         <div key={cloth.id}>
           <h2>Cloth {clothIndex + 1}</h2>

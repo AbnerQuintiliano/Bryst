@@ -81,8 +81,8 @@ export default function Tabela({CreateModal ,Pesquisa}) {
       const Controller = new AbortController();
       console.log('Atualizou...')
       axios.get('http://localhost:3001/api/User',{signal:Controller.signal})
-         .then((response) => {
-               setUsersData(response.data);
+      .then((response) => {
+            setUsersData(response.data);
          })
          .catch((error) => {
             console.error('Erro ao buscar dados da API:', error);
@@ -94,17 +94,13 @@ export default function Tabela({CreateModal ,Pesquisa}) {
    }, [ModalEdit, CreateModal ,ModalDelete]);
    const [IdModal, setIdModal] = useState()
 
-   const PasswordCovert = (Password) => (
-      Password.replace(/./g, '•')
-   )
-
    return (
       <Table>
       <thead>
          <tr>
             <th>Usuário</th>
             <th>Nome do Usuário</th>
-            <th>Senha</th>
+            <th>E-mail</th>
             <th>Cargo</th>
             <th>Ação</th>
          </tr>
@@ -117,7 +113,7 @@ export default function Tabela({CreateModal ,Pesquisa}) {
                </td>
                <td>{data.userName}</td>
                <td>
-                  <V.SScrollCard $HeightCel='none' $HeightSB='0px' $Justify='center'> {PasswordCovert(data.password)} </V.SScrollCard>
+                  <V.SScrollCard $HeightCel='none' $HeightSB='0px' $Justify='center'> {data.email} </V.SScrollCard>
                </td>
                <td>{data.office}</td>
                <td>
