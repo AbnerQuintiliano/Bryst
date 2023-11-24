@@ -1,6 +1,8 @@
 const rotas = require("express").Router();
-const router = require("./UserRouter")
+const routerUser = require("./UserRouter")
+const routerProduto = require("./ProdutoRouter")  
 
-rotas.use("/", router);
+rotas.use("/", routerUser);
+rotas.use("/Produto", routerProduto);
 
 module.exports = rotas;

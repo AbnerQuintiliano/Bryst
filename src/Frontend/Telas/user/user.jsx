@@ -5,12 +5,21 @@ import * as V from "../../components/_variaveis";
 import Tabela from "./components/Tabela";
 import CreatModal from "./components/CreatModal"
 import Msg from "../../components/Mensagem"
-import { useModal, useMensage } from "../../hooks/MyHooks";
+import { useModal, useMensage , HandleLogin } from "../../hooks/MyHooks";
 
 export const CPesquisa = styled(V.Pesquisa)`
     @media (max-width: 450px) {
         width: 100%;
     }
+`
+
+const Menssage = styled.span`
+    color: ${({theme}) => (theme.black.Letra) };
+    font-size: 2.0rem;
+    font-weight: bolder;
+    position: relative;
+    top: 50%;
+    transform: translate( 0, -50%);
 `
 
 export const BtnCreate = styled(V.BtnTitulo)`
@@ -30,6 +39,16 @@ export default function User(){
     const inputRef = useRef();
     const handlePesquisaValue = (e) => {
         setPesquisaValue(e.target.value)
+    }
+
+    const Office = HandleLogin(sessionStorage.getItem("token"))
+    console.log(Office)
+    if(Office !== "Administrador"){
+        return(
+            <MainTela User="true">
+                <Menssage>Você não tem permissão para acessar os usuários.</Menssage>
+            </MainTela>
+        )
     }
 
     return(

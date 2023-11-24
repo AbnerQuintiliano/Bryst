@@ -14,13 +14,11 @@ Modal.setAppElement('#root');
 
 export default function DeleteModal({ isOpen, onClose ,children ,Notification ,Url }) {
 
-
   const Confirm = () => {
     axios.delete(Url)
     onClose();
     Notification();
   };
-  console.log(Url)
 
   return (
     <V.ModalStyles $Width='clamp(300px, 30vw, 40%)' $Height='30vh'

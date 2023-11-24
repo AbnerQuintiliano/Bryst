@@ -1,11 +1,14 @@
 const router = require ("express").Router();
 
-const loginController = require("../controllers/UserController");
+const UserController = require("../controllers/UserController");
 
-router.route("/UserS/:user").get(loginController.ProcurandoUser)
-router.route("/User").get(loginController.LeituraUser)
-router.route("/UserC").post(loginController.CadastroUser)
-router.route("/User/:id").put(loginController.AtualizandoUser)
-router.route("/UserD/:id").delete(loginController.DeletnadoUser)
+router.route("/Login").post(UserController.Login)
+router.route("/Auth").get(UserController.AuthToken)
+router.route("/User").get(UserController.LeituraUser)
+router.route("/UserC").post(UserController.CadastroUser)
+router.route("/UserS/:user").get(UserController.ProcurandoUser) //nem uso
+router.route("/User/:id").put(UserController.AtualizandoUser)
+router.route("/UserD/:id").delete(UserController.DeletnadoUser)
+
 
 module.exports = router;

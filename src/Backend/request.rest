@@ -30,3 +30,88 @@ Content-Type: application/json
 ###
 DELETE http://localhost:3001/api/UserD/6545bfcd272465730f7c9a2c
 Content-Type: application/json
+
+###
+post http://localhost:3001/api/Login
+Content-Type: application/json
+
+{
+    "user":"Abner Quintilianos",
+    "password":"Negão"
+}
+
+##############################################################################################################
+post http://localhost:3001/api/Produto/Create
+Content-Type: application/json
+
+{
+  "marca": "Oakley",
+  "nome": "Juliete",
+  "valor": 200,
+  "tipo": "Óculos ",
+  "Img": 454654,
+  "Cores": [
+    {
+      "Cor": "roxo",
+      "Tamanhos": [
+        {
+          "Tamanho": "-",
+          "Quantidade": 20
+        }
+      ]
+    },
+    {
+      "Cor": "laranja",
+      "Tamanhos": [
+        {
+          "Tamanho": "-",
+          "Quantidade": 40
+        }
+      ]
+    }
+  ]
+}
+
+###
+get http://localhost:3001/api/Produto
+Content-Type: application/json
+
+###
+PUT  http://localhost:3001/api/Produto/Atualizando/65601c6bed21a22cf38a1341
+Content-Type:  application/json
+
+{
+    "_id": "65601c6bed21a22cf38a1341",
+    "Cores": [
+      {
+        "Cor": "roxo",
+        "Tamanhos": [
+          {
+            "Tamanho": "-",
+            "Quantidade": 20,
+            "_id": "65601c6bed21a22cf38a1343"
+          }
+        ],
+        "_id": "65601c6bed21a22cf38a1342"
+      },
+      {
+        "Cor": "laranja",
+        "Tamanhos": [
+          {
+            "Tamanho": "-",
+            "Quantidade": 40,
+            "_id": "65601c6bed21a22cf38a1345"
+          }
+        ],
+        "_id": "65601c6bed21a22cf38a1344"
+      }
+    ],
+    "marca": "Oakley",
+    "nome": "Juliete",
+    "valor": 200,
+    "tipo": "Óculos ",
+    "Img": 454654,
+    "createdAt": "2023-11-24T03:45:47.925Z",
+    "updatedAt": "2023-11-24T03:45:47.925Z",
+    "__v": 0
+  }

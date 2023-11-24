@@ -159,6 +159,8 @@
     display:none;
 }
 .fundo-btn{
+    width: 100%;
+    background-color: unset;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -212,6 +214,14 @@
     color: #4A62BD;
     line-height: 1.5;
     text-decoration: none;
+}
+
+.Error{
+    position: relative;
+    display: flex;
+    background-color: aquamarine;
+    align-items: center;
+    justify-content: center;
 }
 
 

@@ -4,25 +4,26 @@ import MainTela from "../../components/MainTela";
 import Vendas from "./components/Vendas/Vendas";
 import Tarefas from "./components/Tarefas/Tarefas";
 import Estoque from "./components/estoque/estoque";
+import { HandleLogin } from "../../hooks/MyHooks";
 // import { ThemeProvider } from "styled-components"; ainda nao utilizei
 
 export default function Home(){
-    return(
-    <MainTela Home="true">
-        <h1>
-            hey Sir. Crisp
-        </h1>
-        
-        <Vendas/>
+   const token = sessionStorage.getItem('token')
+   const user = sessionStorage.getItem('userName')
 
-        <S._ContainerItens>
+   HandleLogin(token)
 
-            <Tarefas/>
-
-            <Estoque/>
-            
-        </S._ContainerItens>
-    </MainTela>
-    )
+   return(
+   <MainTela Home="true">
+      <h1>
+         hey Sir. {user}
+      </h1>
+      <Vendas/>
+      <S._ContainerItens>
+         <Tarefas/>
+         <Estoque/>
+      </S._ContainerItens>
+   </MainTela>
+   )
 
 }

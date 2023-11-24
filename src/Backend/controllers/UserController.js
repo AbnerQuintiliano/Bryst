@@ -1,4 +1,7 @@
 const User = require("../models/User")
+const jwt = require('jsonwebtoken');
+
+require("dotenv").config();
 
 const Verificação = async(req, res, IdUser=false) => {
          let ExistUsers = await User.find({user: { $regex: req.body.user, $options: 'i' }});
@@ -109,7 +112,55 @@ const Verificação = async(req, res, IdUser=false) => {
                return true
          }}}
 
-class loginController {
+class UserController {
+   static async Login(req, res){
+      console.log("logando usuario")
+      try{
+         const Usuario = await User.find({user:{ $regex: req.body.user}})
+         const Login = Usuario.map((obj)=>(obj.password === req.body.password))
+         if(Login[0] === true){
+            const TokenData = {
+               userName:Usuario[0].userName,
+               office: Usuario[0].office
+            }
+            const Token = jwt.sign(TokenData, process.env.Token_Key, {expiresIn:"1h"})
+            console.log(Usuario[0].userName)
+            res.status(200).json({
+               userName: Usuario[0].userName,
+               token:Token
+            })
+         }else{
+            res.status(400).json({message:'usuário ou senha estão erradas!'})
+         }
+      }catch(error){
+         console.log(error)
+         res.status(500).json({message:'Houve um erro ao tentar realizar o login.', error})
+      }
+   }
+
+   static async AuthToken(req, res ,next){
+      console.log("Verificando token")
+      try{
+         const token = req.header('Authorization');
+         jwt.verify(token, process.env.Token_Key, (error, decode) => {
+            if(!error){
+               res.status(200).json({
+                  sucess: true, 
+                  TokenData: decode
+               })
+            }else{
+               res.status(401).json({
+                  sucess: false, error
+               })
+            }
+         })
+      }
+      catch(error){
+         console.log('Deu ruim')
+         res.status(500).json(error)
+      }
+   }
+
    static async LeituraUser(req, res) {
       console.log("Lendo usuários")
       try {
@@ -168,6 +219,7 @@ class loginController {
          res.status(304).json({ message: "erro ao tentar atualizar usuários", error });
       }
    }
+
    static async DeletnadoUser(req, res) {
       console.log("deletando user")
       try {
@@ -183,4 +235,4 @@ class loginController {
    }
 };
 
-module.exports = loginController;
+module.exports = UserController;

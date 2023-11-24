@@ -82,15 +82,15 @@ export default function Tabela({CreateModal ,Pesquisa}) {
       console.log('Atualizou...')
       axios.get('http://localhost:3001/api/User',{signal:Controller.signal})
       .then((response) => {
-            setUsersData(response.data);
-         })
-         .catch((error) => {
-            console.error('Erro ao buscar dados da API:', error);
-         });
-         return () => {
-            console.log('cancelou...')
-            Controller.abort();
-         }
+         setUsersData(response.data);
+      })
+      .catch((error) => {
+         console.error('Erro ao buscar dados da API:', error);
+      });
+      return () => {
+         console.log('cancelou...')
+         Controller.abort();
+      }
    }, [ModalEdit, CreateModal ,ModalDelete]);
    const [IdModal, setIdModal] = useState()
 

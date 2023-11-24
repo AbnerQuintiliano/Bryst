@@ -8,7 +8,7 @@ Modal.setAppElement("#root");
 
 
 export default function EditModal({ isOpen, onClose, NotificationErro, Notification, Data}) {
-  const {register ,handleSubmit , control,formState: { errors }} = useForm();
+  const {register, handleSubmit, control, formState: { errors }} = useForm();
   const [User, SetUser] = useState('')
   const [UserName, SetUserName] = useState('')
   const [Email, SetEmail] = useState('')

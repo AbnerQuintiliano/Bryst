@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { Buffer } from "buffer";
 import * as V from "../../../components/_variaveis";
 import { useForm , useFieldArray } from "react-hook-form";
 
@@ -25,16 +26,40 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
    }
 
    const [image, setImage] = useState(null);
+   const Convert = () => {
+      let imageData = image.replace("data:image/jpeg;base64,", "");
+      let bytes = Buffer.from(imageData, "base64");
+      let blob = new Blob ([bytes], { type: "image/jpeg" });
+      console.log(blob)
+      setValue('Img' , bytes.buffer.byteLength)
+      return bytes;
+   }
+   function blobToBase64(bytes) { //funcional e operante utilizar no edit
+      let blobs = new Blob ([bytes], { type: "image/jpeg" })
+      console.log(blobs)
+      const reader = new FileReader();
+      reader.onloadend = () => {
+         if (reader.readyState === FileReader.DONE) {
+            console.log(reader.result);
+         } else {
+            console.log("Failed to read blob data");
+         }
+      };
+      reader.readAsDataURL(blobs);
+   };
    const handleImageUpload = (e) => {
       const selectedImage = e.target.files[0];
       if (selectedImage) {
          const reader = new FileReader();
          reader.onload = (e) => {
             setImage(e.target.result);
+            Convert()
+            // blobToBase64(Convert())
          };
          reader.readAsDataURL(selectedImage);
       }
    };
+
 
    const [statusAdd , setAdd] = useState(0)
    const handleAddTamanho = (colorIndex) => ((fieldsColors[colorIndex].Tamanhos.push({Tamanho:'',Quantidade:''}),setAdd(statusAdd + 1)))
@@ -53,8 +78,11 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
 
    var ColorsTemTamanhos = []
    let ColorsIndexbyConfirm = []
-   let podeir = true
    const handleColorsTemTamanhos = () => {
+      let podeir = true
+      if(0 === ColorsIndexbyConfirm.length){
+         return podeir = false
+      }
       ColorsIndexbyConfirm.forEach((_, index) => {
          if(!ColorsTemTamanhos[index].Tamanho)
             podeir = false
@@ -75,26 +103,26 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
          <V.Formulario>
             <V._ContainerItens $Width='90%' $Height='auto' $NoMedia>
                <V.WrapperLC>
-                  <V.Label>Id</V.Label>
-                  <V.Campos placeholder="Id do Produto"  autoComplete="off" type='number' $Err={errors?.id} {...register('id',{required:true ,valueAsNumber:true})}></V.Campos>
-                  {errors?.id?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
+                  <V.Label>Marca</V.Label>
+                  <V.Campos placeholder="marca" autoComplete="off" $Err={errors?.marca} {...register('marca',{required:true})}></V.Campos>
+                  {errors?.marca?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                </V.WrapperLC>
                <V.WrapperLC>
-                  <V.Label>Marca</V.Label>
-                  <V.Campos placeholder="Marca" autoComplete="off" $Err={errors?.marca} {...register('marca',{required:true})}></V.Campos>
-                  {errors?.marca?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
+                  <V.Label>Nome</V.Label>
+                  <V.Campos placeholder="nome"  autoComplete="off" $Err={errors?.nome} {...register('nome',{required:true})}></V.Campos>
+                  {errors?.nome?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                </V.WrapperLC>
             </V._ContainerItens>
             <V._ContainerItens $Width='90%' $Height='auto' $NoMedia>
                <V.WrapperLC>
                   <V.Label>Valor Un.</V.Label>
-                  <V.Campos placeholder="Valor Unitario" autoComplete="off" type='number' $Err={errors?.Quantidade} {...register('Quantidade',{required:true ,valueAsNumber:true})}></V.Campos>
-                  {errors?.Quantidade?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
+                  <V.Campos placeholder="Valor Unitario" autoComplete="off" type='number' $Err={errors?.valor} {...register('valor',{required:true ,valueAsNumber:true})}></V.Campos>
+                  {errors?.valor?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                </V.WrapperLC>
                <V.WrapperLC>
                   <V.Label>Tipo</V.Label>
-                  <V.Campos placeholder="Tipo" autoComplete="off" $Err={errors?.Tipo} {...register('Tipo',{required:true})}></V.Campos>
-                  {errors?.Tipo?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
+                  <V.Campos placeholder="tipo" autoComplete="off" $Err={errors?.tipo} {...register('tipo',{required:true})}></V.Campos>
+                  {errors?.tipo?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                </V.WrapperLC>
             </V._ContainerItens>
             <img src={image} alt="" />
@@ -108,7 +136,7 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
                ColorsTemTamanhos.push({Tamanho:false, ExistTam:false})
                return(
                   <V.Card $WMidia='75%' key={Cores.id}>
-                     {console.log(ColorsTemTamanhos)}
+                     {/* {console.log(ColorsTemTamanhos)} */}
                      <V.Close type="button" onClick={() => handleRemoveColors(CoresIndex)}>X</V.Close>
                      <V.WrapperLC>
                         <V.Label $center>Cor</V.Label>
@@ -117,7 +145,7 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
                         {errors?.Cores?.[CoresIndex]?.Cor?.type === 'maxLength' && <V.Error $absolute='90%'>O máximo e 10 caracteres</V.Error>}
                      </V.WrapperLC>
                      <V.SScrollCard height='70%' $Special='95%' $HeightCel='70%' >
-                        {Cores.Tamanhos.map((Tamanhos, TamanhosIndex) => {
+                        {Cores.Tamanhos.map((_, TamanhosIndex) => {
                            if(ColorsTemTamanhos[CoresIndex].ExistTam === false){
                               ColorsTemTamanhos[CoresIndex].Tamanho = true
                               ColorsTemTamanhos[CoresIndex].ExistTam = true
