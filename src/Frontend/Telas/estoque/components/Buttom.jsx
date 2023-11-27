@@ -1,32 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BtnEscolha } from '../_Style';
 
 
-function ButtonSelector(Fator) {
+function ButtonSelector(Data, PegaValue) {
+  const Obj = Data.Data
   const [selectedButton, setSelectedButton] = useState(1);
-
+  console.log(Obj)
   const handleButtonClick = (buttonId) => {
     setSelectedButton(buttonId);
   };
 
-  const buttons = [
-    { id: 1, text: 'Preto' },
-    { id: 2, text: 'Marrom' },
-    { id: 3, text: 'Roxo' },
-  ];
-
   return (
     <>
-      {buttons.map((button) => (
+      {Obj !== undefined && Obj.map((button, i) => (
         <BtnEscolha
-          key={button.id}
-          onClick={() => handleButtonClick(button.id)}
+          key={button._id}
+          onClick={() => handleButtonClick(i)}
           style={{
-            backgroundColor:  selectedButton === button.id ? '#7688C9': 'unset',
+            backgroundColor:  selectedButton === i ? '#7688C9': 'unset',
           }}
         >
-          {button.text}
+          {button.Cor}
+          {/* {button.Tamanhos} tenta resolver com contextapi*/}
         </BtnEscolha>
+
       ))}
     </>
   );

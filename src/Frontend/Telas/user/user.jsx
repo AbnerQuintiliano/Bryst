@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import MainTela from "../../components/MainTela";
 import * as V from "../../components/_variaveis";
@@ -36,13 +36,11 @@ export default function User(){
     const {HowMsg, handleMsg} = useMensage()
 
     const [PesquisaValue, setPesquisaValue] = useState('')
-    const inputRef = useRef();
     const handlePesquisaValue = (e) => {
         setPesquisaValue(e.target.value)
     }
 
     const Office = HandleLogin(sessionStorage.getItem("token"))
-    console.log(Office)
     if(Office !== "Administrador"){
         return(
             <MainTela User="true">
@@ -56,7 +54,7 @@ export default function User(){
                 <V.Wrapper>
                     <V.Top $Justify='space-between'>
                         <V.BtnTitulo>Cadastro</V.BtnTitulo>
-                        <CPesquisa placeholder="Pesquisar" onChange={handlePesquisaValue} ref={inputRef}></CPesquisa>
+                        <CPesquisa placeholder="Pesquisar" onChange={handlePesquisaValue}></CPesquisa>
                         <BtnCreate $click onClick={openModal}>+</BtnCreate>
                     </V.Top>
                     <CreatModal isOpen={Modal} onClose={closeModal} Notification={handleMsg}></CreatModal>

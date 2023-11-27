@@ -37,10 +37,10 @@ export default function EditModal({ isOpen, onClose, NotificationErro, Notificat
       SetUser(error.response.data.erro[0]),
       SetUserName(error.response.data.erro[1]),
       SetEmail(error.response.data.erro[2]),
+      console.log(error.response.data.erro),
       error.response.data.erro[3] && (NotificationErro(), onClose())
     )))
   };
-
   const handleUserErro = (Campo, ValueComp) => {
     let ValueConfirm = false
     Campo?.map((Value) => (

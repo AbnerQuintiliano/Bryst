@@ -2,59 +2,79 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { Buffer } from "buffer";
 import * as V from "../../../components/_variaveis";
-import { useForm , useFieldArray } from "react-hook-form";
+import { useForm , useFieldArray , useWatch } from "react-hook-form";
+import axios from "axios";
 
 Modal.setAppElement("#root");
 
-export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
+export default function FormsModalEstoque({ isOpen, onClose, Complete}) {
+   const {control ,register, handleSubmit, reset, setValue, formState:{errors}} = useForm();
 
-   const [QtsdeCores , setQtsdeCores] = useState(0)
-   const {control ,register, handleSubmit, formState:{errors} , setValue} = useForm();
+
    const{fields: fieldsColors , append , remove} = useFieldArray({
       control,
       name:'Cores'
    })
+   const [QtsdeCores , setQtsdeCores] = useState(0)
    const handleAddColors = () => ((
       (setQtsdeCores(QtsdeCores + 1)),
       append({Cor:'' , Tamanhos:[]})
    ))
    const handleRemoveColors = (Index) =>((remove(Index), (setQtsdeCores(QtsdeCores - 1))))
 
+   const [Nome, setNome] = useState('')
+   const ValueNome = useWatch({
+      control,
+      name: 'nome',
+      defautValue:''
+   })
    const onSubimit = (data) => { 
       console.log(data);
-      onClose();
+      axios.post('http://localhost:3001/api/Produto/Create',data)
+      .then((response) => ((
+         console.log(response),
+         Complete(),
+         onClose(),
+         reset(),
+         setNome(''),
+         setImage(''),
+         handleRemoveColors(ColorsIndexbyConfirm.map((value) => (value)))
+      )))
+      .catch((error) => ((
+         console.log(error.response.data),
+         setNome(ValueNome)
+      )))
    }
 
-   const [image, setImage] = useState(null);
-   const Convert = () => {
-      let imageData = image.replace("data:image/jpeg;base64,", "");
+   const [image, setImage] = useState();
+   const Convert = (images) => {
+      let imageData = images.replace("data:image/jpeg;base64,", "");
       let bytes = Buffer.from(imageData, "base64");
       let blob = new Blob ([bytes], { type: "image/jpeg" });
-      console.log(blob)
       setValue('Img' , bytes.buffer.byteLength)
-      return bytes;
+      console.log(blob)
    }
-   function blobToBase64(bytes) { //funcional e operante utilizar no edit
-      let blobs = new Blob ([bytes], { type: "image/jpeg" })
-      console.log(blobs)
-      const reader = new FileReader();
-      reader.onloadend = () => {
-         if (reader.readyState === FileReader.DONE) {
-            console.log(reader.result);
-         } else {
-            console.log("Failed to read blob data");
-         }
-      };
-      reader.readAsDataURL(blobs);
-   };
+   // function blobToBase64(bytes) { //funcional e operante utilizar no edit
+   //    let blobs = new Blob ([bytes], { type: "image/jpeg" })
+   //    console.log(blobs)
+   //    const reader = new FileReader();
+   //    reader.onloadend = () => {
+   //       if (reader.readyState === FileReader.DONE) {
+   //          console.log(reader.result);
+   //          return reader.result
+   //       } else {
+   //          console.log("Failed to read blob data");
+   //       }
+   //    };
+   //    reader.readAsDataURL(blobs);
+   // };
    const handleImageUpload = (e) => {
       const selectedImage = e.target.files[0];
       if (selectedImage) {
          const reader = new FileReader();
          reader.onload = (e) => {
             setImage(e.target.result);
-            Convert()
-            // blobToBase64(Convert())
+            Convert(e.target.result)
          };
          reader.readAsDataURL(selectedImage);
       }
@@ -75,6 +95,7 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
       }
       setAdd(statusAdd - 1);
    }
+
 
    var ColorsTemTamanhos = []
    let ColorsIndexbyConfirm = []
@@ -109,8 +130,9 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete }) {
                </V.WrapperLC>
                <V.WrapperLC>
                   <V.Label>Nome</V.Label>
-                  <V.Campos placeholder="nome"  autoComplete="off" $Err={errors?.nome} {...register('nome',{required:true})}></V.Campos>
+                  <V.Campos placeholder="nome"  autoComplete="off" $Err={errors?.nome || Nome === ValueNome} {...register('nome',{required:true})}></V.Campos>
                   {errors?.nome?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
+                  {Nome === ValueNome && <V.Error $absolute='95%'>Ja existe o produto {Nome}</V.Error>}
                </V.WrapperLC>
             </V._ContainerItens>
             <V._ContainerItens $Width='90%' $Height='auto' $NoMedia>

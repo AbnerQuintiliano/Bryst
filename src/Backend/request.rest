@@ -81,37 +81,33 @@ PUT  http://localhost:3001/api/Produto/Atualizando/65601c6bed21a22cf38a1341
 Content-Type:  application/json
 
 {
-    "_id": "65601c6bed21a22cf38a1341",
-    "Cores": [
-      {
-        "Cor": "roxo",
-        "Tamanhos": [
-          {
-            "Tamanho": "-",
-            "Quantidade": 20,
-            "_id": "65601c6bed21a22cf38a1343"
-          }
-        ],
-        "_id": "65601c6bed21a22cf38a1342"
-      },
-      {
-        "Cor": "laranja",
-        "Tamanhos": [
-          {
-            "Tamanho": "-",
-            "Quantidade": 40,
-            "_id": "65601c6bed21a22cf38a1345"
-          }
-        ],
-        "_id": "65601c6bed21a22cf38a1344"
-      }
-    ],
-    "marca": "Oakley",
-    "nome": "Juliete",
-    "valor": 200,
-    "tipo": "Óculos ",
-    "Img": 454654,
-    "createdAt": "2023-11-24T03:45:47.925Z",
-    "updatedAt": "2023-11-24T03:45:47.925Z",
-    "__v": 0
-  }
+  "Cores": [
+    {
+      "Cor": "roxo",
+      "Tamanhos": [
+        {
+          "Tamanho": "-",
+          "Quantidade": 30
+        }
+      ]
+    },
+    {
+      "Cor": "laranja",
+      "Tamanhos": [
+        {
+          "Tamanho": "-",
+          "Quantidade": 30
+        }
+      ]
+    }
+  ],
+  "marca": "Oakley",
+  "nome": "Juliete",
+  "valor": 220,
+  "tipo": "Óculos ",
+  "Img": 454654
+}
+
+###
+DELETE http://localhost:3001/api/Produto/Deletando/655e1cafdfa70bd7a988fb91
+Content-Type: application/json

@@ -25,7 +25,7 @@ export const useModal = () => {
 }
 
 export const useMensage = () => {
-   const [HowMsg, setMsg] = useState(false);
+   const [HowMsg, setMsg] = useState(null);
    const handleMsg = () => {
       setMsg(true)
       setTimeout(() => {setMsg(false)}, 3000)

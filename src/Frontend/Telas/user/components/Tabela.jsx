@@ -120,7 +120,7 @@ export default function Tabela({CreateModal ,Pesquisa}) {
                   <Actions>
                         <Edit><IcoEdit onClick={() => ((openModalEdit(), setIdModal(data)))}/></Edit>
                         {HowMsgEdit && <Msg message={"Usuário atualizado com sucesso!"}/>}
-                        {HowMsgEditErro && <Msg erro={true} message={'Não houve mudança nos dados'}/>}
+                        {HowMsgEditErro && <Msg erro message={'Não houve mudança nos dados'}/>}
                         <Delete onClick={() => ((openModalDelete(),setIdModal(data)))}><IcoDel/></Delete>
                         {HowMsgDelete && <Msg message={"Excluido com sucesso!"}/>}
                   </Actions>
