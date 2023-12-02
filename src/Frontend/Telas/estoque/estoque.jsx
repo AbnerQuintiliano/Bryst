@@ -3,8 +3,8 @@ import MainTela from "../../components/MainTela";
 import * as V from "../../components/_variaveis";
 import { Produto, Dados, LabelEstoque, WrapperBtn, WrapperDados} from "./_Style";
 import FormsModalEstoque from "./components/FormularioAdd";
-import roupa from "../../img/sim.jpeg";
-import ButtonSelector from "./components/Buttom";
+import FormsModalEdit from "./components/FormEdit";
+import ButtonSelection from "./components/Buttom";
 import Modal from "react-modal";
 import Msg from "../../components/Mensagem";
 import DeleteModal from "../../components/DeleteModal";
@@ -15,33 +15,42 @@ Modal.setAppElement("#root");
 
 export default function Estoque() {
    const { Modal:ModalAdd, openModal:openModalAdd, closeModal:closeModalAdd } = useModal();
+   const { Modal:ModalEdit, openModal:openModalEdit, closeModal:closeModalEdit } = useModal();
    const { Modal:ModalDel, openModal:OpenModalDel, closeModal:CloseModalDel } = useModal();
-   const { Modal:ModalAlt, openModal:OpenModalAlt, closeModal:CloseModalAlt } = useModal();
-   const {HowMsg:HowMsgDel, handleMsg:handleMsgDel} = useMensage()
    const {HowMsg:HowMsgCreate, handleMsg:handleMsgCreate} = useMensage()
+   const {HowMsg:HowMsgEdit, handleMsg:handleMsgEdit} = useMensage()
+   const {HowMsg:HowMsgEditErro, handleMsg:handleMsgEditErro} = useMensage()
+   const {HowMsg:HowMsgDel, handleMsg:handleMsgDel} = useMensage()
+   const [DataModif , setDataModif] = useState() 
+   const [Primeiro , setPrimeiro] = useState(true) 
+
    
-   const [ProdutoData, setProdutoData] = useState([])
-   const [Load, setLoad] = useState(true)
+   const [ProdutoData, setProdutoData] = useState([]) 
    useEffect(() => {
-      const Controller = new AbortController();
-      axios.get('http://localhost:3001/api/Produto', {signal:Controller.signal})
-      .then((response) => {
-         setProdutoData(response.data);
-         HowMsgDel === null && HowMsgCreate === null && setLoad(false)
-      })
-      .catch((error) => {
-         console.error('Erro ao buscar dados da API:', error);
-         HowMsgDel === null && HowMsgCreate === null && setLoad(false)
-      });
-      return () => {
-         console.log('cancelou...')
-         setLoad(true) //remover dependendo
-         Controller.abort();
+      if(HowMsgDel || HowMsgCreate || HowMsgEdit || Primeiro === true){
+         const Controller = new AbortController();
+         console.log('foi')
+         axios.get('http://localhost:3001/api/Produto', {signal:Controller.signal})
+         .then((response) => {
+            setProdutoData(response.data);
+         })
+         .catch((error) => {
+            console.error('Erro ao buscar dados da API:', error);
+         })
+         .finally(()=>{
+            (!Controller.signal.aborted && Primeiro === true) && setPrimeiro(false)
+         })
+         return () => {
+            console.log('cancelou...')
+            Controller.abort();
+         }
       }
-   },[HowMsgDel,HowMsgCreate])
+   },[HowMsgDel,HowMsgCreate, HowMsgEdit, Primeiro])
+   console.log('render')
 
    const PesquisaRef = useRef();
    const [Pesquisa , setPesquisa] = useState('')
+   const [DelID , setDelID] = useState('')
    return (
    <MainTela Estoque="true">
       <V.Wrapper $Height="100%">
@@ -56,8 +65,7 @@ export default function Estoque() {
             <Produto>
                <V.Button onClick={openModalAdd}> Adicionar </V.Button>
             </Produto>
-            {Load && <Produto>loading</Produto>}
-               {ProdutoData.length !== 0 && ProdutoData.filter((Data) => (Data.nome.toLowerCase().includes(Pesquisa.toLowerCase()))).map((data)=>(
+               {ProdutoData.filter((Data) => (Data.nome.toLowerCase().includes(Pesquisa.toLowerCase()))).map((data ,i)=>(
                   <Produto key={data._id}>
                      <WrapperDados>
                         <div>
@@ -79,101 +87,35 @@ export default function Estoque() {
                            <Dados>{data.valor}R$</Dados>
                         </div>
                      </WrapperDados>
-                     <img src={roupa} alt="" />
-                     <div>
-                        <LabelEstoque>Cores</LabelEstoque>
-                        <Dados>
-                           <ButtonSelector Data={data.Cores}/>
-                        </Dados>
-                     </div>
-                     <div>
-                        <LabelEstoque>Tamanhos</LabelEstoque>
-                        <Dados>
-                           <ButtonSelector/>
-                        </Dados>
-                     </div>
-                     <div>
-                        <LabelEstoque>Quantidade</LabelEstoque>
-                        <Dados>2</Dados>
-                     </div>
+                     <img src={data.Img} alt="" />
+                     <ButtonSelection Data={data.Cores}/>
                      <WrapperBtn>
                         <V.Button $Width='40%' $Height='clamp(1.25rem, 2vw , 1.75rem )'
                            $Font='1rem' $Color={V.theme.color.verde}
-                           onClick={OpenModalAlt}
+                           onClick={() => {openModalEdit(); setDataModif(data)}} 
                         >
                            Alterar
                         </V.Button>
                         <V.Button $Width='40%' $Height='clamp(1.25rem, 2vw , 1.75rem )' 
                            $Font='1rem' $Color={V.theme.color.vermelho} 
-                           onClick={OpenModalDel}
+                           onClick={() => ((setDelID(data._id),OpenModalDel()))}
                         >
                            Excluir
                         </V.Button>
                      </WrapperBtn>
                   </Produto>
                ))}
-               {/* <div>
-                  <LabelEstoque>Id produto</LabelEstoque>
-                  <Dados>233</Dados>
-               </div>
-               <WrapperDados>
-                  <div>
-                     <LabelEstoque>Marca</LabelEstoque>
-                     <Dados>Nike</Dados>
-                  </div>
-                  <div>
-                     <LabelEstoque>Nome</LabelEstoque>
-                     <Dados>Balce N20</Dados>
-                  </div>
-               </WrapperDados>
-               <WrapperDados>
-                  <div>
-                     <LabelEstoque>Tipo</LabelEstoque>
-                     <Dados>Moletom</Dados>
-                  </div>
-                  <div>
-                     <LabelEstoque>Valor Un</LabelEstoque>
-                     <Dados>129.90 R$</Dados>
-                  </div>
-               </WrapperDados>
-               <img src={roupa} alt="" />
-               <div>
-                  <LabelEstoque>Tamanhos</LabelEstoque>
-                  <Dados>
-                     <ButtonSelector />
-                  </Dados>
-               </div>
-               <div>
-                  <LabelEstoque>Cores</LabelEstoque>
-                  <Dados>
-                     <ButtonSelector />
-                  </Dados>
-               </div>
-               <div>
-                  <LabelEstoque>Quantidade</LabelEstoque>
-                  <Dados>2</Dados>
-               </div>
-               <WrapperBtn>
-                  <V.Button $Width='40%' $Height='clamp(1.25rem, 2vw , 1.75rem )'
-                     $Font='1rem' $Color={V.theme.color.verde}
-                     onClick={OpenModalAlt}
-                  >
-                     Alterar
-                  </V.Button>
-                  <V.Button $Width='40%' $Height='clamp(1.25rem, 2vw , 1.75rem )' 
-                     $Font='1rem' $Color={V.theme.color.vermelho} 
-                     onClick={OpenModalDel}
-                  >
-                     Excluir
-                  </V.Button>
-               </WrapperBtn> */}
          </V.ScrollCard>
       </V.Wrapper>
 
-      {/*modal*/} <FormsModalEstoque isOpen={ModalAdd} onClose={closeModalAdd} Complete={handleMsgCreate}/>
-      <DeleteModal isOpen={ModalDel} onClose={CloseModalDel} Notification={handleMsgDel}>Deseja excluir produto?</DeleteModal>
-      {HowMsgDel && <Msg message='Produto excluido com sucesso!'/>}
+      {/* modal */}
+      <DeleteModal isOpen={ModalDel} onClose={CloseModalDel} Notification={handleMsgDel} Url={`http://localhost:3001/api/Produto/Deletando/${DelID}`}>Deseja excluir produto?</DeleteModal>
+      <FormsModalEstoque isOpen={ModalAdd} onClose={closeModalAdd} Complete={handleMsgCreate}/>
+      {ModalEdit && <FormsModalEdit isOpen={ModalEdit} onClose={closeModalEdit} Notification={handleMsgEdit} NotificationErro={handleMsgEditErro} Data={DataModif}/>}
       {HowMsgCreate && <Msg message='Produto criado com sucesso!'/>}
+      {HowMsgEdit && <Msg message='Produto modififcado com sucesso!'/>}
+      {HowMsgEditErro && <Msg erro message='Não Houve mudança no produto!'/>}
+      {HowMsgDel && <Msg message='Produto excluido com sucesso!'/>}
 
 
    </MainTela>

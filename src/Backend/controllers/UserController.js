@@ -217,7 +217,7 @@ class UserController {
             });
          }
       } catch (error) {
-         res.status(304).json({ message: "erro ao tentar atualizar usuários", error });
+         res.status(304).json({ messageErro: "erro ao tentar atualizar usuários", error });
       }
    }
 

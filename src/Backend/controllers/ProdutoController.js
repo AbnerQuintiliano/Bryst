@@ -1,5 +1,7 @@
 const Produto = require('../models/Produto')
-// var _ = require('lodash');
+const _ = require('lodash');
+const { mapValues } = require('lodash')
+const mongoose = require('mongoose')
 
 // function Comparador(Data , DataAtt ){
 //    const Keys = Object.keys(Data._doc)
@@ -29,16 +31,21 @@ class ProdutoController {
          if(!ProdutoExist){
             const novoProduto = await Produto.create(req.body);
             return res.status(201).json({ message: "criado com sucesso", produto: novoProduto});
+         }else{
+            res.status(409).json({message:'já existe um produto com esse nome!'})
          }
-         res.status(409).json({message:'já existe um produto com esse nome!'})
       } catch (erro) {
          res.status(500).json({ message: `${erro.message} - falha ao cadastrar usuário` });
+         console.log(erro)
       }
    }
 
    static async LeituraProduto (req, res){
       try{
          const Produtos = await Produto.find({})
+         // const teste = await Produto.find({'Cores.Tamanhos._id': '6562dbd518218260708a837b'})
+         const teste = await Produto.aggregate([{$match: {'Cores.Tamanhos._id': new mongoose.Types.ObjectId('6562dbd518218260708a837b')}}])
+         console.log(JSON.stringify(teste))
          res.status(200).json(Produtos)
       }
       catch (error){
@@ -52,18 +59,35 @@ class ProdutoController {
          const id = req.params.id
          
          console.log(`atualizando por id:${id}`);
-         // const ProdutoVerificação = await Produto.findById(id)
-         const test = await Produto.findByIdAndUpdate(id, req.body);
-         console.log(JSON.stringify(test) === JSON.stringify(req.body))
+         const ProdutoVerificação = await Produto.find({nome: {$regex: req.body.nome, $options: 'i' }})
+         const Verificação = (ProdutoVerificação?.map(({_id , ...resto})=>(_id != id)).includes(true))
+         if(!Verificação){
+            console.log('update')
+            let Att = await Produto.findById(id);
+            const itens = ["marca", "nome", "valor", "tipo", "Img","Cores"]
+            Att = _.pick(Att, itens);
+            if(!(JSON.stringify(mapValues(req.body, obj => obj)) === JSON.stringify(mapValues(Att, obj => obj)))){
+               console.log('não iguais')
+               await Produto.findByIdAndUpdate(id, req.body);
+               return res.status(200).end()
+            }else{
+               console.log('iguais')
+               return res.status(304).json({message:'Não Houve mudança no produto!'});
+            }
+         }else{
+            return res.status(409).json({message:'já existe um produto com esse nome!'});
+         }
+         // const test = await Produto.findById(id, req.body);
+         // console.log(JSON.stringify(test) === JSON.stringify(req.body))
          // Comparador(ProdutoVerificação);
          // if(req.body === ProdutoVerificação){
          //    console.log("igual")
          //    return res.status(204).end();
          // }
-         res.status(200).end();
       } catch (error) {
          console.log('deu ruim')
-         res.status(304).json({ message: "erro ao tentar atualizar usuários", error });
+         console.log(error)
+         res.status(400).json({ message: "erro ao tentar atualizar usuários", error });
       }
    }
 

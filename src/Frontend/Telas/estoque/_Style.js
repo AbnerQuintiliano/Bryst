@@ -19,7 +19,9 @@ export const Produto = styled.section`
       align-items: center;
     }
     & img{
-      width: clamp(50% , 2vw , 150%);
+      /* width: clamp(50% , 2vw , 150%); */
+      width: max(10vw , 70px);
+      height: max(10vw , 70px);
       border-radius: 20px;
     }
 `
@@ -60,7 +62,7 @@ export const WrapperBtn = styled.span`
 export const BtnEscolha = styled.button`
   background-color: unset;
   color: ${props => props.theme.black.Letra};
-  color: red; //remover
+  /* color: red; //remover */
   height: clamp(100% , 1vw , 1rem);
   padding: min( .5rem  , 2vw );
   border-radius: 20px;

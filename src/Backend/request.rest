@@ -15,16 +15,16 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/api/UserS/Abner de
+GET http://localhost:3001/api/UserS/Abner de 
 Content-Type: application/json
-
+### nao uso
 ###
 
-PUT http://localhost:3001/api/User/6544564d0dc621af6920f4aeby
+PUT http://localhost:3001/api/User/6541c3b01cfd80d6ff369e1c
 Content-Type: application/json
 
 {
-    "password":"mudei"
+    "password":"123"
 }
 
 ###

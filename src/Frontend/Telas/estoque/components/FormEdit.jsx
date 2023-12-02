@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { Buffer } from "buffer";
 import * as V from "../../../components/_variaveis";
@@ -6,44 +6,27 @@ import { useForm , useFieldArray , useWatch } from "react-hook-form";
 import axios from "axios";
 Modal.setAppElement("#root");
 
-export default function FormsModalEstoque({ isOpen, onClose, Complete}) {
+export default function FormsModalEdit({ isOpen, onClose, Notification, NotificationErro, Data}) {
    const {control ,register, handleSubmit, reset, setValue, formState:{errors}} = useForm();
-
-
+   
    const{fields: fieldsColors , append , remove} = useFieldArray({
       control,
       name:'Cores'
    })
-   const [QtsdeCores , setQtsdeCores] = useState(0)
+   const [QtsdeCores , setQtsdeCores] = useState(Data.Cores.length)
    const handleAddColors = () => ((
       (setQtsdeCores(QtsdeCores + 1)),
       append({Cor:'' , Tamanhos:[]})
    ))
    const handleRemoveColors = (Index) =>((remove(Index), (setQtsdeCores(QtsdeCores - 1), setAdd(statusAdd - fieldsColors[Index].Tamanhos.length))))
 
+
    const [Nome, setNome] = useState('')
    const ValueNome = useWatch({
       control,
       name: 'nome',
-      defautValue:''
    })
-   const onSubimit = (data) => { 
-      console.log(data);
-      axios.post('http://localhost:3001/api/Produto/Create',data)
-      .then((response) => ((
-         console.log(response),
-         Complete(),
-         onClose(),
-         reset(),
-         setNome(''),
-         setImage(''),
-         handleRemoveColors(ColorsIndexbyConfirm.map((value) => (value)))
-      )))
-      .catch((error) => ((
-         console.log(error.response.data),
-         setNome(ValueNome)
-      )))
-   }
+
 
    const [image, setImage] = useState()
    const handleImageUpload = (e) => {
@@ -53,16 +36,15 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete}) {
          reader.onload = (e) => {
             setImage(e.target.result);
             setValue('Img', e.target.result)
-            var dadosBinarios = Buffer.from(e.target.result.split(',')[1], 'base64');
+            var dadosBinarios = new Uint8Array([Buffer.from(e.target.result.split(',')[1], 'base64')]);
             console.log(dadosBinarios)
-            // setValue('Img', e.target.result)
          };
          reader.readAsDataURL(selectedImage);
       }
    };
 
 
-   const [statusAdd , setAdd] = useState(0)
+   const [statusAdd , setAdd] = useState(Data.Cores.map((cores)=>(cores.Tamanhos.length)).reduce((TdeTam, QtsdeTam) => TdeTam+QtsdeTam, 0))
    const handleAddTamanho = (colorIndex) => ((fieldsColors[colorIndex].Tamanhos.push({Tamanho:'',Quantidade:0}),setAdd(statusAdd + 1)))
    const handleDeleteTamanho = (colorIndex , TamanhosIndex) => {
       console.log(TamanhosIndex)
@@ -79,6 +61,7 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete}) {
       setAdd(statusAdd - 1);
    }
 
+
    var ColorsTemTamanhos = []
    let ColorsIndexbyConfirm = []
    const handleColorsTemTamanhos = () => {
@@ -94,6 +77,29 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete}) {
       return podeir; 
    }
 
+   useEffect(()=>{
+      setValue('Cores' , Data.Cores)
+      setValue('Img', Data.Img)
+   },[setValue, Data])
+
+   const onSubimit = (data) => { 
+      console.log(data);
+      axios.put(`http://localhost:3001/api/Produto/Atualizando/${Data._id}`,data)
+      .then((response) => ((
+         console.log(response),
+         Notification(),
+         onClose(),
+         reset(),
+         setNome(''),
+         setImage(''),
+         handleRemoveColors(ColorsIndexbyConfirm.map((value) => (value)))
+      )))
+      .catch((error) => ((
+         console.log(error.response.data),
+         error.response.status === 304 && (NotificationErro(), onClose()),
+         error.response.status === 409 && setNome(ValueNome)
+      )))
+   }
    const handleConfirm = () => (handleColorsTemTamanhos() && handleSubmit(onSubimit)())
    return (
       <V.ModalStyles
@@ -107,12 +113,12 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete}) {
             <V._ContainerItens $Width='90%' $Height='auto' $NoMedia>
                <V.WrapperLC>
                   <V.Label>Marca</V.Label>
-                  <V.Campos placeholder="marca" autoComplete="off" $Err={errors?.marca} {...register('marca',{required:true})}></V.Campos>
+                  <V.Campos placeholder="marca" autoComplete="off" $Err={errors?.marca} {...register('marca',{required:true})} defaultValue={Data.marca}></V.Campos>
                   {errors?.marca?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                </V.WrapperLC>
                <V.WrapperLC>
                   <V.Label>Nome</V.Label>
-                  <V.Campos placeholder="nome"  autoComplete="off" $Err={errors?.nome || Nome === ValueNome} {...register('nome',{required:true})}></V.Campos>
+                  <V.Campos placeholder="nome"  autoComplete="off" $Err={errors?.nome || Nome === ValueNome} {...register('nome',{required:true})} defaultValue={Data.nome}></V.Campos>
                   {errors?.nome?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                   {Nome === ValueNome && <V.Error $absolute='95%'>Ja existe o produto {Nome}</V.Error>}
                </V.WrapperLC>
@@ -120,16 +126,16 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete}) {
             <V._ContainerItens $Width='90%' $Height='auto' $NoMedia>
                <V.WrapperLC>
                   <V.Label>Valor Un.</V.Label>
-                  <V.Campos placeholder="Valor Unitario" autoComplete="off" type='number' $Err={errors?.valor} {...register('valor',{required:true ,valueAsNumber:true})}></V.Campos>
+                  <V.Campos placeholder="Valor Unitario" autoComplete="off" type='number' $Err={errors?.valor} {...register('valor',{required:true ,valueAsNumber:true})} defaultValue={Data.valor}></V.Campos>
                   {errors?.valor?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                </V.WrapperLC>
                <V.WrapperLC>
                   <V.Label>Tipo</V.Label>
-                  <V.Campos placeholder="tipo" autoComplete="off" $Err={errors?.tipo} {...register('tipo',{required:true})}></V.Campos>
+                  <V.Campos placeholder="tipo" autoComplete="off" $Err={errors?.tipo} {...register('tipo',{required:true})} defaultValue={Data.tipo}></V.Campos>
                   {errors?.tipo?.type === 'required' && <V.Error $absolute='95%'>Necessário preencher</V.Error>}
                </V.WrapperLC>
             </V._ContainerItens>
-            <img src={image} alt="" />
+            <img src={image || Data.Img} alt="" />
             <V.WrapperLC>
                <V.Campos $img type="file" id="image" accept="image/*" {...register('Img')} onChange={handleImageUpload}></V.Campos>
                <V.Button $click $Width='100%' type='button' onClick={() => {document.getElementById('image').click();}}>Adicione a Imagem</V.Button>
@@ -153,8 +159,6 @@ export default function FormsModalEstoque({ isOpen, onClose, Complete}) {
                               ColorsTemTamanhos[CoresIndex].Tamanho = true
                               ColorsTemTamanhos[CoresIndex].ExistTam = true
                            }
-                           // console.log(_ + `${TamanhosIndex}`) 
-                           // console.log(_) 
                            return(
                            <V.Card $WMidia='80%' $Background={V.theme.black.fundoClaro} $Width='70%' key={Cores.id + TamanhosIndex}>
                               <V.Close type='button' $MinSpace onClick={() => {handleDeleteTamanho(CoresIndex ,TamanhosIndex)}}>X</V.Close>

@@ -25,7 +25,7 @@ const ProdutoSchema = new Schema(
          type: String,
          required: true
       },
-      Img: Number,
+      Img: String
    },
    { timestamps:true },{VesionKey:false}
 )
