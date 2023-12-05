@@ -40,12 +40,22 @@ class ProdutoController {
       }
    }
 
+   static async LeituraProdutoCompra (_ , res){
+      try{
+         const ProdutosCompra = await Produto.find({}, { Img: 0 })
+         res.status(200).json(ProdutosCompra);
+      }
+      catch (error){
+         res.status(500).json({message:"houve um erro ao entar acessar os Produtos", error})
+      }
+   }
+
    static async LeituraProduto (req, res){
       try{
-         const Produtos = await Produto.find({})
          // const teste = await Produto.find({'Cores.Tamanhos._id': '6562dbd518218260708a837b'})
-         const teste = await Produto.aggregate([{$match: {'Cores.Tamanhos._id': new mongoose.Types.ObjectId('6562dbd518218260708a837b')}}])
-         console.log(JSON.stringify(teste))
+         const Produtos = await Produto.find({})
+         // const teste = await Produto.aggregate([{$match: {'Cores.Tamanhos._id': new mongoose.Types.ObjectId('6562dbd518218260708a837b')}}])
+         // console.log(JSON.stringify(teste))
          res.status(200).json(Produtos)
       }
       catch (error){
@@ -60,6 +70,7 @@ class ProdutoController {
          
          console.log(`atualizando por id:${id}`);
          const ProdutoVerificação = await Produto.find({nome: {$regex: req.body.nome, $options: 'i' }})
+         // eslint-disable-next-line eqeqeq
          const Verificação = (ProdutoVerificação?.map(({_id , ...resto})=>(_id != id)).includes(true))
          if(!Verificação){
             console.log('update')
@@ -77,13 +88,6 @@ class ProdutoController {
          }else{
             return res.status(409).json({message:'já existe um produto com esse nome!'});
          }
-         // const test = await Produto.findById(id, req.body);
-         // console.log(JSON.stringify(test) === JSON.stringify(req.body))
-         // Comparador(ProdutoVerificação);
-         // if(req.body === ProdutoVerificação){
-         //    console.log("igual")
-         //    return res.status(204).end();
-         // }
       } catch (error) {
          console.log('deu ruim')
          console.log(error)
@@ -105,6 +109,59 @@ class ProdutoController {
          res.status(500).json({message:'erro ao tentar deletar' , error})
       }
    }
+
+   static async FaltaProduto(req, res){
+      // const teste = await Produto.find({'Cores.Tamanhos.Quantidade': {$lte: 5}},{ 'Cores.Tamanhos.$': 1 })
+      // const teste = await Produto.aggregate([
+      //    {$match: {'Cores.Tamanhos.Quantidade': { $lte: 5 }}},
+      //    {$project: 
+      //       {id: 1,marca: 1,nome: 1,valor: 1,tipo: 1, Cores: 
+      //          {$map: 
+      //             {input: '$Cores', as: 'cores', in: 
+      //                { Cor: '$$cores.Cor',
+      //                   Tamanhos: {
+      //                      $filter: {input: '$$cores.Tamanhos', as: 'tamanho', cond: { $lte: ['$$tamanho.Quantidade', 5] }}
+      //                   }
+      //                }
+      //             }
+      //          }
+      //       }
+      //    }
+      // ]);
+      const teste  = await Produto.aggregate([
+         {$match: {  'Cores.Tamanhos.Quantidade': { $lte: 5 }}},
+         {
+            $project: {id: 1, marca: 1, nome: 1, valor: 1, tipo: 1,
+               Cores: {
+                  $map: { input: '$Cores', as: 'cor', in: {
+                     Cor: '$$cor.Cor',
+                        Tamanhos: {
+                           $filter: {input: '$$cor.Tamanhos',as: 'tamanho',cond: { $lte: ['$$tamanho.Quantidade', 5] }}
+                        }
+                  },},
+               },
+            },
+         },
+         {
+            $project: {id: 1, marca: 1, nome: 1, valor: 1, tipo: 1,
+               Cores: {
+                  $filter: {input: '$Cores', as: 'cor',
+                     cond: { $gt: [{ $size: '$$cor.Tamanhos' }, 0] },
+                  },
+               },
+            },
+         },
+      ]);
+      
+      try{
+         res.status(200).json(teste)
+      }
+      catch(error){
+         res.status(400).json(error)
+      }
+   }
+
 }
+
 
 module.exports = ProdutoController

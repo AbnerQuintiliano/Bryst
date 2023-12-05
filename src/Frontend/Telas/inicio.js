@@ -1,130 +1,232 @@
 import React, { useState } from 'react';
-import {useForm ,useFieldArray} from 'react-hook-form'
+import ButtonSelection from './estoque/components/Buttom';
+// import MainTela from '../components/MainTela';
+import * as E from './estoque/_Style';
+// import * as V from '../components/_variaveis';
+import { Swiper , SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+
+const MyCarousel = () => {
+ const [items, setItems] = useState([
+  {
+      "Cor": "Preta",
+      "Tamanhos": [
+          {
+              "Tamanho": "M",
+              "Quantidade": 2,
+              "_id": "6562c54c18218260708a8291"
+          },
+          {
+              "Tamanho": "G",
+              "Quantidade": 5,
+              "_id": "6562c54c18218260708a8292"
+          }
+      ],
+      "_id": "6562c54c18218260708a8290"
+  },
+  {
+      "Cor": "Branca",
+      "Tamanhos": [
+          {
+              "Tamanho": "M",
+              "Quantidade": 10,
+              "_id": "656a3d248fad7e045b8f604d"
+          }
+      ],
+      "_id": "656a3d248fad7e045b8f604c"
+  },
+  {
+      "Cor": "Verde",
+      "Tamanhos": [
+          {
+              "Tamanho": "g",
+              "Quantidade": 0,
+              "_id": "656a7a5889dc882285f6ecc4"
+          }
+      ],
+      "_id": "656a7a5889dc882285f6ecc3"
+  },
+  {
+      "Cor": "azul",
+      "Tamanhos": [
+          {
+              "Tamanho": "g",
+              "Quantidade": 0,
+              "_id": "656a7a8189dc882285f6ed09"
+          }
+      ],
+      "_id": "656a7a8189dc882285f6ed08"
+  },
+  {
+      "Cor": "amarelo",
+      "Tamanhos": [
+          {
+              "Tamanho": "p",
+              "Quantidade": 0,
+              "_id": "656a7a8189dc882285f6ed0b"
+          }
+      ],
+      "_id": "656a7a8189dc882285f6ed0a"
+  },
+  {
+      "Cor": "roxo",
+      "Tamanhos": [
+          {
+              "Tamanho": "g",
+              "Quantidade": 0,
+              "_id": "656a7a9e89dc882285f6ed62"
+          }
+      ],
+      "_id": "656a7a9e89dc882285f6ed61"
+  }
+]);
 
 
-// export default function Inicio(){
+return (
+  <>
+  <div style={{ width:'200px', height: '200px'  , backgroundColor:'red' , display: 'flex', justifyContent: 'center', alignItems:'center'}}>
+    <SwiperT Data={items}/>
+  </div>
+  <SwiperT Data={items}/>
+  </>
+//   <Swiper
+//   style={{backgroundColor: 'black'}}
+//   slidesPerView={3}
+//   // spaceBetween={20}
+//   centeredSlides={true}
+//   height={20}
+//   width={200}
+//   // pagination={{ clickable: true }}
+//   // navigation
+// >
+// {items.map((button, i) => (
+//   <SwiperSlide>
+//       <E.BtnEscolha
+//         key={button._id}
+//         onClick={() => (console.log(i))}
+//         // style={{
+//         //   backgroundColor:  selectedButtonColor === i ? '#7688C9': 'unset',
+//         // }}
+//       >
+//         {button.Cor}
+//       </E.BtnEscolha>
+//   </SwiperSlide>
+// ))}
+// </Swiper>
+  
+  // <MainTela Estoque="true">
+  //   <V.Wrapper $Height="100%">
+  //     <V.ScrollCard height="100%" $HeightCel="100%">
+  //       <E.Produto>
+  //         <ButtonSelection Data={items}/>
+  //       </E.Produto>
+  //     </V.ScrollCard>
+  //   </V.Wrapper>
+  // </MainTela>
+)};
 
-//     return(
-//       <>
+export default MyCarousel;
+
+const SwiperT = () => {
+   // eslint-disable-next-line no-unused-vars
+const [items, _] = useState([
+    {
+        "Cor": "Preta",
+        "Tamanhos": [
+            {
+                "Tamanho": "M",
+                "Quantidade": 2,
+                "_id": "6562c54c18218260708a8291"
+            },
+            {
+                "Tamanho": "G",
+                "Quantidade": 5,
+                "_id": "6562c54c18218260708a8292"
+            }
+        ],
+        "_id": "6562c54c18218260708a8290"
+    },
+    {
+        "Cor": "Branca",
+        "Tamanhos": [
+            {
+                "Tamanho": "M",
+                "Quantidade": 10,
+                "_id": "656a3d248fad7e045b8f604d"
+            }
+        ],
+        "_id": "656a3d248fad7e045b8f604c"
+    },
+    {
+        "Cor": "Verde",
+        "Tamanhos": [
+            {
+                "Tamanho": "g",
+                "Quantidade": 0,
+                "_id": "656a7a5889dc882285f6ecc4"
+            }
+        ],
+        "_id": "656a7a5889dc882285f6ecc3"
+    },
+    {
+        "Cor": "azul",
+        "Tamanhos": [
+            {
+                "Tamanho": "g",
+                "Quantidade": 0,
+                "_id": "656a7a8189dc882285f6ed09"
+            }
+        ],
+        "_id": "656a7a8189dc882285f6ed08"
+    },
+    {
+        "Cor": "amarelo",
+        "Tamanhos": [
+            {
+                "Tamanho": "p",
+                "Quantidade": 0,
+                "_id": "656a7a8189dc882285f6ed0b"
+            }
+        ],
+        "_id": "656a7a8189dc882285f6ed0a"
+    },
+    {
+        "Cor": "roxo",
+        "Tamanhos": [
+            {
+                "Tamanho": "g",
+                "Quantidade": 0,
+                "_id": "656a7a9e89dc882285f6ed62"
+            }
+        ],
+        "_id": "656a7a9e89dc882285f6ed61"
+    }
+]);
+return(
+<E.Dados>
+   <Swiper
+      style={{backgroundColor: 'black'}}
+      slidesPerView={2}
+      centeredSlides={true}
+      width={200}
+      height={20}
+     // pagination={{ clickable: true }}
+     // navigation
+   >
+   {items.map((button, i) => (
+      <SwiperSlide>
       
-//         <Container>
-//           <FileInput type="file" id="file" />
-//           <CustomFileLabel htmlFor="file">Escolher arquivo</CustomFileLabel>
-//         </Container>
-//         <SScrollCard>
-//             <Card>sim</Card>
-//             <Card>sim</Card>
-//             <Card>sim</Card>
-//             <Card>sim</Card>
-//             <Card>sim</Card>
-//             <Card>sim</Card>
-//         </SScrollCard>
-//       </>
-//     )
-    
-//   }
-
-function Inicio() {
-  const [formUpdated, setFormUpdated] = useState(0);
-  const { control, handleSubmit, register } = useForm();
-  const { fields: clothes, append, remove } = useFieldArray({
-    control,
-    name: 'clothes',
-  });
-
-  const addCloth = () => {
-    append({
-      id: '',
-      value: '',
-      colors: [],
-    });
-  };
-
-  const removeCloth = (index) => {
-    remove(index);
-  };
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
-  const addColor = (clothIndex) => {
-    clothes[clothIndex].colors.push({ sizeQuantities: [] });
-    setFormUpdated(formUpdated + 1);
-  };
-
-  const removeColor = (clothIndex, colorIndex) => {
-    clothes[clothIndex].colors.splice(colorIndex, 1);
-    setFormUpdated(formUpdated + 1);
-  };
-
-  const addSize = (clothIndex, colorIndex) => {
-    const newSize = { size: '', quantity: '' };
-    register(`clothes[${clothIndex}].colors[${colorIndex}].sizeQuantities[${clothes[clothIndex].colors[colorIndex].sizeQuantities.length}]`, {
-      value: newSize,
-    })
-
-    clothes[clothIndex].colors[colorIndex].sizeQuantities.push(newSize);
-    setFormUpdated(formUpdated + .5);
-  };
-
-  const removeSize = (clothIndex, colorIndex, sizeIndex) => {
-    clothes[clothIndex].colors[colorIndex].sizeQuantities.splice(sizeIndex, 1);
-    setFormUpdated(formUpdated + 1);
-  };
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="email"/>
-      {clothes.map((cloth, clothIndex) => (
-        <div key={cloth.id}>
-          <h2>Cloth {clothIndex + 1}</h2>
-          <input {...register(`clothes[${clothIndex}].id`)} placeholder="ID" />
-          <input {...register(`clothes[${clothIndex}].value`)} placeholder="Value" />
-
-          {cloth.colors.map((color, colorIndex) => (
-            <div key={colorIndex}>
-              <h3>Color {colorIndex + 1}</h3>
-              <button type="button" onClick={() => removeColor(clothIndex, colorIndex)}>
-                Remove Color
-              </button>
-              <button type="button" onClick={() => addSize(clothIndex, colorIndex)}>
-                Add Size
-              </button>
-
-              {color.sizeQuantities.map((sizeQuantity, sizeIndex) => (
-                <div key={sizeIndex}>
-                  <input
-                    {...register(`clothes[${clothIndex}].colors[${colorIndex}].sizeQuantities[${sizeIndex}].size`)}
-                    placeholder="Size"
-                  />
-                  <input
-                    {...register(`clothes[${clothIndex}].colors[${colorIndex}].sizeQuantities[${sizeIndex}].quantity`)}
-                    placeholder="Quantity"
-                  />
-                  <button type="button" onClick={() => removeSize(clothIndex, colorIndex, sizeIndex)}>
-                    Remove Size
-                  </button>
-                </div>
-              ))}
-            </div>
-          ))}
-          <button type="button" onClick={() => addColor(clothIndex)}>
-            Add Color
-          </button>
-          <button type="button" onClick={() => removeCloth(clothIndex)}>
-            Remove Cloth
-          </button>
-        </div>
-      ))}
-
-      <button type="button" onClick={addCloth}>
-        Add Cloth
-      </button>
-
-      <button type="submit">Submit</button>
-    </form>
-  );
-}
-
-export default Inicio;
+         <E.BtnEscolha
+            key={button._id}
+            onClick={() => (console.log(i))}
+           // style={{
+           //   backgroundColor:  selectedButtonColor === i ? '#7688C9': 'unset',
+           // }}
+         >
+            {button.Cor}
+         </E.BtnEscolha>
+      </SwiperSlide>
+   ))}
+   </Swiper>
+</E.Dados>
+)}

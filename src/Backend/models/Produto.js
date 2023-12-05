@@ -27,7 +27,7 @@ const ProdutoSchema = new Schema(
       },
       Img: String
    },
-   { timestamps:true },{VesionKey:false}
+   { timestamps:true ,VesionKey:false}
 )
 
 const Produto = mongoose.model( "Produto" , ProdutoSchema );

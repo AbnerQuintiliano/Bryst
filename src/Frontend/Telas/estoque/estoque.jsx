@@ -22,7 +22,8 @@ export default function Estoque() {
    const {HowMsg:HowMsgEditErro, handleMsg:handleMsgEditErro} = useMensage()
    const {HowMsg:HowMsgDel, handleMsg:handleMsgDel} = useMensage()
    const [DataModif , setDataModif] = useState() 
-   const [Primeiro , setPrimeiro] = useState(true) 
+   const [Primeiro , setPrimeiro] = useState(true)
+   const [Load , setLoad] = useState(true)
 
    
    const [ProdutoData, setProdutoData] = useState([]) 
@@ -38,7 +39,10 @@ export default function Estoque() {
             console.error('Erro ao buscar dados da API:', error);
          })
          .finally(()=>{
-            (!Controller.signal.aborted && Primeiro === true) && setPrimeiro(false)
+            if(!Controller.signal.aborted && Primeiro === true){
+               setPrimeiro(false);
+               setLoad(false);
+            }
          })
          return () => {
             console.log('cancelou...')
@@ -65,6 +69,11 @@ export default function Estoque() {
             <Produto>
                <V.Button onClick={openModalAdd}> Adicionar </V.Button>
             </Produto>
+            {Load &&             
+               <Produto>
+                  Carregando...
+               </Produto>
+            }
                {ProdutoData.filter((Data) => (Data.nome.toLowerCase().includes(Pesquisa.toLowerCase()))).map((data ,i)=>(
                   <Produto key={data._id}>
                      <WrapperDados>
@@ -88,7 +97,7 @@ export default function Estoque() {
                         </div>
                      </WrapperDados>
                      <img src={data.Img} alt="" />
-                     <ButtonSelection Data={data.Cores}/>
+                     <ButtonSelection Key={data._id} Modal={ModalDel || ModalAdd || ModalEdit} Data={data.Cores}/>
                      <WrapperBtn>
                         <V.Button $Width='40%' $Height='clamp(1.25rem, 2vw , 1.75rem )'
                            $Font='1rem' $Color={V.theme.color.verde}

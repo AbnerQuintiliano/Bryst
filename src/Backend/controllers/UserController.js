@@ -221,7 +221,7 @@ class UserController {
       }
    }
 
-   static async DeletnadoUser(req, res) {
+   static async DeletandoUser(req, res) {
       console.log("deletando user")
       try {
          const id = req.params.id;

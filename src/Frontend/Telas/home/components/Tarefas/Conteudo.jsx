@@ -2,10 +2,9 @@ import React from "react"
 import styled, { css } from "styled-components";
 import {ReactComponent as IcoDel} from '../../../../img/delete.svg';
 import DeleteModal from "../../../../components/DeleteModal";
-import Msg from '../../../../components/Mensagem'
-import { useHover , useMensage , useModal } from "../../../../hooks/MyHooks";
+import { useHover, useModal } from "../../../../hooks/MyHooks";
 import * as V from '../../../../components/_variaveis'
-
+import { useContextModal } from "../ContextModal";
 
 const Delete = styled.button`
     width: 30px;
@@ -24,11 +23,11 @@ const Delete = styled.button`
     }
 `
 
-export const Conteudo = (props) => {
+export const Conteudo = ({children, $Msg, $_id}) => {
 
+    const {attValueModais} = useContextModal()
     const { HowHover , EnterHover , ExitHover } = useHover();
     const {Modal, openModal , closeModal} = useModal();
-    const {HowMsg , handleMsg} = useMensage();
 
     return(
         <>
@@ -36,17 +35,15 @@ export const Conteudo = (props) => {
                 $Background={V.theme.black.fundoClaro} style={{padding:'0.4rem 0.75rem', whiteSpace: 'nowrap' , fontSize:'clamp(80% , 3vw , 1rem)'}} 
                 onMouseEnter={EnterHover} onMouseLeave={ExitHover} 
             >
-                {props.children}
-                <Delete $hover={`${HowHover}`} onClick={openModal}>
+                {children}
+                <Delete $hover={`${HowHover}`} onClick={() => {openModal(); attValueModais()}}>
                     <IcoDel style={{width:'clamp(16px , 3vw , 1.5rem)'}}/>
                 </Delete>
             </V.Card>
 
-            <DeleteModal isOpen={Modal} onClose={closeModal} Notification={handleMsg} >
+            <DeleteModal isOpen={Modal} onClose={() => {closeModal(); attValueModais()}} Notification={$Msg} Url={`http://localhost:3001/api/Tarefa/Deletando/${$_id}`}>
                 Deseja excluir a tarefa?
             </DeleteModal>
-
-            {HowMsg && <Msg message={'Tarefa deletada com sucesso!'}/>}
         </>
     )
 }

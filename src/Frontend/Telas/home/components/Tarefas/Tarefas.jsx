@@ -1,56 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { useForm } from "react-hook-form";
 import * as V from "../../../../components/_variaveis";
 import { Conteudo } from "./Conteudo";
+import { ModalAdd } from "./ModalAdd";
 import Msg from "../../../../components/Mensagem";
 import { useModal ,useMensage } from "../../../../hooks/MyHooks";
+import axios from "axios";
+import { useContextModal } from "../ContextModal";
 
 Modal.setAppElement('#root');
 export default function Tarefas() {
    
-   const { register, handleSubmit , formState:{errors} } = useForm();
-   const onSubmit=(data) => {
-      console.log(data)
-      closeModal();
-      handleMsg();
-      const dataG = {...data , User:HowMsg};
-      console.log(dataG);
-   }
-   
+   const {attValueModais} = useContextModal()
    const {Modal, openModal , closeModal} = useModal();
    const {HowMsg, handleMsg} = useMensage()
+   const {HowMsg:HowMsgDel, handleMsg:handleMsgDel} = useMensage()
+
+   const [Primeiro , setPrimeiro] = useState(true)
+   const [Tarefas, setTarefas] = useState([])
+   useEffect(() => {
+      if(HowMsg || HowMsgDel || Primeiro === true){
+      const Controller = new AbortController();
+      axios.get('http://localhost:3001/api/Tarefa', {signal:Controller.signal})
+      .then((response)=>{
+         setTarefas(response.data)
+      })
+      .catch((error) => {
+         console.error('Erro ao buscar dados da API:', error);
+      })
+      .finally(() => {
+         if(!Controller.signal.aborted && Primeiro === true){
+            setPrimeiro(false);
+         }
+      })
+      return () => {
+         console.log('cancelou...')
+         Controller.abort();
+      }
+   }
+   },[setTarefas, HowMsg, HowMsgDel, Primeiro , setPrimeiro])
+
    
    return(
    <V.Wrapper $MinWidth={'49%'}>
       <div>
          <V.BtnTitulo >Tarefas</V.BtnTitulo>
-         <V.BtnTitulo $click onClick={openModal}>+</V.BtnTitulo>
-         <V.ModalStyles $Width='max(50% , 300px)'
-            $Height='25vh'
-            isOpen={Modal}
-            onRequestClose={closeModal}
-            style={{overlay:{backgroundColor: 'rgba(27, 30, 39, 0.8)',backdropFilter: 'blur(10px)'}}}
-         >
-            <V.WrapperLC>
-               <V.Label>Escreva a Tarefa</V.Label>
-               <V.Campos $Background={V.theme.black.deFundo} $Err={errors?.Tarefa} {...register('Tarefa',{required: true , maxLength:30})} autoComplete="off"></V.Campos>
-               {errors?.Tarefa?.type === 'required' && <V.Error>Necessário preencher o campo</V.Error>}
-               {errors?.Tarefa?.type === 'maxLength' && <V.Error>Muitas caracteres, o maximo e 30.</V.Error>}
-            </V.WrapperLC>
-            <V.Button $Width='max(35%,150px)' $Height='2rem' $Color={V.theme.color.verde} onClick={handleSubmit(onSubmit)}>Criar tarefa</V.Button>
-         </V.ModalStyles>
+         <V.BtnTitulo $click onClick={()=> {openModal(); attValueModais()}}>+</V.BtnTitulo>
+         {Modal && <ModalAdd isOpen={Modal} closeModal={() => {closeModal(); attValueModais()}} Notification={handleMsg}/>}
       </div>
          <V.ScrollCard height='100%' $HeightCel='100%' $direction>
-            <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
-            <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
-            <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
-            <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
-            <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
-            <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
-            <Conteudo>ovdnsdj vbsdngpsnibosndfbonsfs</Conteudo>
+            {Tarefas.map((obj)=>(
+               <Conteudo $_id={obj._id} $Msg={handleMsgDel} key={obj._id}>{obj.conteudo}</Conteudo>
+            ))}
          </V.ScrollCard>
       {HowMsg && <Msg message={'Tarefa criada com sucesso!'}/> }
+      {HowMsgDel && <Msg message={'Tarefa deletada com sucesso!'}/> }
    </V.Wrapper>
    )
 }

@@ -169,9 +169,11 @@ export const Card = styled.div` //Os cards
 `
 
 export const MaisInfo  = styled.span` //são os dados que aparecem apenas no cel do Aviso Estoque
+  width: 90%;
   display: none;
   font-size: 0.9rem;
   color: ${props => props.theme.black.Letra};
+  position: relative;
   @media (max-width: 700px) {
     display: block;
   }
@@ -179,7 +181,7 @@ export const MaisInfo  = styled.span` //são os dados que aparecem apenas no cel
 export const Header = styled.div` //especifico do card das vendas
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 0 5%;
   & [num]{
     font-size: 1.5rem;
@@ -236,11 +238,14 @@ export const Total =styled.div` //onde fica total e forma de pgmt + buttons
 export const _ContainerItens = styled.div` //agrupa grupos de componente // utilizado mais na home
 width: ${({$Width}) => ( $Width || '100%')};
 height: ${({$Height}) => ( $Height || '30%')}; 
+${({$HeightMin}) => ($HeightMin && css`min-height: ${$HeightMin};`)};
 gap: .5rem;
 display: flex;
 flex-direction: row;
     @media (max-width: 700px) {
-        flex-direction: ${({$NoMedia}) => (!$NoMedia && 'column')};
+      flex-direction: ${({$NoMedia}) => (!$NoMedia && 'column')};
+      ${({$HeightMin}) => ($HeightMin && css`min-height: unset;`)};
+      /* ${({$HeightMin}) => ($HeightMin && css`height: 100%;`)}; */
     }
 `
 
@@ -443,7 +448,7 @@ export const _OverflowStyle = css`
 export const ScrollCard = styled.section` //estilo do Scroll
     height: ${props => props.height || '80%' };
     width: ${({$Width}) => ($Width ||  '100%' )};
-    gap: .35rem;
+    gap: ${({$gap}) => ($gap ||  '.35rem' )};
     
     display: flex;
     flex-direction: ${({$direction}) => ($direction? 'column' : 'row')};

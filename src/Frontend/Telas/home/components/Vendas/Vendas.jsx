@@ -5,11 +5,13 @@ import * as V from "../../../../components/_variaveis";
 import {BtnAlterar, BtnExcluir}  from './buttons.jsx';
 import Msg from "../../../../components/Mensagem";
 import { useHover ,useMensage , useModal} from "../../../../hooks/MyHooks";
+import { useContextModal } from "../ContextModal.jsx";
 
 
 export default function Vendas() {
     
-    const elementHover = useRef(false);
+    const {attValueModais} = useContextModal()
+    const elementHover = useRef(false);    
 
     const {HowHover, EnterHover, ExitHover} = useHover();
     const {Modal, openModal , closeModal} = useModal();
@@ -24,13 +26,12 @@ export default function Vendas() {
                 <V.BtnTitulo>Vendas</V.BtnTitulo>
             <V.ScrollCard height='100%' $HeightCel='100%'>
                 <V.Card $Width='40%' $WMidia='80%' $Background={V.theme.black.fundoClaro}>
-                    <V.Button  $Height='2rem' onClick={openModal}>Adicionar</V.Button>
-                    <FormsModalVendas isOpen={Modal} onClose={closeModal} Notification={handleMsg}/>
+                    <V.Button  $Height='2rem' onClick={()=>((openModal(), attValueModais()))}>Adicionar</V.Button>
+                    {Modal && <FormsModalVendas isOpen={Modal} onClose={() => ((closeModal(), attValueModais()))} Notification={handleMsg}/>}
                     {HowMsg && <Msg message={"Venda realizada com sucesso!"}/>}
                 </V.Card>
                 <V.Card $Width='40%' $WMidia='80%' $Background={V.theme.black.fundoClaro} style={{padding:'0.4rem 0.5rem'}}>
                     <V.Header>
-                        <div num="">001</div>
                         <div>
                             <data>18/08/2023</data>
                             <time>12:35</time>
@@ -42,12 +43,12 @@ export default function Vendas() {
                     </V.Header>
                     <V.SScrollCard $HeightCel='60vh'>
                         <V.Card $WMidia='80%' >
-                            <div>Id Prod: 223</div>
+                            <div>Nome: AI</div>
                             <img src={roupa} alt=""/> 
-                            <div>Valor UN : 129.90</div>
-                            <div>Qts : 2</div>
-                            <div>Tam : G</div>
-                            <div>Cor : Azul</div>
+                            <div>Valor Un: 129.90</div>
+                            <div>Tamanho : 2</div>
+                            <div>Cor : G</div>
+                            <div>Quantidade : Azul</div>
                         </V.Card>
                         <V.Card $WMidia='80%'>
                             <img src={roupa} alt=""/> 

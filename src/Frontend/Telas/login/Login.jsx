@@ -47,11 +47,21 @@ function Login() {
     }
   }
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      console.log('ue')
+      handleSubmit(onSubmit)()
+    }
+  };
+
+
   const Navigate = useNavigate()
   const [Erro, setErro] = useState(false)
   const {register, handleSubmit} = useForm();
 
+
   const onSubmit = (data) => {
+    console.log('foi')
     axios.post(`http://localhost:3001/api/Login`, data)
     .then((response) => ((
       console.log(response),
@@ -74,7 +84,8 @@ function Login() {
             </span>
             
             <div className="estilo-input">
-              <input 
+              <input
+              onKeyDown={handleKeyPress}
               className= {user !== "" ? 'has-val input' : 'input'}
               id="mail"
               type="text"  /*BAGUIETI QUE FAZ O EMAIL FICAR EM CIMA DA PALAVRA*/
@@ -91,7 +102,8 @@ function Login() {
             </div>
 
             <div className="estilo-input">
-              <input 
+              <input
+              onKeyDown={handleKeyPress}
               className={password !== "" ? 'has-val input' : 'input'}
               id="password"
               type="password"
@@ -109,7 +121,7 @@ function Login() {
               {Erro && <Error $absolute='-30px'>{Erro}</Error>}
             </div>
 
-            <button type='button'className="login-btn" onClick={() => (handleSubmit(onSubmit))()}>
+            <button id='Enviar' type='button'className="login-btn" tabIndex={0} onClick={handleSubmit(onSubmit)}>
               Login
             </button>
 
