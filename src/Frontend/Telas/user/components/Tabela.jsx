@@ -66,7 +66,7 @@ const Edit = styled.div`
    }
 `;
 
-export default function Tabela({CreateModal ,Pesquisa}) {
+export default function Tabela({CreateModal ,HowMsgAdd ,Pesquisa}) {
 
    const {Modal:ModalEdit , openModal:openModalEdit , closeModal:closeModalEdit} = useModal();
    const {HowMsg:HowMsgEdit , handleMsg:handleMsgEdit} = useMensage();
@@ -76,22 +76,32 @@ export default function Tabela({CreateModal ,Pesquisa}) {
    const {HowMsg:HowMsgDelete , handleMsg:handleMsgDelete} = useMensage();
 
    const [UsersData, setUsersData] = useState([]);
-
+   const [Primeiro, setPrimeiro] = useState(true);
+   console.log(HowMsgAdd)
    useEffect (() => {
+      if(HowMsgDelete || HowMsgEdit || HowMsgAdd || Primeiro === true){
+   console.log('foi')
       const Controller = new AbortController();
-      console.log('Atualizou...')
-      axios.get('http://localhost:3001/api/User',{signal:Controller.signal})
-      .then((response) => {
-         setUsersData(response.data);
-      })
-      .catch((error) => {
-         console.error('Erro ao buscar dados da API:', error);
-      });
-      return () => {
-         console.log('cancelou...')
-         Controller.abort();
+         console.log('Atualizou...')
+         axios.get('http://localhost:3001/api/User',{signal:Controller.signal})
+         .then((response) => {
+            setUsersData(response.data);
+         })
+         .catch((error) => {
+            console.error('Erro ao buscar dados da API:', error);
+         })
+         .finally(()=>{
+            if(!Controller.signal.aborted && Primeiro === true){
+               setPrimeiro(false);
+            }
+         });
+         return () => {
+            console.log('cancelou...')
+            Controller.abort();
+         }
       }
-   }, [ModalEdit, CreateModal ,ModalDelete]);
+   // }, [ModalEdit, CreateModal ,ModalDelete]);
+   }, [HowMsgDelete, HowMsgAdd,HowMsgEdit, Primeiro, setPrimeiro]);
    const [IdModal, setIdModal] = useState()
 
    return (

@@ -6,7 +6,7 @@ router.route("/Auth").get(UserController.AuthToken)
 router.route("/User").get(UserController.LeituraUser)
 router.route("/UserC").post(UserController.CadastroUser)
 router.route("/UserS/:user").get(UserController.ProcurandoUser) //nem uso
-router.route("/User/:id").put(UserController.AtualizandoUser)
+router.route("/UserA/:id").put(UserController.AtualizandoUser)
 router.route("/UserD/:id").delete(UserController.DeletandoUser)
 
 

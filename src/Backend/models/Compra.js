@@ -7,7 +7,8 @@ const CompraSchema = new Schema(
       id:{type: mongoose.Schema.Types.ObjectId},
       itens:[{
          produto:{
-            type:Schema.Types.ObjectId,
+            // type:Schema.Types.ObjectId,,
+            type:String,
             ref: 'Produto',
             populate:{ select: 'nome Img valor'}
          },

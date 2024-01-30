@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import * as V from "../../../components/_variaveis";
 import { useForm, useWatch } from "react-hook-form";
@@ -8,7 +8,7 @@ Modal.setAppElement("#root");
 
 
 export default function EditModal({ isOpen, onClose, NotificationErro, Notification, Data}) {
-  const {register, handleSubmit, control, formState: { errors }} = useForm();
+  const {register, handleSubmit, setValue, control, formState: { errors }} = useForm();
   const [User, SetUser] = useState('')
   const [UserName, SetUserName] = useState('')
   const [Email, SetEmail] = useState('')
@@ -27,7 +27,7 @@ export default function EditModal({ isOpen, onClose, NotificationErro, Notificat
   })
 
   const onSubmit = (data) => {
-    axios.put(`http://localhost:3001/api/User/${Data._id}`, data)
+    axios.put(`http://localhost:3001/api/UserA/${Data._id}`, data)
     .then((response) => ((
       console.log(response),
       Notification(),
@@ -56,7 +56,12 @@ export default function EditModal({ isOpen, onClose, NotificationErro, Notificat
   let ValueEmailErro = false
   Email && (ValueEmailErro = handleUserErro(Email?.email, ValueEmail));
   const regexEmail = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
-  
+
+//settar o valor e permitir a alteração
+  useEffect(() =>{
+    setValue('office', Data.office)
+  },[Data, setValue])
+
   return (
     <V.ModalStyles $Width="clamp(300px, 30vw, 40%)" $Height="70vh" isOpen={isOpen} onRequestClose={onClose} 
       style={{overlay: { backgroundColor: "rgba(27, 30, 39, 0.8)", backdropFilter: "blur(10px)"}}}
@@ -89,7 +94,8 @@ export default function EditModal({ isOpen, onClose, NotificationErro, Notificat
         </V.WrapperLC>
         <V.WrapperLC>
         <V.Label>Cargo</V.Label>
-        <V.CampoOption $Err={errors?.office} {...register("office" ,{required: true ,validate:(value) => {return value !== "0"}})} value={Data.office}>
+        {/* <V.CampoOption $Err={errors?.office} {...register("office" ,{required: true ,validate:(value) => {return value !== "0"}})} value={Data.office}> */}
+        <V.CampoOption $Err={errors?.office} {...register("office" ,{required: true ,validate:(value) => {return value !== "0"}})}>
           <option value="0">Selecione o Cargo...</option>
           <option value="Funcionário">Funcionário</option>
           <option value="Administrador">Administrador</option>

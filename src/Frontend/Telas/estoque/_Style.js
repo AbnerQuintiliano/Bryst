@@ -81,8 +81,6 @@ export const WrapperBtn = styled.span`
 export const BtnEscolha = styled.button`
   background-color: unset;
   color: ${props => props.theme.black.Letra};
-  /* color: red; //remover */
-  /* height: clamp(100% , 1vw , 1rem); */
   height: 18px;
   padding: min( .5rem  , 2vw );
   border-radius: 20px;
@@ -120,6 +118,7 @@ export const Dados = styled.div`
       padding-top: 0;
       padding-bottom: 0;
       height: 15px;
+      color: red;
     }
     button{
       @media (max-width: 425px) {

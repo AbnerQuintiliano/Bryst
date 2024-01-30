@@ -3,19 +3,33 @@ const jwt = require('jsonwebtoken');
 
 require("dotenv").config();
 
-const Verificação = async(req, res, IdUser=false) => {
-   if(IdUser){
-      let DataId 
-      DataId= await User.find({_id:IdUser})
-      var ExistUserNameById = DataId
+const Verificação = async(req, res, IdUser=false, Cadastrado=false) => {
+   console.log('verificação indo')
+   if(Cadastrado){
+      if(!IdUser){
+         // let DataId 
+         // DataId= await User.find({_id:IdUser})
+         // var ExistUserNameById = DataId
+         res.status(400).json({message:'o id do usuário não foi passado'})
+         return;
+      }
+      var ExistUserNameById = await User.find({_id:IdUser})
+      console.log(ExistUserNameById)
       ExistUserNameById = ExistUserNameById.map(({user, password, userName, email, office,...resto})=>({user, password, userName, email, office}))
-   }else{
-      return res.status(400).json({message:'o id do usuário não foi passado'})
+      if(JSON.stringify(ExistUserNameById[0]) === JSON.stringify(req.body)){
+         console.log('Não houve mudança nos dados')
+         res.status(400).json({
+            erro:[
+               { message: null, user:null},
+               { message: null, userName:null },
+               { message: null, userName:null },
+               {message: true}
+            ]
+         });
+         return false;
+      }
    }
-   if(IdUser && JSON.stringify(ExistUserNameById[0]) === JSON.stringify(req.body)){
-      console.log('Não houve mudança nos dados')
-      return false;
-   }
+
    let ExistUsers = await User.find({user: { $regex: req.body.user, $options: 'i' }});
    IdUser && (ExistUsers = ExistUsers.filter((object) => (`${object._id}` !== IdUser)))
    const ValuesbyCompUser = ExistUsers.map((Users) => (Users.user.toLowerCase()))
@@ -124,7 +138,7 @@ class UserController {
                userName:Usuario[0].userName,
                office: Usuario[0].office
             }
-            const Token = jwt.sign(TokenData, process.env.Token_Key, {expiresIn:"1h"})
+            const Token = jwt.sign(TokenData, process.env.Token_Key, {expiresIn:"3h"})
             console.log(Usuario[0].userName)
             res.status(200).json({
                userName: Usuario[0].userName,
@@ -139,7 +153,7 @@ class UserController {
       }
    }
 
-   static async AuthToken(req, res ,next){
+   static async AuthToken(req, res){
       console.log("Verificando token")
       try{
          const token = req.header('Authorization');
@@ -175,7 +189,8 @@ class UserController {
    static async CadastroUser(req, res) {
       console.log("Criando user")
       try {
-         if( await Verificação(req,res) === true){ 
+         const Teste = await Verificação(req, res)
+         if(Teste){
             const novoUser = await User.create(req.body);
             res.status(201).json({ message: "criado com sucesso", usuarios: novoUser});
          }
@@ -202,19 +217,10 @@ class UserController {
       try {
          const id = req.params.id;
          console.log(`atualizando por id:${id}`);
-         let Teste = await Verificação(req ,res ,id)
+         let Teste = await Verificação(req ,res ,id, true)
          if( Teste === true){
             const UserAtt = await User.findByIdAndUpdate(id, req.body);
             res.status(200).json(UserAtt);
-         } else if(Teste === false){
-            res.status(400).json({
-               erro:[
-                  { message: null, user:null},
-                  { message: null, userName:null },
-                  { message: null, userName:null },
-                  {message: true}
-               ]
-            });
          }
       } catch (error) {
          res.status(304).json({ messageErro: "erro ao tentar atualizar usuários", error });
@@ -225,9 +231,7 @@ class UserController {
       console.log("deletando user")
       try {
          const id = req.params.id;
-
          console.log(`deletando usuário de id:${id}`);
-
          const UserDel = await User.findByIdAndDelete(id);
          res.status(200).json({ msg: "usuário deletado com sucesso!", UserDel });
       } catch (error) {

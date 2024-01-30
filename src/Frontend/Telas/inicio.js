@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import ButtonSelection from './estoque/components/Buttom';
+import * as E from './home/components/estoque/estoque'
 // import MainTela from '../components/MainTela';
-import * as E from './estoque/_Style';
+import * as T from './estoque/_Style';
 // import * as V from '../components/_variaveis';
-import { Swiper , SwiperSlide } from 'swiper/react'
-import 'swiper/css'
+import { Swiper , SwiperSlide } from "swiper/react";
+// import { Scrollbar } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/scrollbar';
 
 const MyCarousel = () => {
- const [items, setItems] = useState([
+   const items = useState([
   {
       "Cor": "Preta",
       "Tamanhos": [
@@ -82,47 +84,20 @@ const MyCarousel = () => {
 ]);
 
 
+
+
 return (
-  <>
-  <div style={{ width:'200px', height: '200px'  , backgroundColor:'red' , display: 'flex', justifyContent: 'center', alignItems:'center'}}>
-    <SwiperT Data={items}/>
-  </div>
-  <SwiperT Data={items}/>
-  </>
-//   <Swiper
-//   style={{backgroundColor: 'black'}}
-//   slidesPerView={3}
-//   // spaceBetween={20}
-//   centeredSlides={true}
-//   height={20}
-//   width={200}
-//   // pagination={{ clickable: true }}
-//   // navigation
-// >
-// {items.map((button, i) => (
-//   <SwiperSlide>
-//       <E.BtnEscolha
-//         key={button._id}
-//         onClick={() => (console.log(i))}
-//         // style={{
-//         //   backgroundColor:  selectedButtonColor === i ? '#7688C9': 'unset',
-//         // }}
-//       >
-//         {button.Cor}
-//       </E.BtnEscolha>
-//   </SwiperSlide>
-// ))}
-// </Swiper>
-  
-  // <MainTela Estoque="true">
-  //   <V.Wrapper $Height="100%">
-  //     <V.ScrollCard height="100%" $HeightCel="100%">
-  //       <E.Produto>
-  //         <ButtonSelection Data={items}/>
-  //       </E.Produto>
-  //     </V.ScrollCard>
-  //   </V.Wrapper>
-  // </MainTela>
+   <>
+   <div style={{ width:'200px', height: '200px'  , backgroundColor:'red' , display: 'flex', justifyContent: 'center', alignItems:'center'}}>
+      <T.Dados $Special>
+         <SwiperT Data={items}/>
+         <SwiperT Data={items}/>
+         <SwiperT Data={items}/>
+      </T.Dados>
+   </div>
+   <SwiperT Data={items}/>
+   </>
+
 )};
 
 export default MyCarousel;
@@ -203,7 +178,7 @@ const [items, _] = useState([
     }
 ]);
 return(
-<E.Dados>
+<T.Dados>
    <Swiper
       style={{backgroundColor: 'black'}}
       slidesPerView={2}
@@ -215,18 +190,17 @@ return(
    >
    {items.map((button, i) => (
       <SwiperSlide>
-      
-         <E.BtnEscolha
-            key={button._id}
-            onClick={() => (console.log(i))}
-           // style={{
-           //   backgroundColor:  selectedButtonColor === i ? '#7688C9': 'unset',
-           // }}
-         >
-            {button.Cor}
-         </E.BtnEscolha>
+            <T.BtnEscolha
+               key={button._id}
+               onClick={() => (console.log(i))}
+               // style={{
+               //   backgroundColor:  selectedButtonColor === i ? '#7688C9': 'unset',
+               // }}
+            >
+               {button.Cor}
+            </T.BtnEscolha>
       </SwiperSlide>
    ))}
    </Swiper>
-</E.Dados>
+</T.Dados>
 )}

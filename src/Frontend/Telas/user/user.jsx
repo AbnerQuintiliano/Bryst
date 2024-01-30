@@ -33,7 +33,7 @@ export const BtnCreate = styled(V.BtnTitulo)`
 
 export default function User(){
     const {Modal , openModal , closeModal} = useModal()
-    const {HowMsg, handleMsg} = useMensage()
+    const {HowMsg, handleMsg} = useMensage(false)
 
     const [PesquisaValue, setPesquisaValue] = useState('')
     const handlePesquisaValue = (e) => {
@@ -58,10 +58,10 @@ export default function User(){
                         <BtnCreate $click onClick={openModal}>+</BtnCreate>
                     </V.Top>
                     <CreatModal isOpen={Modal} onClose={closeModal} Notification={handleMsg}></CreatModal>
-                    {HowMsg && <Msg message={"Usuário criado com sucesso!"}/>}
                     <V.SScrollCard height='auto' $HeightCel='auto'>
-                        <Tabela CreateModal={Modal} Pesquisa={PesquisaValue}/>
+                        <Tabela CreateModal={Modal} HowMsgAdd={HowMsg} Pesquisa={PesquisaValue}/>
                     </V.SScrollCard>
+                    {HowMsg && <Msg message={"Usuário criado com sucesso!"}/>}
                 </V.Wrapper>
         </MainTela>
     )
